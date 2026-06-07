@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر الیما | نام کتاب</title>
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="../style.css">
+    <script src="../script.js" defer></script>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+    
+    <div class="site-wrapper">
+        <header>
+            <div class="header-container">
+                <div class="header-controls">
+                    <button class="theme-switch" id="themeBtn" aria-label="تغییر تم سایت">
+                        <img id="themeIconImg" src="../darkmode.png" alt="تغییر تم" width="24" height="24">
+                    </button>
+                </div>
+                <div class="logo-area">
+                    <a href="../"><img src="../header_logo.png" alt="لوگو نشر الیما" width="130" height="48"></a>
+                    <span class="dev-badge">نسخه آزمایشی</span>
+                </div>
+                <nav class="desktop-nav">
+                    <ul class="nav-links">
+                        <li><a href="../">صفحه اصلی</a></li>
+                        <li><a href="./">کتاب‌ها</a></li>
+                        <li><a href="../index.html#new-books">تازه‌های نشر</a></li>
+                        <li><a href="../index.html#authors">شاعران و نویسندگان</a></li>
+                        <li><a href="../about/index.html">درباره ما</a></li>
+                        <li><a href="../index.html#contact">ارتباط با ما</a></li>
+                    </ul>
+                </nav>
+                <div class="burger-wrapper">
+                    <button class="burger-menu" id="burgerBtn" aria-label="منوی سایت">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="mobile-nav" id="mobileNav">
+            <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
+            <ul class="nav-links">
+                <li><a href="../">صفحه اصلی</a></li>
+                <li><a href="./">کتاب‌ها</a></li>
+                <li><a href="../index.html#new-books">تازه‌های نشر</a></li>
+                <li><a href="../index.html#authors">شاعران و نویسندگان</a></li>
+                <li><a href="../about/index.html">درباره ما</a></li>
+                <li><a href="../index.html#contact">ارتباط با ما</a></li>
+            </ul>
+        </nav>
+
+        <main class="pro-book-page">
+            <div class="pro-book-container">
+                <div class="back-link-wrapper">
+                    <a href="index.html" class="back-to-gallery-btn">
+                        <span class="arrow">⟶</span> بازگشت به گالری کتاب‌ها
+                    </a>
+                </div>
+                
+                <section class="pro-top-section glass-effect">
+                    
+                    <div class="pro-gallery">
+                        <div class="pro-main-image">
+                            <img id="mainBookImg" src="covers/barayeshomare13.jpg" alt="تصویر اصلی کتاب">
+                        </div>
+                        <div class="pro-thumbnails">
+                            <img src="covers/barayeshomare13.jpg" class="thumb-img active-thumb" onclick="changeImage(this)" alt="زاویه اول">
+                            <img src="covers/barayeshomare13back.jpg" class="thumb-img" onclick="changeImage(this)" alt="زاویه دوم">
+                            <img src="covers/book1-3.jpg" class="thumb-img" onclick="changeImage(this)" alt="صفحات داخلی">
+                        </div>
+                    </div>
+
+                    <div class="pro-basic-info">
+                        <div class="pro-badges">
+                            <span class="badge-tag">چاپ پنجم</span>
+                            <span class="badge-tag highlight">پرفروش</span>
+                        </div>
+                        
+                        <h1 class="pro-title">برای شماره 13 ها</h1>
+                        <h2 class="pro-author">نویسنده: <span>علی قنواتی</span></h2>
+                        
+                        <div class="pro-price-box">
+                            <span class="price-label">قیمت نسخه چاپی:</span>
+                            <span class="price-value">۲۴۵,۰۰۰ <span>تومان</span></span>
+                        </div>
+
+                        <div class="pro-action-buttons">
+                            <button class="btn-primary">افزودن به سبد خرید</button>
+                            <button class="btn-secondary">مطالعه نمونه PDF</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="pro-specs-section glass-effect">
+                    <h3 class="section-title">مشخصات فنی کتاب</h3>
+                    <div class="pro-specs-grid">
+                        <div class="spec-row">
+                            <span class="spec-key">تعداد صفحات:</span>
+                            <span class="spec-value">۳۲۰ صفحه</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-key">قطع کتاب:</span>
+                            <span class="spec-value">رقعی (۱۴ در ۲۱)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-key">نوع جلد:</span>
+                            <span class="spec-value">شومیز مات (Softcover)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-key">نوع کاغذ:</span>
+                            <span class="spec-value">بالک سوئدی (سبک)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-key">شابک (ISBN):</span>
+                            <span class="spec-value">978-600-12345-6-7</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-key">سال انتشار:</span>
+                            <span class="spec-value">۱۴۰۵</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="pro-desc-section glass-effect">
+                    <h3 class="section-title">درباره کتاب</h3>
+                    <div class="pro-desc-content">
+                        <p>
+                            در این بخش می‌توانید متن کامل معرفی کتاب را قرار دهید. طراحی این قسمت به گونه‌ای است که خواندن متن‌های طولانی چشم را خسته نکند و فضای کافی بین خطوط وجود داشته باشد.
+                        </p>
+                        <p>
+                            بهتر است در پاراگراف اول یک قلاب جذاب برای خواننده قرار دهید و در پاراگراف‌های بعدی در مورد ساختار کتاب، دلیل نگارش آن و مخاطبین هدف صحبت کنید. این چیدمان حرفه‌ای باعث می‌شود اعتماد کاربر برای خرید جلب شود.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <footer id="contact">
+            <div class="footer-grid">
+                <div class="social-section">
+                    <h3>شبکه‌های اجتماعی ما</h3>
+                    <p>در شبکه‌های اجتماعی همراه ما باشید:</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-btn">اینستاگرام</a>
+                        <a href="#" class="social-btn">تلگرام</a>
+                    </div>
+                </div>
+                
+                <div class="quick-links">
+                    <h3>لینک‌های سریع</h3>
+                    <div class="quick-links-wrapper">
+                        <a href="../index.html#new-books" class="quick-link-item"><span class="arrow">←</span> فروشگاه آنلاین</a>
+                        <a href="#" class="quick-link-item"><span class="arrow">←</span> مراحل پذیرش آثار</a>
+                    </div>
+                </div>
+                
+                <div class="newsletter">
+                    <h3>عضویت در خبرنامه</h3>
+                    <form class="newsletter-box" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="ایمیل شما..." required>
+                        <button type="submit">ثبت</button>
+                    </form>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                <p>تمامی حقوق مادی و معنوی برای <strong>نشر اِلیما</strong> محفوظ است. ۱۴۰۵</p>
+            </div>
+        </footer>
+
+        <button class="scroll-top" id="scrollTopBtn" aria-label="برو به بالا">▲</button>
+    </div>
+</body>
+</html>
