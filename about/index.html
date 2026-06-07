@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر الیما | درباره ما</title>
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../style.css">
+    <script src="../script.js" defer></script>
+</head>
+<body>
+    <script>
+        // جلوگیری از چشمک زدن صفحه سفید
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+    <div class="site-wrapper">
+        <header>
+            <div class="header-container">
+                <div class="header-controls">
+                    <button class="theme-switch" id="themeBtn" aria-label="تغییر تم سایت">
+                        <img id="themeIconImg" src="../darkmode.png" alt="تغییر تم" width="24" height="24">
+                    </button>
+                </div>
+                <div class="logo-area">
+                    <a href="../"><img src="../header_logo.png" alt="لوگو نشر الیما" width="130" height="48"></a>
+                    <span class="dev-badge">نسخه آزمایشی</span>
+                </div>
+                <nav class="desktop-nav">
+                    <ul class="nav-links">
+                        <li><a href="../">صفحه اصلی</a></li>
+                        <li><a href="../book/">کتاب‌ها</a></li>
+                        <li><a href="../index.html#new-books">تازه‌های نشر</a></li>
+                        <li><a href="../index.html#authors">شاعران و نویسندگان</a></li>
+                        <li><a href="./" style="color: var(--primary);">درباره ما</a></li>
+                        <li><a href="../index.html#contact">ارتباط با ما</a></li>
+                    </ul>
+                </nav>
+                <div class="burger-wrapper">
+                    <button class="burger-menu" id="burgerBtn" aria-label="منوی سایت">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="mobile-nav" id="mobileNav">
+            <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
+            <ul class="nav-links">
+                <li><a href="../">صفحه اصلی</a></li>
+                <li><a href="../book/">کتاب‌ها</a></li>
+                <li><a href="../index.html#new-books">تازه‌های نشر</a></li>
+                <li><a href="../index.html#authors">شاعران و نویسندگان</a></li>
+                <li><a href="./" style="color: var(--primary);">درباره ما</a></li>
+                <li><a href="../index.html#contact">ارتباط با ما</a></li>
+            </ul>
+        </nav>
+
+        <main class="about-page">
+            <section class="about-hero">
+                <div class="about-hero-content">
+                    <h1>داستان <span>نشر الیما</span></h1>
+                    <p>پاسدار کلمات، حامی اندیشه‌ها و همراه همیشگی اهالی قلم.</p>
+                </div>
+            </section>
+
+            <section class="about-content-wrapper">
+                <div class="about-grid">
+                    <div class="about-text glass-effect">
+                        <h2>مدیریت و چشم‌انداز</h2>
+                        <p>نشر الیما با تکیه بر سال‌ها تجربه در عرصه چاپ و نشر، با هدف ارتقای سطح فرهنگ مطالعه و معرفی استعدادهای نوظهور ادبی پا به عرصه گذاشته است. مدیریت این مجموعه همواره بر این باور است که هر کتاب، روح تازه‌ای در کالبد جامعه می‌دمد.</p>
+                        <p>ما با دقت و وسواس علمی، آثار ارزشمند را در حوزه‌های ادبیات، تاریخ، فلسفه و هنر گزینش کرده و با بالاترین استانداردهای چاپ در اختیار مخاطبان فهیم قرار می‌دهیم.</p>
+                    </div>
+                    <div class="about-image glass-effect">
+                        <img src="about.png" alt="تصویر انتشارات نشر الیما">
+                    </div>
+                </div>
+
+                <div class="core-values">
+                    <div class="value-card glass-effect">
+                        <span class="value-icon">🤝</span>
+                        <h3>حمایت از نویسندگان</h3>
+                        <p>همراهی قدم‌به‌قدم با مؤلفان از دریافت دست‌نوشته تا رسیدن کتاب به ویترین کتاب‌فروشی‌ها.</p>
+                    </div>
+                    <div class="value-card glass-effect">
+                        <span class="value-icon">✨</span>
+                        <h3>کیفیت چاپ ماندگار</h3>
+                        <p>استفاده از بهترین نوع کاغذ، صحافی دقیق و طراحی جلدهای چشم‌نواز و هنری.</p>
+                    </div>
+                    <div class="value-card glass-effect">
+                        <span class="value-icon">📚</span>
+                        <h3>تنوع موضوعی</h3>
+                        <p>پوشش گسترده سلایق مخاطبان با انتشار کتاب در ژانرهای متنوع و تخصصی.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="contact">
+            <div class="footer-grid">
+                <div class="social-section">
+                    <h3>شبکه‌های اجتماعی ما</h3>
+                    <p>در شبکه‌های اجتماعی همراه ما باشید و از تازه‌های نشر و تخفیف‌ها مطلع شوید:</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-btn">اینستاگرام</a>
+                        <a href="#" class="social-btn">تلگرام</a>
+                        <a href="#" class="social-btn">توییتر (ایکس)</a>
+                    </div>
+                </div>
+                
+                <div class="quick-links">
+                    <h3>لینک‌های سریع</h3>
+                    <div class="quick-links-wrapper">
+                        <a href="../index.html#new-books" class="quick-link-item">
+                            <span class="arrow">←</span> فروشگاه آنلاین
+                        </a>
+                        <a href="#" class="quick-link-item">
+                            <span class="arrow">←</span> مراحل پذیرش آثار
+                        </a>
+                        <a href="#" class="quick-link-item">
+                            <span class="arrow">←</span> همکاری با انتشارات
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="newsletter">
+                    <h3>عضویت در خبرنامه</h3>
+                    <p>برای اطلاع از تخفیف‌های فصلی و چاپ کتاب‌های جدید، ایمیل خود را وارد کنید:</p>
+                    <form class="newsletter-box" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="ایمیل شما..." required>
+                        <button type="submit">ثبت</button>
+                    </form>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                <p>تمامی حقوق مادی و معنوی برای <strong>نشر اِلیما</strong> محفوظ است. ۱۴۰۵</p>
+            </div>
+        </footer>
+
+        <button class="scroll-top" id="scrollTopBtn" aria-label="برو به بالا">▲</button>
+    </div>
+</body>
+</html>
