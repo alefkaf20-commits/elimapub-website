@@ -11,56 +11,20 @@
     
     <link rel="stylesheet" href="style.css">
     
+    <script src="layout.js" defer></script>
     <script src="script.js" defer></script>
 </head>
 <body>
     <script>
-        // جلوگیری از چشمک زدن صفحه سفید
+        // جلوگیری از چشمک زدن صفحه سفید در تم تاریک
         if (localStorage.getItem('elima-theme') === 'dark') {
             document.body.classList.add('dark-theme');
         }
     </script>
+    
     <div class="site-wrapper">
-        <header>
-            <div class="header-container">
-                <div class="header-controls">
-                    <button class="theme-switch" id="themeBtn" aria-label="تغییر تم سایت">
-                        <img id="themeIconImg" src="darkmode.png" alt="تغییر تم" width="24" height="24">
-                    </button>
-                </div>
-                <div class="logo-area">
-                    <a href="/"><img src="header_logo.png" alt="لوگو نشر الیما" width="130" height="48"></a>
-                    <span class="dev-badge">نسخه آزمایشی</span>
-                </div>
-                <nav class="desktop-nav">
-                    <ul class="nav-links">
-                        <li><a href="/" style="color: var(--primary);">صفحه اصلی</a></li>
-                        <li><a href="/book/">کتاب‌ها</a></li>
-                        <li><a href="#new-books">تازه‌های نشر</a></li>
-                        <li><a href="#authors">شاعران و نویسندگان</a></li>
-                        <li><a href="/about">درباره ما</a></li>
-                        <li><a href="#contact">ارتباط با ما</a></li>
-                    </ul>
-                </nav>
-                <div class="burger-wrapper">
-                    <button class="burger-menu" id="burgerBtn" aria-label="منوی سایت">
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <nav class="mobile-nav" id="mobileNav">
-            <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
-            <ul class="nav-links">
-                <li><a href="/" style="color: var(--primary);">صفحه اصلی</a></li>
-                <li><a href="/book/">کتاب‌ها</a></li>
-                <li><a href="#new-books">تازه‌های نشر</a></li>
-                <li><a href="#authors">شاعران و نویسندگان</a></li>
-                <li><a href="/about">درباره ما</a></li>
-                <li><a href="#contact">ارتباط با ما</a></li>
-            </ul>
-        </nav>
+        
+        <site-header></site-header>
 
         <main>
             <section class="hero-section">
@@ -68,12 +32,9 @@
                     <img src="logo.png" alt="نشر الیما" class="hero-logo" width="125" height="125">
                     <h1>نشر اِلیما</h1>
                     <p>دریچه‌ای نو به سوی آگاهی و فرهنگ. یافتن آثار ماندگار، تاریخی و ادبی با بالاترین کیفیت در بزرگترین مرجع چاپ و نشر.</p>
-                    <form class="search-box" id="mainSearchForm" onsubmit="event.preventDefault();">
-                        <input type="text" id="searchInput" placeholder="نام کتاب یا نویسنده را جستجو کنید..." autocomplete="off">
+                    <form class="search-box" onsubmit="event.preventDefault();">
+                        <input type="text" placeholder="نام کتاب یا نویسنده را جستجو کنید..." required>
                         <button type="submit">جستجو</button>
-                        
-                        <div class="search-results-container hide" id="searchResults">
-                            </div>
                     </form>
                 </div>
             </section>
@@ -90,10 +51,10 @@
             <section class="books-wrapper">
                 <article class="book-item glass-effect">
                     <div class="cover-box">جلد اثر ۱</div>
-                    <h3 class="item-title">نوای دل</h3>
-                    <p class="item-author">نویسنده: هوشنگ اعتمادی</p>
+                    <h3 class="item-title">عنوان اثر نمونه اول</h3>
+                    <p class="item-author">نویسنده: نام مؤلف اثر</p>
                     <div class="item-price">۱۴۵,۰۰۰ تومان</div>
-                    <a href="/book/book1.html" class="btn-action">مشاهده و خرید</a>
+                    <a href="#" class="btn-action">مشاهده و خرید</a>
                 </article>
                 <article class="book-item glass-effect">
                     <div class="cover-box">جلد اثر ۲</div>
@@ -142,46 +103,7 @@
             </section>
         </main>
 
-        <footer id="contact">
-            <div class="footer-grid">
-                <div class="social-section">
-                    <h3>شبکه‌های اجتماعی ما</h3>
-                    <p>در شبکه‌های اجتماعی همراه ما باشید و از تازه‌های نشر و تخفیف‌ها مطلع شوید:</p>
-                    <div class="social-icons">
-                        <a href="#" class="social-btn">اینستاگرام</a>
-                        <a href="#" class="social-btn">تلگرام</a>
-                        <a href="#" class="social-btn">توییتر (ایکس)</a>
-                    </div>
-                </div>
-                
-                <div class="quick-links">
-                    <h3>لینک‌های سریع</h3>
-                    <div class="quick-links-wrapper">
-                        <a href="#new-books" class="quick-link-item">
-                            <span class="arrow">←</span> فروشگاه آنلاین
-                        </a>
-                        <a href="#" class="quick-link-item">
-                            <span class="arrow">←</span> مراحل پذیرش آثار
-                        </a>
-                        <a href="#" class="quick-link-item">
-                            <span class="arrow">←</span> همکاری با انتشارات
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="newsletter">
-                    <h3>عضویت در خبرنامه</h3>
-                    <p>برای اطلاع از تخفیف‌های فصلی و چاپ کتاب‌های جدید، ایمیل خود را وارد کنید:</p>
-                    <form class="newsletter-box" onsubmit="event.preventDefault();">
-                        <input type="email" placeholder="ایمیل شما..." required>
-                        <button type="submit">ثبت</button>
-                    </form>
-                </div>
-            </div>
-            <div class="bottom-bar">
-                <p>تمامی حقوق مادی و معنوی برای <strong>نشر اِلیما</strong> محفوظ است. ۱۴۰۵</p>
-            </div>
-        </footer>
+        <site-footer></site-footer>
 
         <button class="scroll-top" id="scrollTopBtn" aria-label="برو به بالا">▲</button>
     </div>
