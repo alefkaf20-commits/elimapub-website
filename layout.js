@@ -48,6 +48,34 @@ class SiteHeader extends HTMLElement {
             </ul>
         </nav>
         `;
+
+        // ================= کدهای جدید: روشن شدن گزینه فعال در منو =================
+        const currentUrl = window.location.href;
+        const navLinks = this.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            const linkHref = link.href;
+
+            // بررسی ۱: آیا کاربر در پوشه کتاب‌ها است؟ (حتی اگر داخل صفحه یک کتاب خاص باشد)
+            if (currentUrl.includes('/book/')) {
+                if (linkHref.includes('/book/')) {
+                    link.style.color = 'var(--primary)';
+                }
+            }
+            // بررسی ۲: آیا کاربر در صفحه درباره ما است؟
+            else if (currentUrl.includes('/about/')) {
+                if (linkHref.includes('/about/')) {
+                    link.style.color = 'var(--primary)';
+                }
+            }
+            // بررسی ۳: آیا کاربر در صفحه اصلی است؟
+            else if ((currentUrl.endsWith('/') || currentUrl.endsWith('index.html')) && !currentUrl.includes('/book/') && !currentUrl.includes('/about/')) {
+                // فقط گزینه "صفحه اصلی" را رنگی کن
+                if (linkHref.endsWith('index.html') && !linkHref.includes('/book/') && !linkHref.includes('/about/')) {
+                    link.style.color = 'var(--primary)';
+                }
+            }
+        });
     }
 }
 
