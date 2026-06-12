@@ -127,3 +127,16 @@
     .pro-specs-grid { grid-template-columns: 1fr; }
     .spec-row { flex-direction: row; text-align: right; justify-content: space-between; }
 }
+@media (max-width: 768px) {
+    /* اصلاح چیدمان صفحه درباره ما در موبایل */
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    .about-text {
+        padding: 20px !important;
+    }
+    .about-image {
+        height: 250px;
+    }
+}
