@@ -1,89 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // تابع اصلی مدیریت منو و تم سایت
-    function initHeaderLogic() {
-        const themeBtn = document.getElementById('themeBtn');
-        const body = document.body;
-        const burgerBtn = document.getElementById('burgerBtn');
-        const mobileNav = document.getElementById('mobileNav');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-
-        if (themeBtn) {
-            // هماهنگ‌سازی اولیه وضعیت تم بر اساس لکال‌استوریج یا کلاس بادی
-            const isDark = body.classList.contains('dark-theme') || localStorage.getItem('elima-theme') === 'dark';
-            
-            // اطمینان از اینکه اگر لکال استوریج دارک بود ولی کلاس بادی جا افتاده بود، کلاس اضافه شود
-            if (isDark && !body.classList.contains('dark-theme')) {
-                body.classList.add('dark-theme');
-            }
-            
-            updateThemeIcon(isDark);
-
-            themeBtn.addEventListener('click', () => {
-                body.classList.toggle('dark-theme');
-                const currentDark = body.classList.contains('dark-theme');
-                localStorage.setItem('elima-theme', currentDark ? 'dark' : 'light');
-                updateThemeIcon(currentDark);
-            });
-        }
-
-        function updateThemeIcon(isDark) {
-            const themeImg = document.getElementById('themeIconImg');
-            if (!themeImg) return;
-            
-            const currentSrc = themeImg.getAttribute('src');
-            const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
-            
-            if(isDark) {
-                themeImg.setAttribute('src', basePath + 'lightmode.png');
-                themeBtn.style.background = 'rgba(255, 255, 255, 0.1)'; 
-            } else {
-                themeImg.setAttribute('src', basePath + 'darkmode.png');
-                themeBtn.style.background = 'rgba(0, 0, 0, 0.05)'; 
-            }
-        }
-
-        function toggleMenu(isOpen) {
-            if (!mobileNav || !burgerBtn) return;
-            if(isOpen) {
-                mobileNav.classList.add('active');
-                burgerBtn.classList.add('open'); 
-                body.classList.add('no-scroll');
-            } else {
-                mobileNav.classList.remove('active'); 
-                burgerBtn.classList.remove('open'); 
-                body.classList.remove('no-scroll');
-            }
-        }
-
-        if (burgerBtn && closeMenuBtn && mobileNav) {
-            burgerBtn.addEventListener('click', () => toggleMenu(!mobileNav.classList.contains('active')));
-            closeMenuBtn.addEventListener('click', () => toggleMenu(false));
-            
-            mobileNav.addEventListener('click', (e) => {
-                if (e.target === mobileNav) toggleMenu(false);
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                    toggleMenu(false);
-                }
-            });
-
-            document.querySelectorAll('.mobile-nav a').forEach(link => {
-                link.addEventListener('click', () => toggleMenu(false));
-            });
-        }
-    }
-
-    // بررسی هوشمند ساختار صفحه: اگر تگ سفارشی هدر وجود دارد صبر کند، در غیر این صورت فوری اجرا شود
-    if (document.querySelector('site-header')) {
-        customElements.whenDefined('site-header').then(() => {
-            initHeaderLogic();
-        });
-    } else {
-        initHeaderLogic();
-    }
 
     // ================= کدهای دکمه اسکرول =================
     const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -131,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!mainImage || mainImage.src === element.src) return;
         
         mainImage.style.opacity = '0';
-        
         setTimeout(() => {
             mainImage.src = element.src;
             mainImage.style.opacity = '1';
