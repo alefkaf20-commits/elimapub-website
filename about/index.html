@@ -17,7 +17,14 @@
     </script>
 </head>
 <body>
+    <script>
+        // جلوگیری از چشمک زدن صفحه سفید - اجرای فوری در ابتدای بادی
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
     <div class="site-wrapper">
+    
         <header>
             <div class="header-container">
                 <div class="header-controls">
