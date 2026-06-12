@@ -28,26 +28,3 @@ body:not(.dark-theme) .back-to-gallery-btn {
 body:not(.dark-theme) .back-to-gallery-btn:hover {
     border-color: var(--primary);
 }
-
-/* ================= سیستم جستجوی زنده (Live Search) ================= */
-.search-box { position: relative; }
-
-.search-results-container {
-    position: absolute; top: 110%; left: 0; right: 0; background: var(--input-bg); border: 1px solid var(--border-glass);
-    border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    max-height: 350px; overflow-y: auto; z-index: 2000; text-align: right; padding: 10px; transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.search-results-container.hide { display: none; opacity: 0; transform: translateY(-10px); }
-
-.search-result-item {
-    display: flex; align-items: center; gap: 15px; padding: 10px; text-decoration: none; border-radius: 12px; transition: background-color 0.3s ease; border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-body.dark-theme .search-result-item { border-bottom-color: rgba(255,255,255,0.05); }
-.search-result-item:last-child { border-bottom: none; }
-.search-result-item:hover { background: var(--shape-1); }
-
-.search-result-img { width: 45px; height: 65px; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-.search-result-info h4 { color: var(--text-title); font-size: 1rem; margin-bottom: 5px; font-weight: 800; }
-.search-result-info p { color: var(--text-body); font-size: 0.85rem; }
-
-.no-results { padding: 20px; text-align: center; color: var(--text-body); font-size: 0.95rem; font-weight: 600; }
