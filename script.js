@@ -1,22 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // حل مشکل تداخل جاوااسکریپت و کامپوننت هدر
-    customElements.whenDefined('site-header').then(() => {
+    // تابع اصلی مدیریت منو و تم سایت
+    function initHeaderLogic() {
         const themeBtn = document.getElementById('themeBtn');
         const body = document.body;
         const burgerBtn = document.getElementById('burgerBtn');
         const mobileNav = document.getElementById('mobileNav');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-        // اطمینان از وجود دکمه‌ها قبل از اعمال رویدادها
         if (themeBtn) {
-            updateThemeIcon(body.classList.contains('dark-theme'));
+            // هماهنگ‌سازی اولیه وضعیت تم بر اساس لکال‌استوریج یا کلاس بادی
+            const isDark = body.classList.contains('dark-theme') || localStorage.getItem('elima-theme') === 'dark';
+            
+            // اطمینان از اینکه اگر لکال استوریج دارک بود ولی کلاس بادی جا افتاده بود، کلاس اضافه شود
+            if (isDark && !body.classList.contains('dark-theme')) {
+                body.classList.add('dark-theme');
+            }
+            
+            updateThemeIcon(isDark);
 
             themeBtn.addEventListener('click', () => {
                 body.classList.toggle('dark-theme');
-                const isDark = body.classList.contains('dark-theme');
-                localStorage.setItem('elima-theme', isDark ? 'dark' : 'light');
-                updateThemeIcon(isDark);
+                const currentDark = body.classList.contains('dark-theme');
+                localStorage.setItem('elima-theme', currentDark ? 'dark' : 'light');
+                updateThemeIcon(currentDark);
             });
         }
 
@@ -24,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const themeImg = document.getElementById('themeIconImg');
             if (!themeImg) return;
             
-            // تشخیص مسیر فعلی عکس تا در پوشه‌های تو در تو به مشکل نخورد
             const currentSrc = themeImg.getAttribute('src');
             const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
             
@@ -68,7 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.addEventListener('click', () => toggleMenu(false));
             });
         }
-    });
+    }
+
+    // بررسی هوشمند ساختار صفحه: اگر تگ سفارشی هدر وجود دارد صبر کند، در غیر این صورت فوری اجرا شود
+    if (document.querySelector('site-header')) {
+        customElements.whenDefined('site-header').then(() => {
+            initHeaderLogic();
+        });
+    } else {
+        initHeaderLogic();
+    }
 
     // ================= کدهای دکمه اسکرول =================
     const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -94,13 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterBtns.length > 0 && galleryItems.length > 0) {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // حذف کلاس active از همه دکمه‌ها و دادن آن به دکمه کلیک شده
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
                 const filterValue = btn.getAttribute('data-filter');
 
-                // فیلتر کردن کارت‌ها
                 galleryItems.forEach(item => {
                     if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                         item.classList.remove('hide');
@@ -115,19 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================= عملکرد بهینه‌شده اسلایدر عکس =================
     window.changeImage = function(element) {
         const mainImage = document.getElementById('mainBookImg');
-        // اگر عکسی که کلیک شده همان عکس اصلی است، هیچ کاری نکن (جلوگیری از باگ چشمک زدن)
         if (!mainImage || mainImage.src === element.src) return;
         
-        // اعمال افکت محو شدن
         mainImage.style.opacity = '0';
         
-        // صبر برای اتمام محو شدن، سپس تغییر مسیر عکس
         setTimeout(() => {
             mainImage.src = element.src;
             mainImage.style.opacity = '1';
         }, 200);
         
-        // جابجایی کلاس قاب دور عکس‌های کوچک
         const thumbnails = document.querySelectorAll('.thumb-img');
         if (thumbnails.length > 0) {
             thumbnails.forEach(thumb => thumb.classList.remove('active-thumb'));
