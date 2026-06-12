@@ -1,0 +1,23 @@
+/* ================= تنظیمات پایه ================= */
+html { scroll-behavior: smooth; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+
+body {
+    background-color: var(--bg-main); color: var(--text-body);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    padding-top: 85px; overflow-x: hidden;
+    backface-visibility: hidden;
+}
+
+body.no-scroll { overflow: hidden; }
+img { max-width: 100%; height: auto; display: block; }
+.site-wrapper { position: relative; width: 100%; min-height: 100vh; z-index: 1; }
+
+.glass-effect {
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
+    background: var(--bg-cards); border: 1px solid var(--border-glass);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
+    will-change: transform;
+    transform: translateZ(0); 
+}

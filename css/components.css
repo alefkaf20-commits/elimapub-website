@@ -1,0 +1,53 @@
+/* ================= استایل دکمه بازگشت ================= */
+.back-link-wrapper { margin-bottom: 20px; width: 100%; }
+.back-to-gallery-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--text-body); font-weight: 700; text-decoration: none;
+    padding: 10px 18px; border-radius: 12px;
+    background: var(--bg-cards); border: 1px solid var(--border-glass);
+    transition: all 0.3s ease; box-shadow: var(--glass-shadow);
+}
+.back-to-gallery-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateX(5px); }
+
+/* ================= بهبود مضاعف و تمیزتر شدن لایت‌مود ================= */
+body:not(.dark-theme) .pro-top-section, 
+body:not(.dark-theme) .pro-specs-section, 
+body:not(.dark-theme) .pro-desc-section {
+    background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+body:not(.dark-theme) .spec-row,
+body:not(.dark-theme) .pro-price-box {
+    background: #f8fafc; border: 1px solid #e2e8f0;
+}
+
+body:not(.dark-theme) .back-to-gallery-btn {
+    background: #ffffff; border: 1px solid #cbd5e1; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+body:not(.dark-theme) .back-to-gallery-btn:hover {
+    border-color: var(--primary);
+}
+
+/* ================= سیستم جستجوی زنده (Live Search) ================= */
+.search-box { position: relative; }
+
+.search-results-container {
+    position: absolute; top: 110%; left: 0; right: 0; background: var(--input-bg); border: 1px solid var(--border-glass);
+    border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    max-height: 350px; overflow-y: auto; z-index: 2000; text-align: right; padding: 10px; transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.search-results-container.hide { display: none; opacity: 0; transform: translateY(-10px); }
+
+.search-result-item {
+    display: flex; align-items: center; gap: 15px; padding: 10px; text-decoration: none; border-radius: 12px; transition: background-color 0.3s ease; border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+body.dark-theme .search-result-item { border-bottom-color: rgba(255,255,255,0.05); }
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: var(--shape-1); }
+
+.search-result-img { width: 45px; height: 65px; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.search-result-info h4 { color: var(--text-title); font-size: 1rem; margin-bottom: 5px; font-weight: 800; }
+.search-result-info p { color: var(--text-body); font-size: 0.85rem; }
+
+.no-results { padding: 20px; text-align: center; color: var(--text-body); font-size: 0.95rem; font-weight: 600; }
