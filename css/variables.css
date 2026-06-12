@@ -1,0 +1,33 @@
+/* ================= متغیرهای رنگی (تم روشن و تاریک) ================= */
+:root {
+    /* لایت مود */
+    --bg-main: #eef2f6;
+    --bg-cards: rgba(255, 255, 255, 0.65);
+    --border-glass: rgba(255, 255, 255, 0.8);
+    --text-title: #1e293b;
+    --text-body: #475569;
+    --primary: #4f46e5;
+    --primary-light: #e0e7ff;
+    --accent: #059669;
+    --shape-1: rgba(79, 70, 229, 0.08);
+
+    --header-bg: rgba(255, 255, 255, 0.75);
+    --input-bg: rgba(255, 255, 255, 0.9);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+body.dark-theme {
+    /* دارک مود */
+    --bg-main: #0b1120;
+    --bg-cards: rgba(30, 41, 59, 0.4);
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --text-title: #f8fafc;
+    --text-body: #94a3b8;
+    --primary: #6366f1;
+    --primary-light: #1e1b4b;
+    --accent: #34d399;
+    --shape-1: rgba(99, 102, 241, 0.12);
+    --header-bg: rgba(11, 17, 32, 0.8);
+    --input-bg: rgba(15, 23, 42, 0.8);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
