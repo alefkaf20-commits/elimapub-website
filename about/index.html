@@ -10,9 +10,15 @@
     <link rel="stylesheet" href="../style.css">
     <script src="../layout.js" defer></script>
     <script src="../script.js" defer></script>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
 </head>
 <body>
     <script>
+        // جلوگیری از چشمک زدن صفحه سفید - اجرای فوری در ابتدای بادی
         if (localStorage.getItem('elima-theme') === 'dark') {
             document.body.classList.add('dark-theme');
         }
@@ -33,7 +39,7 @@
                 <div class="about-grid">
                     <div class="about-text glass-effect">
                         <h2>مدیریت و چشم‌انداز</h2>
-                        <p>نشر الیما با تکیه بر سال‌ها تجربه در عرصه چاپ و نشر، با هدف ارتقای سطح فرهنگ مطالعه و معرفی استعدادهای نوظهور ادبی پا به عرصه گذاشته است.</p>
+                        <p>نشر الیما با تکیه بر سال‌ها تجربه در عرصه چاپ و نشر، با هدف ارتقای سطح فرهنگ مطالعه و معرفی استعدادهای نوظهور ادبی پا به عرصه گذاشته است. مدیریت این مجموعه همواره بر این باور است که هر کتاب، روح تازه‌ای در کالبد جامعه می‌دمد.</p>
                         <p>ما با دقت و وسواس علمی، آثار ارزشمند را در حوزه‌های ادبیات، تاریخ، فلسفه و هنر گزینش کرده و با بالاترین استانداردهای چاپ در اختیار مخاطبان فهیم قرار می‌دهیم.</p>
                     </div>
                     <div class="about-image glass-effect">
