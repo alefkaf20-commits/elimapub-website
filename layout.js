@@ -1,11 +1,14 @@
-// تشخیص خودکار و هوشمند مسیر ریشه سایت بر اساس محل قرارگیری layout.js
 const scriptTag = document.currentScript || document.querySelector('script[src*="layout.js"]');
 const src = scriptTag.getAttribute('src');
-// با این کار هر چقدر مسیر تو در تو باشد (مثل ../../ یا ../../../) دقیقاً همان استخراج می‌شود
 const basePath = src.split('layout.js')[0];
-// ================= قالب هدر و منوها =================
+
 class SiteHeader extends HTMLElement {
     connectedCallback() {
+        const currentUrl = window.location.href;
+        
+        // تابع کمکی برای بررسی اینکه آیا لینک فعلی با آدرس صفحه تطابق دارد یا خیر
+        const isActive = (path) => currentUrl.includes(path) ? 'style="color: var(--primary); font-weight: 800;"' : '';
+
         this.innerHTML = `
         <header>
             <div class="header-container">
@@ -21,10 +24,10 @@ class SiteHeader extends HTMLElement {
                 <nav class="desktop-nav">
                     <ul class="nav-links">
                         <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                        <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
+                        <li><a href="${basePath}book/index.html" ${isActive('book/index.html')}>کتاب‌ها</a></li>
                         <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
                         <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                        <li><a href="${basePath}about/index.html">درباره ما</a></li>
+                        <li><a href="${basePath}about/index.html" ${isActive('about/index.html')}>درباره ما</a></li>
                         <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
                     </ul>
                 </nav>
@@ -40,46 +43,17 @@ class SiteHeader extends HTMLElement {
             <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
             <ul class="nav-links">
                 <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
+                <li><a href="${basePath}book/index.html" ${isActive('book/index.html')}>کتاب‌ها</a></li>
                 <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
                 <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                <li><a href="${basePath}about/index.html">درباره ما</a></li>
+                <li><a href="${basePath}about/index.html" ${isActive('about/index.html')}>درباره ما</a></li>
                 <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
             </ul>
         </nav>
         `;
-
-        // ================= کدهای جدید: روشن شدن گزینه فعال در منو =================
-        const currentUrl = window.location.href;
-        const navLinks = this.querySelectorAll('.nav-links a');
-
-        navLinks.forEach(link => {
-            const linkHref = link.href;
-
-            // بررسی ۱: آیا کاربر در پوشه کتاب‌ها است؟ (حتی اگر داخل صفحه یک کتاب خاص باشد)
-            if (currentUrl.includes('/book/')) {
-                if (linkHref.includes('/book/')) {
-                    link.style.color = 'var(--primary)';
-                }
-            }
-            // بررسی ۲: آیا کاربر در صفحه درباره ما است؟
-            else if (currentUrl.includes('/about/')) {
-                if (linkHref.includes('/about/')) {
-                    link.style.color = 'var(--primary)';
-                }
-            }
-            // بررسی ۳: آیا کاربر در صفحه اصلی است؟
-            else if ((currentUrl.endsWith('/') || currentUrl.endsWith('index.html')) && !currentUrl.includes('/book/') && !currentUrl.includes('/about/')) {
-                // فقط گزینه "صفحه اصلی" را رنگی کن
-                if (linkHref.endsWith('index.html') && !linkHref.includes('/book/') && !linkHref.includes('/about/')) {
-                    link.style.color = 'var(--primary)';
-                }
-            }
-        });
     }
 }
 
-// ================= قالب فوتر =================
 class SiteFooter extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
@@ -87,13 +61,12 @@ class SiteFooter extends HTMLElement {
             <div class="footer-grid">
                 <div class="social-section">
                     <h3>شبکه‌های اجتماعی ما</h3>
-                    <p>در شبکه‌های اجتماعی همراه ما باشید:</p>
+                    <p>در شبکه‌های اجتماعی همراه ما باشید و از تازه‌های نشر و تخفیف‌ها مطلع شوید:</p>
                     <div class="social-icons">
                         <a href="#" class="social-btn">اینستاگرام</a>
                         <a href="#" class="social-btn">تلگرام</a>
                     </div>
                 </div>
-                
                 <div class="quick-links">
                     <h3>لینک‌های سریع</h3>
                     <div class="quick-links-wrapper">
@@ -101,7 +74,6 @@ class SiteFooter extends HTMLElement {
                         <a href="#" class="quick-link-item"><span class="arrow">←</span> مراحل پذیرش آثار</a>
                     </div>
                 </div>
-                
                 <div class="newsletter">
                     <h3>عضویت در خبرنامه</h3>
                     <form class="newsletter-box" onsubmit="event.preventDefault();">
@@ -118,6 +90,5 @@ class SiteFooter extends HTMLElement {
     }
 }
 
-// معرفی این تگ‌های جدید به مرورگر
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
