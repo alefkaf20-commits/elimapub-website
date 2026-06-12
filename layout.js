@@ -11,7 +11,7 @@ class SiteHeader extends HTMLElement {
             <div class="header-container">
                 <div class="header-controls">
                     <button class="theme-switch" id="themeBtn" aria-label="تغییر تم سایت">
-                        <img id="themeIconImg" src="${basePath}darkmode.png" alt="تغییر تم" width="24" height="24">
+                        <img id="themeIconImg" src="${basePath}${localStorage.getItem('elima-theme') === 'dark' ? 'lightmode.png' : 'darkmode.png'}" alt="تغییر تم" width="24" height="24">
                     </button>
                 </div>
                 <div class="logo-area">
