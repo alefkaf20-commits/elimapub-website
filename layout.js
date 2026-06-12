@@ -1,8 +1,8 @@
-// تشخیص خودکار مسیر ریشه سایت برای جلوگیری از شکستن لینک‌ها و عکس‌ها
+// تشخیص خودکار و هوشمند مسیر ریشه سایت بر اساس محل قرارگیری layout.js
 const scriptTag = document.currentScript || document.querySelector('script[src*="layout.js"]');
 const src = scriptTag.getAttribute('src');
-const basePath = src.includes('../') ? '../' : './';
-
+// با این کار هر چقدر مسیر تو در تو باشد (مثل ../../ یا ../../../) دقیقاً همان استخراج می‌شود
+const basePath = src.split('layout.js')[0];
 // ================= قالب هدر و منوها =================
 class SiteHeader extends HTMLElement {
     connectedCallback() {
