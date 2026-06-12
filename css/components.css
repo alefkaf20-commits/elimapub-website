@@ -28,3 +28,86 @@ body:not(.dark-theme) .back-to-gallery-btn {
 body:not(.dark-theme) .back-to-gallery-btn:hover {
     border-color: var(--primary);
 }
+/* ================= سیستم جستجوی زنده حرفه‌ای ================= */
+.search-box {
+    position: relative; /* تراز شدن باکس نتایج دقیقاً نسبت به کادر جستجو */
+}
+
+.search-results-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: var(--bg-cards);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow), 0 15px 30px rgba(0, 0, 0, 0.1);
+    max-height: 380px;
+    overflow-y: auto;
+    z-index: 3000;
+    display: none;
+    padding: 10px;
+}
+
+.search-results-dropdown.active {
+    display: block;
+    animation: fadeInSearch 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSearch {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text-body);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.search-result-item:hover {
+    background: var(--shape-1);
+    color: var(--primary);
+    transform: translateX(-5px);
+}
+
+.search-result-item img {
+    width: 45px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: right;
+}
+
+.search-result-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-title);
+}
+
+.search-result-author {
+    font-size: 0.8rem;
+    color: var(--text-body);
+}
+
+.search-no-results {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
