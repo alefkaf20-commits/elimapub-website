@@ -5,16 +5,15 @@ const basePath = src.split('layout.js')[0];
 class SiteHeader extends HTMLElement {
     connectedCallback() {
         const currentUrl = window.location.href;
-        
-        // تابع کمکی برای بررسی اینکه آیا لینک فعلی با آدرس صفحه تطابق دارد یا خیر
         const isActive = (path) => currentUrl.includes(path) ? 'style="color: var(--primary); font-weight: 800;"' : '';
+        const isDark = document.body.classList.contains('dark-theme') || localStorage.getItem('elima-theme') === 'dark';
 
         this.innerHTML = `
         <header>
             <div class="header-container">
                 <div class="header-controls">
                     <button class="theme-switch" id="themeBtn" aria-label="تغییر تم سایت">
-                        <img id="themeIconImg" src="${basePath}${localStorage.getItem('elima-theme') === 'dark' ? 'lightmode.png' : 'darkmode.png'}" alt="تغییر تم" width="24" height="24">
+                        <img id="themeIconImg" src="${basePath}${isDark ? 'lightmode.png' : 'darkmode.png'}" alt="تغییر تم" width="24" height="24">
                     </button>
                 </div>
                 <div class="logo-area">
@@ -51,6 +50,51 @@ class SiteHeader extends HTMLElement {
             </ul>
         </nav>
         `;
+
+        // ================= لاجیک اختصاصی کامپوننت هدر =================
+        const themeBtn = this.querySelector('#themeBtn');
+        const themeIconImg = this.querySelector('#themeIconImg');
+        const burgerBtn = this.querySelector('#burgerBtn');
+        const mobileNav = this.querySelector('#mobileNav');
+        const closeMenuBtn = this.querySelector('#closeMenuBtn');
+        const body = document.body;
+
+        const updateThemeIcon = (dark) => {
+            if (!themeIconImg) return;
+            themeIconImg.setAttribute('src', `${basePath}${dark ? 'lightmode.png' : 'darkmode.png'}`);
+            themeBtn.style.background = dark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+        };
+
+        if (themeBtn) {
+            updateThemeIcon(isDark);
+            themeBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-theme');
+                const currentDark = body.classList.contains('dark-theme');
+                localStorage.setItem('elima-theme', currentDark ? 'dark' : 'light');
+                updateThemeIcon(currentDark);
+            });
+        }
+
+        const toggleMenu = (isOpen) => {
+            if (!mobileNav || !burgerBtn) return;
+            if (isOpen) {
+                mobileNav.classList.add('active');
+                burgerBtn.classList.add('open'); 
+                body.classList.add('no-scroll');
+            } else {
+                mobileNav.classList.remove('active'); 
+                burgerBtn.classList.remove('open');
+                body.classList.remove('no-scroll');
+            }
+        };
+
+        if (burgerBtn && closeMenuBtn && mobileNav) {
+            burgerBtn.addEventListener('click', () => toggleMenu(!mobileNav.classList.contains('active')));
+            closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+            mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) toggleMenu(false); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileNav.classList.contains('active')) toggleMenu(false); });
+            mobileNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => toggleMenu(false)); });
+        }
     }
 }
 
