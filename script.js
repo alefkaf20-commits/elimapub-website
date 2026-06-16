@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ================= دیتابیس جامع کتاب‌ها (تغییرناپذیر و آماده) =================
+    // ================= دیتابیس جامع کتاب‌ها (آماده برای اضافه کردن کتاب‌های جدید) =================
     const BOOKS_DATABASE = [
         { title: 'نوای دل', author: 'هوشنگ اعتمادی گندمانی', url: 'book/book1.html', image: 'book/covers/navayedel.jpg', category: 'literature' },
         { title: 'برای شماره ۱۳ ها', author: 'علی قنواتی', url: 'book/book2.html', image: 'book/covers/barayeshomare13.jpg', category: 'history' },
@@ -10,17 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'رگ زیر دندان', author: 'نام مشخص نشده', url: '#', image: 'book/covers/ragziredandan.jpg', category: 'history' }
     ];
 
-    // ================= سیستم جستجوی زنده و هوشمند =================
+    // ================= سیستم جستجوی دوگانه (Live Dropdown + Full Overlay) =================
     const searchInput = document.querySelector('.search-box input');
     const searchBoxForm = document.querySelector('.search-box');
 
     if (searchInput && searchBoxForm) {
-        // ایجاد داینامیک باکس نتایج جستجو
-        const resultsDropdown = document.createElement('div');
-        resultsDropdown.className = 'search-results-dropdown';
-        searchBoxForm.appendChild(resultsDropdown);
+        
+        // ۱. ساخت منوی کشویی جستجوی زنده (متصل به کادر جستجو)
+        const liveDropdown = document.createElement('div');
+        liveDropdown.className = 'live-search-dropdown';
+        searchBoxForm.appendChild(liveDropdown);
 
-        // تابع دی‌بانس (Debounce) برای جلوگیری از اجرای رگباری کد با هر تایپ
+        // ۲. ساخت لایه تمام‌صفحه نتایج جامع (متصل به کل سایت)
+        const overlay = document.createElement('div');
+        overlay.className = 'search-overlay';
+        overlay.innerHTML = `
+            <div class="search-overlay-header">
+                <h3>نتایج جستجو برای: <span id="searchQueryText">همه آثار</span></h3>
+                <button class="close-overlay-btn" id="closeSearchBtn" aria-label="بستن جستجو">✕</button>
+            </div>
+            <div class="search-overlay-body">
+                <div class="search-results-grid" id="searchResultsGrid"></div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const searchResultsGrid = overlay.querySelector('#searchResultsGrid');
+        const searchQueryText = overlay.querySelector('#searchQueryText');
+        const closeSearchBtn = overlay.querySelector('#closeSearchBtn');
+
+        // تابع دی‌بانس برای جلوگیری از کرش مرورگر هنگام تایپ سریع
         function debounce(func, delay) {
             let timeoutId;
             return function (...args) {
@@ -29,62 +48,103 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        // تابع اصلی فیلتر و رندر نتایج
-        const performSearch = (query) => {
+        // عملکرد تایپ زنده (Live Search Dropdown)
+        const performLiveSearch = (query) => {
             const cleanedQuery = query.trim().toLowerCase();
 
             if (!cleanedQuery) {
-                resultsDropdown.classList.remove('active');
-                resultsDropdown.innerHTML = '';
+                liveDropdown.classList.remove('active');
+                liveDropdown.innerHTML = '';
                 return;
             }
 
-            // فیلتر کردن بر اساس عنوان یا نویسنده
             const filteredBooks = BOOKS_DATABASE.filter(book => 
                 book.title.toLowerCase().includes(cleanedQuery) || 
                 book.author.toLowerCase().includes(cleanedQuery)
             );
 
             if (filteredBooks.length === 0) {
-                resultsDropdown.innerHTML = `<div class="search-no-results">کتابی با این مشخصات پیدا نشد 🔍</div>`;
+                liveDropdown.innerHTML = `<div class="live-no-results">کتابی پیدا نشد 🔍</div>`;
             } else {
-                resultsDropdown.innerHTML = filteredBooks.map(book => `
-                    <a href="${book.url}" class="search-result-item">
+                // در جستجوی زنده نهایتاً ۵ نتیجه را نشان می‌دهیم تا کادر خیلی شلوغ نشود
+                liveDropdown.innerHTML = filteredBooks.slice(0, 5).map(book => `
+                    <a href="${book.url}" class="live-result-item">
+                        <img src="${book.image}" alt="${book.title}" class="live-result-img" onerror="this.src='book/covers/default.jpg';">
+                        <div class="live-result-info">
+                            <h4>${book.title}</h4>
+                            <p>${book.author}</p>
+                        </div>
+                    </a>
+                `).join('');
+            }
+            liveDropdown.classList.add('active');
+        };
+
+        // عملکرد جستجوی جامع (Full Screen Overlay)
+        const performFullSearch = (query) => {
+            const cleanedQuery = query.trim().toLowerCase();
+            searchQueryText.textContent = cleanedQuery ? cleanedQuery : 'همه آثار';
+
+            const filteredBooks = BOOKS_DATABASE.filter(book => 
+                book.title.toLowerCase().includes(cleanedQuery) || 
+                book.author.toLowerCase().includes(cleanedQuery)
+            );
+
+            if (filteredBooks.length === 0) {
+                searchResultsGrid.innerHTML = `<div class="search-no-results-full">متأسفانه کتابی با این عنوان یا نویسنده یافت نشد 🔍</div>`;
+            } else {
+                searchResultsGrid.innerHTML = filteredBooks.map(book => `
+                    <a href="${book.url}" class="search-result-card">
                         <img src="${book.image}" alt="${book.title}" onerror="this.src='book/covers/default.jpg';">
                         <div class="search-result-info">
-                            <span class="search-result-title">${book.title}</span>
-                            <span class="search-result-author">نویسنده: ${book.author}</span>
+                            <h4>${book.title}</h4>
+                            <p>نویسنده: ${book.author}</p>
                         </div>
                     </a>
                 `).join('');
             }
 
-            resultsDropdown.classList.add('active');
+            // مخفی کردن کشویی زنده و باز کردن لایه کامل
+            liveDropdown.classList.remove('active');
+            overlay.classList.add('active');
+            document.body.classList.add('no-scroll');
         };
 
-        // گوش دادن به تایپ کاربر با تاخیر ۲۵۰ میلی‌ثانیه
+        // لیسنرها
+        // لیسنرها (تغییر تاخیر از 250 به 100 برای رفع لگ و سرعت بیشتر)
         searchInput.addEventListener('input', debounce((e) => {
-            performSearch(e.target.value);
-        }, 250));
+            performLiveSearch(e.target.value);
+        }, 100));
 
-        // بستن باکس نتایج با زدن کلید Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                resultsDropdown.classList.remove('active');
-            }
+        searchBoxForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            performFullSearch(searchInput.value);
         });
 
-        // بستن باکس نتایج با کلیک روی هر جایی خارج از فرم جستجو
+        // مدیریت بستن منوها
+        const closeOverlay = () => {
+            overlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        };
+
+        closeSearchBtn.addEventListener('click', closeOverlay);
+
         document.addEventListener('click', (e) => {
             if (!searchBoxForm.contains(e.target)) {
-                resultsDropdown.classList.remove('active');
+                liveDropdown.classList.remove('active');
             }
         });
 
-        // باز شدن مجدد باکس در صورت فوکوس و داشتن متن
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                liveDropdown.classList.remove('active');
+                if (overlay.classList.contains('active')) closeOverlay();
+            }
+        });
+
         searchInput.addEventListener('focus', () => {
             if (searchInput.value.trim()) {
-                resultsDropdown.classList.add('active');
+                liveDropdown.classList.add('active');
             }
         });
     }
