@@ -1,113 +1,153 @@
-/* ================= استایل دکمه بازگشت ================= */
-.back-link-wrapper { margin-bottom: 20px; width: 100%; }
-.back-to-gallery-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--text-body); font-weight: 700; text-decoration: none;
-    padding: 10px 18px; border-radius: 12px;
-    background: var(--bg-cards); border: 1px solid var(--border-glass);
-    transition: all 0.3s ease; box-shadow: var(--glass-shadow);
-}
-.back-to-gallery-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateX(5px); }
+/* ==========================================================================
+   css/components.css - فایل کامل مؤلفه‌های سایت (نسخه اصلاح شده)
+   ========================================================================== */
 
-/* ================= بهبود مضاعف و تمیزتر شدن لایت‌مود ================= */
-body:not(.dark-theme) .pro-top-section, 
-body:not(.dark-theme) .pro-specs-section, 
-body:not(.dark-theme) .pro-desc-section {
-    background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+/* ================= بج‌ها و لیبل‌ها (Badges & Tags) ================= */
+.dev-badge {
+    position: relative; overflow: hidden; display: flex; align-items: center; gap: 6px;
+    background: rgba(249, 115, 22, 0.1); color: #ea580c; border: 1px solid rgba(249, 115, 22, 0.2);
+    font-size: 0.7rem; font-weight: 800; padding: 5px 12px; border-radius: 20px;
+    backdrop-filter: blur(4px); transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+    white-space: nowrap; flex-shrink: 0;
 }
+body.dark-theme .dev-badge { color: #fdba74; background-color: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.3); }
+.dev-badge::before {
+    content: ''; width: 6px; height: 6px; background-color: #f97316; border-radius: 50%;
+    box-shadow: 0 0 8px #f97316; animation: blinkDot 1.5s infinite alternate;
+}
+.dev-badge::after {
+    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: sweepLight 3s infinite linear;
+}
+.badge-tag { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; background: var(--input-bg); color: var(--text-body); border: 1px solid var(--border-glass); }
+.badge-tag.highlight { background: rgba(5, 150, 105, 0.1); color: var(--accent); border-color: rgba(5, 150, 105, 0.3); }
 
-body:not(.dark-theme) .spec-row,
-body:not(.dark-theme) .pro-price-box {
-    background: #f8fafc; border: 1px solid #e2e8f0;
-}
+@keyframes blinkDot { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+@keyframes sweepLight { 0% { left: -100%; } 20%, 100% { left: 200%; } }
 
-body:not(.dark-theme) .back-to-gallery-btn {
-    background: #ffffff; border: 1px solid #cbd5e1; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
+/* ================= سیستم جستجوی دوگانه (Live + Overlay) ================= */
 
-body:not(.dark-theme) .back-to-gallery-btn:hover {
-    border-color: var(--primary);
-}
-/* ================= سیستم جستجوی زنده حرفه‌ای ================= */
+/* تغییرات جدید برای جستجوی زنده درون‌مرزی (هل‌دهنده محتوا) */
 .search-box {
-    position: relative; /* تراز شدن باکس نتایج دقیقاً نسبت به کادر جستجو */
+    display: flex; max-width: 540px; margin: 0 auto; background: var(--input-bg); border-radius: 50px; padding: 6px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.02); border: 1px solid var(--border-glass);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s;
+    flex-wrap: wrap !important; /* اجازه شکستن منو به ردیف پایین */
+    position: relative;
+    z-index: 100;
 }
+.search-box:focus-within { border-color: var(--primary); box-shadow: 0 10px 30px rgba(79, 70, 229, 0.15), 0 0 0 4px var(--shape-1); }
+.search-box input { flex: 1; border: none; background: transparent; padding: 15px 25px; font-size: 1rem; color: var(--text-title); outline: none; min-width: 0; }
+.search-box button { background: var(--primary); color: white; border: none; border-radius: 40px; padding: 0 32px; font-weight: bold; cursor: pointer; transition: opacity 0.4s, transform 0.4s, background-color 0.4s; }
+.search-box button:hover { opacity: 0.95; transform: scale(1.02); }
 
-.search-results-dropdown {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    right: 0;
-    background: var(--bg-cards);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-glass);
-    border-radius: 20px;
-    box-shadow: var(--glass-shadow), 0 15px 30px rgba(0, 0, 0, 0.1);
-    max-height: 380px;
-    overflow-y: auto;
-    z-index: 3000;
-    display: none;
-    padding: 10px;
+/* --- ۱. استایل لیست کشویی جستجوی زنده --- */
+.live-search-dropdown {
+    position: relative; /* هل دادن محتوای زیرین به جای پوشاندن آن‌ها */
+    width: 100%;
+    flex-basis: 100%; /* اشغال کل عرض در ردیف جدید جستجو */
+    margin-top: 15px;
+    background: var(--bg-cards); border: 1px solid var(--border-glass); border-radius: 16px;
+    box-shadow: var(--glass-shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    max-height: 300px; overflow-y: auto; display: none; padding: 10px;
 }
+.live-search-dropdown.active { display: block; animation: fadeInLive 0.2s ease-out; }
+body.dark-theme .live-search-dropdown { background: rgba(30, 41, 59, 0.85); border-color: rgba(255, 255, 255, 0.1); }
+@keyframes fadeInLive { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-.search-results-dropdown.active {
-    display: block;
-    animation: fadeInSearch 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+.live-result-item { display: flex; align-items: center; gap: 15px; padding: 10px; text-decoration: none; border-radius: 12px; transition: background-color 0.3s ease; border-bottom: 1px solid rgba(0,0,0,0.05); text-align: right; }
+body.dark-theme .live-result-item { border-bottom-color: rgba(255,255,255,0.05); }
+.live-result-item:last-child { border-bottom: none; }
+.live-result-item:hover { background: var(--shape-1); transform: translateX(-3px); }
+.live-result-img { width: 40px; height: 60px; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.live-result-info h4 { color: var(--text-title); font-size: 0.95rem; margin-bottom: 5px; font-weight: 800; }
+.live-result-info p { color: var(--text-body); font-size: 0.8rem; }
+.live-no-results { padding: 20px; text-align: center; color: var(--text-body); font-size: 0.9rem; font-weight: 600; }
 
-@keyframes fadeInSearch {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* --- ۲. استایل لایه تمام صفحه (Full Search Overlay) --- */
+.search-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background: var(--bg-main); z-index: 9999; display: flex; flex-direction: column;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+.search-overlay.active { opacity: 1; visibility: visible; }
+.search-overlay-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: var(--header-bg); border-bottom: 1px solid var(--border-glass); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.search-overlay-header h3 { color: var(--text-title); font-size: 1.15rem; font-weight: 800; }
+.search-overlay-header h3 span { color: var(--primary); }
+.close-overlay-btn { background: var(--input-bg); color: var(--text-title); border: 1px solid var(--border-glass); border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.close-overlay-btn:hover { background: var(--primary); color: #fff; transform: rotate(90deg); }
+.search-overlay-body { padding: 30px 20px; overflow-y: auto; flex: 1; background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-cards) 100%); }
+.search-results-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
-.search-result-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 15px;
-    border-radius: 14px;
-    text-decoration: none;
-    color: var(--text-body);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
+.search-result-card { display: flex; align-items: center; gap: 15px; padding: 15px; background: var(--bg-cards); border: 1px solid var(--border-glass); border-radius: 16px; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; box-shadow: var(--glass-shadow); text-align: right; }
+.search-result-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--primary); }
+.search-result-card img { width: 60px; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.search-result-info { display: flex; flex-direction: column; gap: 5px; }
+.search-result-info h4 { color: var(--text-title); font-size: 1.05rem; font-weight: 800; }
+.search-result-info p { color: var(--text-body); font-size: 0.85rem; }
+.search-no-results-full { text-align: center; padding: 50px 20px; color: var(--text-body); font-size: 1.1rem; font-weight: 700; width: 100%; grid-column: 1 / -1; }
 
-.search-result-item:hover {
-    background: var(--shape-1);
-    color: var(--primary);
-    transform: translateX(-5px);
-}
+/* ================= کارت‌ها (Cards) ================= */
+.cat-card { padding: 30px 20px; text-align: center; border-radius: 20px; cursor: pointer; }
+.cat-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.06); border-color: var(--primary); }
+.cat-card h3 { color: var(--text-title); font-weight: 700; transition: color 0.4s; }
+.cat-card:hover h3 { color: var(--primary); }
+.cat-icon { font-size: 2.8rem; margin-bottom: 12px; display: block; transition: transform 0.4s; will-change: transform; }
+.cat-card:hover .cat-icon { transform: scale(1.1); }
 
-.search-result-item img {
-    width: 45px;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
+.book-item { border-radius: 24px; padding: 24px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.book-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
+.cover-box { width: 100%; height: 340px; background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.02) 100%); border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--text-body); font-weight: bold; border: 1px solid var(--border-glass); transition: border-color 0.4s, color 0.4s; }
+.item-title { font-size: 1.25rem; font-weight: 800; color: var(--text-title); margin-bottom: 6px; transition: color 0.4s; }
+.item-author { font-size: 0.95rem; color: var(--text-body); margin-bottom: 15px; transition: color 0.4s; }
+.item-price { font-size: 1.3rem; font-weight: 900; color: var(--accent); margin-top: auto; margin-bottom: 20px; transition: color 0.4s; }
 
-.search-result-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    text-align: right;
-}
+.author-card { text-align: center; cursor: pointer; padding: 25px 15px; border-radius: 20px; background: var(--bg-cards); border: 1px solid var(--border-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--glass-shadow); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s; }
+.author-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
+.author-pic { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 15px; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); border: 4px solid var(--bg-main); box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: border-color 0.4s; }
+.author-card h3 { font-size: 1.1rem; color: var(--text-title); font-weight: 800; margin-bottom: 5px; transition: color 0.4s; }
+.author-card p { font-size: 0.9rem; color: var(--text-body); transition: color 0.4s; }
 
-.search-result-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--text-title);
-}
+.compact-card { text-decoration: none; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 160px; transition: transform 0.3s ease; }
+.compact-card:hover { transform: translateY(-6px); }
+.compact-card.hide { display: none; }
+.compact-card img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-glass); margin-bottom: 10px; transition: box-shadow 0.3s ease; }
+.compact-card:hover img { box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25); }
+.compact-card h4 { font-size: 0.85rem; color: var(--text-title); font-weight: 700; text-align: center; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-.search-result-author {
-    font-size: 0.8rem;
-    color: var(--text-body);
-}
+/* ================= انواع دکمه‌ها (Buttons) ================= */
+.btn-action { width: 100%; padding: 13px; background: var(--primary); color: #fff !important; border-radius: 14px; font-weight: 700; text-decoration: none; transition: opacity 0.4s, background-color 0.4s; display: inline-block; text-align: center; }
+.btn-action:hover { opacity: 0.9; }
+.btn-white { display: inline-block; background: #fff; color: #4f46e5; padding: 15px 40px; border-radius: 14px; font-weight: 800; text-decoration: none; transition: transform 0.4s, box-shadow 0.4s; position: relative; z-index: 2; }
+.btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(79, 70, 229, 0.4); }
+.btn-secondary { background: var(--input-bg); color: var(--text-title); border: 1px solid var(--border-glass) !important; }
+.btn-secondary:hover { background: var(--border-glass); }
+.filter-btn { background: var(--input-bg); border: 1px solid var(--border-glass); color: var(--text-body); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(8px); }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-.search-no-results {
-    padding: 20px;
-    text-align: center;
-    color: var(--text-body);
-    font-size: 0.95rem;
-    font-weight: 600;
-}
+.back-link-wrapper { margin-bottom: 20px; width: 100%; }
+.back-to-gallery-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text-body); font-weight: 700; text-decoration: none; padding: 10px 18px; border-radius: 12px; background: var(--bg-cards); border: 1px solid var(--border-glass); transition: all 0.3s ease; box-shadow: var(--glass-shadow); }
+.back-to-gallery-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateX(5px); }
+body:not(.dark-theme) .back-to-gallery-btn { background: #ffffff; border: 1px solid #cbd5e1; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+body:not(.dark-theme) .back-to-gallery-btn:hover { border-color: var(--primary); color: #fff; }
+
+.social-btn { padding: 10px 20px; border-radius: 30px; background: var(--input-bg); border: 1px solid var(--border-glass); color: var(--text-title); text-decoration: none; font-weight: 600; transition: background-color 0.4s, color 0.4s, border-color 0.4s, transform 0.4s, box-shadow 0.4s; display: inline-block; }
+.social-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 8px 15px rgba(79, 70, 229, 0.2); }
+.quick-link-item { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: var(--bg-cards); border: 1px solid var(--border-glass); border-radius: 14px; text-decoration: none; color: var(--text-body); font-weight: 600; transition: background-color 0.4s, color 0.4s, border-color 0.4s, transform 0.4s, box-shadow 0.4s; width: fit-content; }
+.quick-link-item .arrow { transition: transform 0.4s ease; opacity: 0.7; }
+.quick-link-item:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateX(-8px); box-shadow: 0 10px 20px rgba(79, 70, 229, 0.15); }
+.quick-link-item:hover .arrow { transform: translateX(-5px); opacity: 1; }
+
+/* ================= ابزارهای فرعی (Newsletter & Scroll Top) ================= */
+.newsletter-box { display: flex; margin-top: 15px; max-width: 350px; }
+.newsletter-box input { flex: 1; padding: 14px 18px; border: 1px solid var(--border-glass); background: var(--input-bg); border-radius: 0 12px 12px 0; color: var(--text-title); outline: none; transition: background-color 0.4s, border-color 0.4s; }
+.newsletter-box button { padding: 14px 24px; border: none; background: var(--primary); color: white; border-radius: 12px 0 0 12px; cursor: pointer; font-weight: bold; transition: background-color 0.4s; }
+
+.scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--primary); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; transition: opacity 0.4s ease, background-color 0.4s, transform 0.4s; z-index: 1000; }
+.scroll-top:hover { transform: translateY(-5px); }
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
