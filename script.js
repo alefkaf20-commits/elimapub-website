@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ================= دیتابیس جامع کتاب‌ها (آماده برای اضافه کردن کتاب‌های جدید) =================
+    // ================= دیتابیس جامع کتاب‌ها =================
     const BOOKS_DATABASE = [
         { title: 'نوای دل', author: 'هوشنگ اعتمادی گندمانی', url: 'book/book1.html', image: 'book/covers/navayedel.jpg', category: 'literature' },
         { title: 'برای شماره ۱۳ ها', author: 'علی قنواتی', url: 'book/book2.html', image: 'book/covers/barayeshomare13.jpg', category: 'history' },
@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchInput && searchBoxForm) {
         
-        // ۱. ساخت منوی کشویی جستجوی زنده (متصل به کادر جستجو)
+        // ۱. ساخت منوی کشویی جستجوی زنده (در جریان اصلی صفحه تا متون را نرم هل دهد)
         const liveDropdown = document.createElement('div');
         liveDropdown.className = 'live-search-dropdown';
-        searchBoxForm.appendChild(liveDropdown);
+        searchBoxForm.insertAdjacentElement('afterend', liveDropdown);
 
-        // ۲. ساخت لایه تمام‌صفحه نتایج جامع (متصل به کل سایت)
+        // ۲. ساخت لایه تمام‌صفحه نتایج جامع
         const overlay = document.createElement('div');
         overlay.className = 'search-overlay';
         overlay.innerHTML = `
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchQueryText = overlay.querySelector('#searchQueryText');
         const closeSearchBtn = overlay.querySelector('#closeSearchBtn');
 
-        // تابع دی‌بانس برای جلوگیری از کرش مرورگر هنگام تایپ سریع
         function debounce(func, delay) {
             let timeoutId;
             return function (...args) {
@@ -48,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        // عملکرد تایپ زنده (Live Search Dropdown)
+        // عملکرد تایپ زنده (بدون پرش)
         const performLiveSearch = (query) => {
             const cleanedQuery = query.trim().toLowerCase();
 
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (filteredBooks.length === 0) {
                 liveDropdown.innerHTML = `<div class="live-no-results">کتابی پیدا نشد 🔍</div>`;
             } else {
-                // در جستجوی زنده نهایتاً ۵ نتیجه را نشان می‌دهیم تا کادر خیلی شلوغ نشود
                 liveDropdown.innerHTML = filteredBooks.slice(0, 5).map(book => `
                     <a href="${book.url}" class="live-result-item">
                         <img src="${book.image}" alt="${book.title}" class="live-result-img" onerror="this.src='book/covers/default.jpg';">
@@ -104,14 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             }
 
-            // مخفی کردن کشویی زنده و باز کردن لایه کامل
             liveDropdown.classList.remove('active');
             overlay.classList.add('active');
             document.body.classList.add('no-scroll');
         };
 
         // لیسنرها
-        // لیسنرها (تغییر تاخیر از 250 به 100 برای رفع لگ و سرعت بیشتر)
         searchInput.addEventListener('input', debounce((e) => {
             performLiveSearch(e.target.value);
         }, 100));
@@ -121,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
             performFullSearch(searchInput.value);
         });
 
-        // مدیریت بستن منوها
         const closeOverlay = () => {
             overlay.classList.remove('active');
             document.body.classList.remove('no-scroll');
@@ -130,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeSearchBtn.addEventListener('click', closeOverlay);
 
         document.addEventListener('click', (e) => {
-            if (!searchBoxForm.contains(e.target)) {
+            if (!searchBoxForm.contains(e.target) && !liveDropdown.contains(e.target)) {
                 liveDropdown.classList.remove('active');
             }
         });
