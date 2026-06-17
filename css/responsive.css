@@ -1,4 +1,7 @@
-/* ================= ریسپانسیو (موبایل و تبلت) ================= */
+/* ==========================================================================
+   css/responsive.css - ریسپانسیو (موبایل و تبلت)
+   ========================================================================== */
+
 @media (max-width: 992px) {
     body { padding-top: 75px; }
     .header-controls { order: 1; justify-content: flex-start; flex: 1; } 
@@ -38,7 +41,11 @@
     .hero-logo { width: 90px; height: 90px; margin-bottom: 15px; }
     .hero-section h1 { font-size: 1.9rem; margin-bottom: 10px; }
     .hero-section p { font-size: 0.95rem; margin: 0 auto 20px; line-height: 1.7; }
+    
+    /* تنظیمات فرم جستجو برای تبلت */
     .search-box { padding: 4px; width: 100%; max-width: 400px; }
+    .search-box input { font-size: 0.9rem; padding: 12px 15px; }
+    .search-box button { padding: 0 20px; font-size: 0.95rem; }
 
     .cats-container, .books-wrapper, .authors-wrapper {
         display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
@@ -61,65 +68,31 @@
     .about-hero h1 { font-size: 2rem; margin-bottom: 10px; }
     .about-hero p { font-size: 1rem; }
     
-    /* اصلاح چیدمان صفحه درباره ما در موبایل */
-    .about-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-        margin-bottom: 40px;
+    /* تنظیمات اختصاصی جستجو برای موبایل و افکت سه‌نقطه */
+    .search-box input { 
+        font-size: 0.8rem; 
+        padding: 10px 12px; 
+        text-overflow: ellipsis; 
+        overflow: hidden; 
+        white-space: nowrap; 
     }
+    .search-box button { padding: 0 16px; font-size: 0.85rem; }
     
-    .about-text {
-        padding: 20px !important;
-        border-radius: 18px;
-    }
+    .about-grid { grid-template-columns: 1fr !important; gap: 20px !important; margin-bottom: 40px; }
+    .about-text { padding: 20px !important; border-radius: 18px; }
     .about-text h2 { font-size: 1.5rem; margin-bottom: 15px; text-align: center; }
     .about-text p { font-size: 0.95rem; line-height: 1.7; }
     
-    /* رفع مشکل بریده شدن عکس در موبایل */
-    .about-image {
-        height: auto !important; 
-        padding: 15px; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 18px;
-    }
-    
-    .about-image img {
-        width: 100%;
-        height: auto;
-        max-height: 300px; 
-        object-fit: contain; 
-        border-radius: 18px;
-    }
+    .about-image { height: auto !important; padding: 15px; display: flex; justify-content: center; align-items: center; border-radius: 18px; }
+    .about-image img { width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 18px; }
 
     .core-values { grid-template-columns: 1fr; gap: 15px; }
     .value-card { padding: 25px 20px; border-radius: 18px; }
     .value-icon { font-size: 2.5rem; margin-bottom: 10px; }
     .value-card h3 { font-size: 1.1rem; }
-}
 
-@media (max-width: 500px) {
-    .compact-book-gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px 10px; }
-    .compact-card h4 { font-size: 0.75rem; }
-}
-
-@media (max-width: 900px) {
-    .pro-top-section { flex-direction: column; align-items: center; padding: 25px; }
-    .pro-gallery { width: 100%; max-width: 320px; flex: none; }
-    .pro-title { font-size: 1.8rem; text-align: center; }
-    .pro-author { text-align: center; }
-    .pro-badges { justify-content: center; }
-    .pro-action-buttons { flex-direction: column; }
-    .pro-specs-section, .pro-desc-section { padding: 25px; }
-}
-
-/* ================= طراحی اختصاصی و هوشمند برای موبایل ================= */
-@media (max-width: 768px) {
     .pro-book-container { gap: 15px; }
-    
     .pro-top-section { flex-direction: column; align-items: center; padding: 20px 15px; }
-    
     .pro-gallery { width: 100%; max-width: 280px; margin: 0 auto 10px; flex: none; } 
     .thumb-img { width: 65px; height: 95px; border-radius: 8px; }
     
@@ -145,9 +118,100 @@
     .spec-row { padding: 8px; flex-direction: column; gap: 4px; text-align: center; font-size: 0.85rem; }
 }
 
+@media (max-width: 500px) {
+    .compact-book-gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px 10px; }
+    .compact-card h4 { font-size: 0.75rem; }
+    
+    /* برای گوشی‌های خیلی کوچیک */
+    .search-box input { font-size: 0.75rem; padding: 8px 10px; }
+    .search-box button { padding: 0 14px; font-size: 0.8rem; }
+}
+
+@media (max-width: 900px) {
+    .pro-top-section { flex-direction: column; align-items: center; padding: 25px; }
+    .pro-gallery { width: 100%; max-width: 320px; flex: none; }
+    .pro-title { font-size: 1.8rem; text-align: center; }
+    .pro-author { text-align: center; }
+    .pro-badges { justify-content: center; }
+    .pro-action-buttons { flex-direction: column; }
+    .pro-specs-section, .pro-desc-section { padding: 25px; }
+}
+
 @media (max-width: 380px) {
     .pro-price-box { flex-direction: column; gap: 5px; }
     .pro-action-buttons { flex-direction: column; }
     .pro-specs-grid { grid-template-columns: 1fr; }
     .spec-row { flex-direction: row; text-align: right; justify-content: space-between; }
+}
+/* ================= ریسپانسیو صفحه جزئیات کتاب (موبایل و تبلت) ================= */
+@media (max-width: 992px) {
+    .pro-top-section {
+        flex-direction: column;
+        padding: 30px 20px;
+        gap: 35px;
+    }
+    
+    .pro-gallery {
+        width: 100%;
+        flex: none;
+    }
+    
+    .pro-main-image {
+        max-width: 380px; 
+        margin: 0 auto;
+    }
+    
+    .pro-title {
+        font-size: 2.1rem;
+        text-align: center;
+    }
+    
+    .pro-author {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+    
+    .pro-badges {
+        justify-content: center;
+    }
+    
+    .pro-price-box {
+        flex-direction: column; 
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+        transform: scale(1); 
+        border-right: 2px solid var(--primary);
+        border-bottom: 8px solid var(--accent); 
+    }
+    
+    .pro-action-buttons {
+        flex-direction: column; 
+        width: 100%;
+    }
+    
+    .pro-specs-section, .pro-desc-section {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pro-title {
+        font-size: 1.7rem;
+    }
+    
+    .price-value {
+        font-size: 1.9rem;
+    }
+    
+    .thumb-img {
+        width: 65px;
+        height: 90px;
+    }
+    
+    .spec-row {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
 }
