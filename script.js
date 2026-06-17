@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // محاسبه مسیر اصلی سایت به صورت داینامیک برای رفع مشکل پوشه‌بندی
+    const currentScript = document.currentScript || document.querySelector('script[src*="script.js"]');
+    let basePath = '';
+    if (currentScript) {
+        const src = currentScript.getAttribute('src');
+        if (src) basePath = src.split('script.js')[0];
+    }
 
-    const isInsideBookFolder = window.location.pathname.includes('/book/');
-
-    // ================= سیستم جستجوی دوگانه =================
+    // ================= سیستم جستجوی دوگانه (بدون حالت شناور روی سایت) =================
     const searchInput = document.querySelector('.search-box input');
     const searchBoxForm = document.querySelector('.search-box');
 
@@ -41,13 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
             return filteredBooks.map(book => {
                 const coverImage = book.images && book.images.length > 0 ? book.images[0] : 'default.jpg';
-                const imagePath = isInsideBookFolder ? `covers/${coverImage}` : `book/covers/${coverImage}`;
-                const linkPath = isInsideBookFolder ? `details.html?id=${book.id}` : `book/details.html?id=${book.id}`;
+                // استفاده از basePath برای جلوگیری از مشکل خرابی مسیر تصاویر
+                const imagePath = basePath + 'book/covers/' + coverImage;
+                const linkPath = basePath + 'book/details.html?id=' + book.id;
                 
                 if (isLive) {
                     return `
                         <a href="${linkPath}" class="live-result-item">
-                            <img src="${imagePath}" alt="${book.title}" class="live-result-img" onerror="this.src='${isInsideBookFolder ? '' : 'book/'}covers/default.jpg';">
+                            <img src="${imagePath}" alt="${book.title}" class="live-result-img" onerror="this.src='${basePath}book/covers/default.jpg';">
                             <div class="live-result-info">
                                 <h4>${book.title}</h4>
                                 <p>${book.author}</p>
@@ -57,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     return `
                         <a href="${linkPath}" class="search-result-card">
-                            <img src="${imagePath}" alt="${book.title}" onerror="this.src='${isInsideBookFolder ? '' : 'book/'}covers/default.jpg';">
+                            <img src="${imagePath}" alt="${book.title}" onerror="this.src='${basePath}book/covers/default.jpg';">
                             <div class="search-result-info">
                                 <h4>${book.title}</h4>
                                 <p>نویسنده: ${book.author}</p>
@@ -94,6 +101,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => { if (!searchBoxForm.contains(e.target) && !liveDropdown.contains(e.target)) liveDropdown.classList.remove('active'); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { liveDropdown.classList.remove('active'); if (overlay.classList.contains('active')) closeOverlay(); } });
         searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) liveDropdown.classList.add('active'); });
+    }
+
+    // ================= رندر داینامیک گالری کتاب‌ها (book/index.html) =================
+    const galleryContainer = document.querySelector('.compact-book-gallery');
+    if (galleryContainer && typeof BOOKS_DATABASE !== 'undefined') {
+        // ایجاد داینامیک تمام کارت‌های کتاب از دیتابیس
+        galleryContainer.innerHTML = BOOKS_DATABASE.map(book => {
+            const coverImage = book.images && book.images.length > 0 ? book.images[0] : 'default.jpg';
+            const imagePath = basePath + 'book/covers/' + coverImage;
+            const linkPath = basePath + 'book/details.html?id=' + book.id;
+            return `
+            <a href="${linkPath}" class="compact-card" data-category="${book.category}">
+                <img src="${imagePath}" alt="${book.title}" loading="lazy" onerror="this.src='${basePath}book/covers/default.jpg'">
+                <h4>${book.title}</h4>
+            </a>
+            `;
+        }).join('');
+
+        // سیستم فیلترینگ دکمه‌های گالری
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.compact-card');
+        if (filterBtns.length > 0 && galleryItems.length > 0) {
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) item.classList.remove('hide');
+                        else item.classList.add('hide');
+                    });
+                });
+            });
+        }
     }
 
     // ================= تزریق داینامیک اطلاعات در صفحه جزئیات =================
@@ -140,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ================= کدهای دکمه اسکرول و فیلتر =================
+    // ================= کدهای دکمه اسکرول =================
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     if (scrollTopBtn) {
         let ticking = false;
@@ -157,22 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.compact-card');
-    if (filterBtns.length > 0 && galleryItems.length > 0) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const filterValue = btn.getAttribute('data-filter');
-                galleryItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) item.classList.remove('hide');
-                    else item.classList.add('hide');
-                });
-            });
-        });
-    }
-
+    // عملکرد تغییر عکس در اسلایدر
     window.changeImage = function(element) {
         const mainImage = document.getElementById('mainBookImg');
         if (!mainImage || mainImage.src === element.src) return;
