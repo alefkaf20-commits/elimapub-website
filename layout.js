@@ -136,3 +136,35 @@ class SiteFooter extends HTMLElement {
 
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
+document.addEventListener('DOMContentLoaded', () => {
+    // این کد با کمی تاخیر اجرا میشه تا مطمئن بشیم هدر کامل ساخته شده
+    setTimeout(() => {
+        const navLinks = document.querySelectorAll('header a, .nav-links a');
+        const currentPath = window.location.pathname;
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // تشخیص دقیق اینکه آیا در صفحه اصلی سایت هستیم یا نه
+            const isHomePage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/about/') && !currentPath.includes('/book/'));
+            
+            if (isHomePage) {
+                if (href === 'index.html' || href === '../index.html' || href === '/') {
+                    link.classList.add('active');
+                }
+            } else {
+                // رنگی کردن بقیه صفحات (گالری، درباره ما و...)
+                const cleanHref = href.replace('../', '').replace('./', '');
+                if (cleanHref !== 'index.html' && currentPath.includes(cleanHref)) {
+                    link.classList.add('active');
+                }
+                // اگر کاربر داخل صفحه جزئیات یک کتاب است، دکمه "کتاب‌ها" در هدر روشن بماند
+                if (currentPath.includes('/book/details.html') && href.includes('book/index.html')) {
+                    link.classList.add('active');
+                }
+            }
+        });
+    }, 150);
+});
