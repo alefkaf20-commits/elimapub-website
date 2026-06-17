@@ -2,8 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">نشر الیما | در حال بارگذاری...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="pageTitle">نشر الیما | جزئیات کتاب</title>
     
     <link rel="icon" href="../icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/pages.css">
     <link rel="stylesheet" href="../css/responsive.css">
     
     <script src="../database.js" defer></script>
@@ -21,61 +20,65 @@
 </head>
 <body>
     <script>
-        if (localStorage.getItem('elima-theme') === 'dark') document.body.classList.add('dark-theme');
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
     </script>
+    
     <div class="site-wrapper">
         <site-header></site-header>
 
         <main class="pro-book-page">
             <div class="pro-book-container">
+                
                 <div class="back-link-wrapper">
                     <a href="index.html" class="back-to-gallery-btn">
-                        <span class="arrow">⟶</span> بازگشت به گالری کتاب‌ها
+                        <span class="arrow">→</span> بازگشت به ویترین
                     </a>
                 </div>
-                
+
                 <section class="pro-top-section">
                     <div class="pro-gallery">
                         <div class="pro-main-image">
-                            <img id="mainBookImg" src="" alt="تصویر اصلی کتاب">
+                            <img id="mainBookImg" src="" alt="جلد کتاب">
                         </div>
                         <div class="pro-thumbnails" id="thumbnailsContainer"></div>
                     </div>
-
+                    
                     <div class="pro-basic-info">
                         <div class="pro-badges" id="badgesContainer"></div>
-                        
-                        <h1 class="pro-title" id="bookTitle"></h1>
-                        <h2 class="pro-author">نویسنده: <span id="bookAuthor"></span></h2>
+                        <h1 class="pro-title" id="bookTitle">...</h1>
+                        <h2 class="pro-author" id="bookAuthor">...</h2>
                         
                         <div class="pro-price-box">
-                            <span class="price-label">قیمت نسخه چاپی:</span>
-                            <span class="price-value"><span id="bookPrice"></span> <span>تومان</span></span>
+                            <span class="price-label">قیمت ناشر:</span>
+                            <div class="price-value"><span id="bookPrice">...</span> <span class="currency">تومان</span></div>
                         </div>
-
+                        
                         <div class="pro-action-buttons">
                             <button class="btn-primary">افزودن به سبد خرید</button>
-                            <button class="btn-secondary">مطالعه نمونه PDF</button>
+                            <button class="btn-secondary">دانلود نمونه (PDF)</button>
                         </div>
                     </div>
                 </section>
 
-                <section class="pro-specs-section glass-effect">
-                    <h3 class="section-title">مشخصات فنی کتاب</h3>
+                <section class="pro-specs-section">
+                    <h3 class="section-title">مشخصات فیزیکی و نشر</h3>
                     <div class="pro-specs-grid">
-                        <div class="spec-row"><span class="spec-key">تعداد صفحات:</span><span class="spec-value" id="bookPages"></span></div>
-                        <div class="spec-row"><span class="spec-key">قطع کتاب:</span><span class="spec-value" id="bookFormat"></span></div>
-                        <div class="spec-row"><span class="spec-key">نوع جلد:</span><span class="spec-value" id="bookCoverType"></span></div>
-                        <div class="spec-row"><span class="spec-key">نوع کاغذ:</span><span class="spec-value" id="bookPaperType"></span></div>
-                        <div class="spec-row"><span class="spec-key">شابک (ISBN):</span><span class="spec-value" id="bookIsbn"></span></div>
-                        <div class="spec-row"><span class="spec-key">سال انتشار:</span><span class="spec-value" id="bookYear"></span></div>
+                        <div class="spec-row"><span class="spec-key">تعداد صفحات</span><span class="spec-value" id="bookPages"></span></div>
+                        <div class="spec-row"><span class="spec-key">قطع کتاب</span><span class="spec-value" id="bookFormat"></span></div>
+                        <div class="spec-row"><span class="spec-key">نوع جلد</span><span class="spec-value" id="bookCoverType"></span></div>
+                        <div class="spec-row"><span class="spec-key">نوع کاغذ</span><span class="spec-value" id="bookPaperType"></span></div>
+                        <div class="spec-row"><span class="spec-key">شابک (ISBN)</span><span class="spec-value" id="bookIsbn" dir="ltr"></span></div>
+                        <div class="spec-row"><span class="spec-key">سال چاپ</span><span class="spec-value" id="bookYear"></span></div>
                     </div>
                 </section>
 
-                <section class="pro-desc-section glass-effect">
-                    <h3 class="section-title">درباره کتاب</h3>
+                <section class="pro-desc-section">
+                    <h3 class="section-title">معرفی و خلاصه کتاب</h3>
                     <div class="pro-desc-content" id="bookDesc"></div>
                 </section>
+                
             </div>
         </main>
 
