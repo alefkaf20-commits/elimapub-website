@@ -4,8 +4,6 @@ const basePath = src.split('layout.js')[0];
 
 class SiteHeader extends HTMLElement {
     connectedCallback() {
-        const currentUrl = window.location.href;
-        const isActive = (path) => currentUrl.includes(path) ? 'style="color: var(--primary); font-weight: 800;"' : '';
         const isDark = document.body.classList.contains('dark-theme') || localStorage.getItem('elima-theme') === 'dark';
 
         this.innerHTML = `
@@ -23,10 +21,10 @@ class SiteHeader extends HTMLElement {
                 <nav class="desktop-nav">
                     <ul class="nav-links">
                         <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                        <li><a href="${basePath}book/index.html" ${isActive('book/index.html')}>کتاب‌ها</a></li>
+                        <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
                         <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
                         <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                        <li><a href="${basePath}about/index.html" ${isActive('about/index.html')}>درباره ما</a></li>
+                        <li><a href="${basePath}about/index.html">درباره ما</a></li>
                         <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
                     </ul>
                 </nav>
@@ -42,16 +40,15 @@ class SiteHeader extends HTMLElement {
             <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
             <ul class="nav-links">
                 <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                <li><a href="${basePath}book/index.html" ${isActive('book/index.html')}>کتاب‌ها</a></li>
+                <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
                 <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
                 <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                <li><a href="${basePath}about/index.html" ${isActive('about/index.html')}>درباره ما</a></li>
+                <li><a href="${basePath}about/index.html">درباره ما</a></li>
                 <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
             </ul>
         </nav>
         `;
-
-        // ================= لاجیک اختصاصی کامپوننت هدر =================
+        
         const themeBtn = this.querySelector('#themeBtn');
         const themeIconImg = this.querySelector('#themeIconImg');
         const burgerBtn = this.querySelector('#burgerBtn');
@@ -79,10 +76,10 @@ class SiteHeader extends HTMLElement {
             if (!mobileNav || !burgerBtn) return;
             if (isOpen) {
                 mobileNav.classList.add('active');
-                burgerBtn.classList.add('open'); 
+                burgerBtn.classList.add('open');
                 body.classList.add('no-scroll');
             } else {
-                mobileNav.classList.remove('active'); 
+                mobileNav.classList.remove('active');
                 burgerBtn.classList.remove('open');
                 body.classList.remove('no-scroll');
             }
@@ -136,31 +133,32 @@ class SiteFooter extends HTMLElement {
 
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
+
 document.addEventListener('DOMContentLoaded', () => {
-    // این کد با کمی تاخیر اجرا میشه تا مطمئن بشیم هدر کامل ساخته شده
+    // تنظیم وضعیت روشن (Active) در هدر
     setTimeout(() => {
         const navLinks = document.querySelectorAll('header a, .nav-links a');
         const currentPath = window.location.pathname;
+        
+        // تشخیص صفحه اصلی با دقت بالا
+        const isHomePage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/about/') && !currentPath.includes('/book/'));
         
         navLinks.forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
             if (!href) return;
+            const linkText = link.textContent.trim();
+            const cleanHref = href.replace('../', '').replace('./', '');
 
-            // تشخیص دقیق اینکه آیا در صفحه اصلی سایت هستیم یا نه
-            const isHomePage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/about/') && !currentPath.includes('/book/'));
-            
             if (isHomePage) {
-                if (href === 'index.html' || href === '../index.html' || href === '/') {
-                    link.classList.add('active');
-                }
+                // اگر در صفحه اصلی هستیم، فقط لینکی که اسمش "صفحه اصلی" است روشن شود
+                if (linkText === 'صفحه اصلی') link.classList.add('active');
             } else {
-                // رنگی کردن بقیه صفحات (گالری، درباره ما و...)
-                const cleanHref = href.replace('../', '').replace('./', '');
-                if (cleanHref !== 'index.html' && currentPath.includes(cleanHref)) {
+                // رنگی کردن بقیه صفحات (گالری، درباره ما)
+                if (cleanHref !== 'index.html' && cleanHref !== '' && currentPath.includes(cleanHref)) {
                     link.classList.add('active');
                 }
-                // اگر کاربر داخل صفحه جزئیات یک کتاب است، دکمه "کتاب‌ها" در هدر روشن بماند
+                // اگر کاربر داخل صفحه جزئیات یک کتاب است، دکمه "کتاب‌ها" روشن بماند
                 if (currentPath.includes('/book/details.html') && href.includes('book/index.html')) {
                     link.classList.add('active');
                 }
