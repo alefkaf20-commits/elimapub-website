@@ -20,12 +20,12 @@ class SiteHeader extends HTMLElement {
                 </div>
                 <nav class="desktop-nav">
                     <ul class="nav-links">
-                        <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                        <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
-                        <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
-                        <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                        <li><a href="${basePath}about/index.html">درباره ما</a></li>
-                        <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
+                        <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
+                        <li><a href="#" class="login-nav-btn">ورود</a></li>
+                        <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
+                        <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
+                        <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
+                        <li><a href="${basePath}contact/index.html" class="nav-item-link">ارتباط با ما</a></li>
                     </ul>
                 </nav>
                 <div class="burger-wrapper">
@@ -39,16 +39,37 @@ class SiteHeader extends HTMLElement {
         <nav class="mobile-nav" id="mobileNav">
             <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
             <ul class="nav-links">
-                <li><a href="${basePath}index.html">صفحه اصلی</a></li>
-                <li><a href="${basePath}book/index.html">کتاب‌ها</a></li>
-                <li><a href="${basePath}index.html#new-books">تازه‌های نشر</a></li>
-                <li><a href="${basePath}index.html#authors">شاعران و نویسندگان</a></li>
-                <li><a href="${basePath}about/index.html">درباره ما</a></li>
-                <li><a href="${basePath}index.html#contact">ارتباط با ما</a></li>
+                <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
+                <li><a href="#" class="login-nav-btn">ورود</a></li>
+                <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
+                <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
+                <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
+                <li><a href="${basePath}contact/index.html" class="nav-item-link">ارتباط با ما</a></li>
             </ul>
         </nav>
         `;
-        
+
+        // سیستم هوشمند و قطعی برای تشخیص صفحه فعال (بدون باگ تداخل صفحات)
+        const currentUrl = new URL(window.location.href);
+        const currentPath = currentUrl.pathname.endsWith('/') ? currentUrl.pathname + 'index.html' : currentUrl.pathname;
+        const navLinks = this.querySelectorAll('.nav-item-link');
+
+        navLinks.forEach(link => {
+            try {
+                const linkUrl = new URL(link.href, window.location.href);
+                const linkPath = linkUrl.pathname.endsWith('/') ? linkUrl.pathname + 'index.html' : linkUrl.pathname;
+                
+                // از رنگی شدن لینک‌های هشتگ‌دار در منو جلوگیری می‌کند
+                if (linkUrl.hash) return;
+
+                if (currentPath === linkPath) {
+                    link.classList.add('active-page');
+                }
+            } catch (e) {
+                // Ignore parsing errors
+            }
+        });
+
         const themeBtn = this.querySelector('#themeBtn');
         const themeIconImg = this.querySelector('#themeIconImg');
         const burgerBtn = this.querySelector('#burgerBtn');
@@ -89,8 +110,6 @@ class SiteHeader extends HTMLElement {
             burgerBtn.addEventListener('click', () => toggleMenu(!mobileNav.classList.contains('active')));
             closeMenuBtn.addEventListener('click', () => toggleMenu(false));
             mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) toggleMenu(false); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileNav.classList.contains('active')) toggleMenu(false); });
-            mobileNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => toggleMenu(false)); });
         }
     }
 }
@@ -98,27 +117,31 @@ class SiteHeader extends HTMLElement {
 class SiteFooter extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-        <footer id="contact">
+        <footer>
             <div class="footer-grid">
                 <div class="social-section">
                     <h3>شبکه‌های اجتماعی ما</h3>
-                    <p>در شبکه‌های اجتماعی همراه ما باشید و از تازه‌های نشر و تخفیف‌ها مطلع شوید:</p>
-                    <div class="social-icons">
-                        <a href="#" class="social-btn">اینستاگرام</a>
-                        <a href="#" class="social-btn">تلگرام</a>
+                    <p>با دنبال کردن ما، از تازه‌های نشر اِلیما و تخفیف‌های ویژه جا نمانید:</p>
+                    <div class="social-icons compact">
+                        <a href="#" class="social-icon-btn" aria-label="اینستاگرام">
+                            <img src="${basePath}instaicon.svg" alt="اینستاگرام">
+                        </a>
+                        <a href="#" class="social-icon-btn" aria-label="تلگرام">
+                            <img src="${basePath}teleicon.svg" alt="تلگرام">
+                        </a>
                     </div>
                 </div>
                 <div class="quick-links">
                     <h3>لینک‌های سریع</h3>
                     <div class="quick-links-wrapper">
                         <a href="${basePath}index.html#new-books" class="quick-link-item"><span class="arrow">←</span> فروشگاه آنلاین</a>
-                        <a href="#" class="quick-link-item"><span class="arrow">←</span> مراحل پذیرش آثار</a>
+                        <a href="${basePath}contact/index.html" class="quick-link-item"><span class="arrow">←</span> مراحل پذیرش آثار</a>
                     </div>
                 </div>
                 <div class="newsletter">
                     <h3>عضویت در خبرنامه</h3>
                     <form class="newsletter-box" onsubmit="event.preventDefault();">
-                        <input type="email" placeholder="ایمیل شما..." required>
+                        <input type="email" placeholder="آدرس ایمیل شما..." required>
                         <button type="submit">ثبت</button>
                     </form>
                 </div>
@@ -133,36 +156,3 @@ class SiteFooter extends HTMLElement {
 
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
-
-document.addEventListener('DOMContentLoaded', () => {
-    // تنظیم وضعیت روشن (Active) در هدر
-    setTimeout(() => {
-        const navLinks = document.querySelectorAll('header a, .nav-links a');
-        const currentPath = window.location.pathname;
-        
-        // تشخیص صفحه اصلی با دقت بالا
-        const isHomePage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/about/') && !currentPath.includes('/book/'));
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const href = link.getAttribute('href');
-            if (!href) return;
-            const linkText = link.textContent.trim();
-            const cleanHref = href.replace('../', '').replace('./', '');
-
-            if (isHomePage) {
-                // اگر در صفحه اصلی هستیم، فقط لینکی که اسمش "صفحه اصلی" است روشن شود
-                if (linkText === 'صفحه اصلی') link.classList.add('active');
-            } else {
-                // رنگی کردن بقیه صفحات (گالری، درباره ما)
-                if (cleanHref !== 'index.html' && cleanHref !== '' && currentPath.includes(cleanHref)) {
-                    link.classList.add('active');
-                }
-                // اگر کاربر داخل صفحه جزئیات یک کتاب است، دکمه "کتاب‌ها" روشن بماند
-                if (currentPath.includes('/book/details.html') && href.includes('book/index.html')) {
-                    link.classList.add('active');
-                }
-            }
-        });
-    }, 150);
-});
