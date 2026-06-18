@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر الیما | ارتباط با ما</title>
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+
+    <site-header></site-header>
+
+    <main class="contact-page-container">
+        <section class="contact-hero">
+            <h1>با ما در <span class="text-primary">ارتباط</span> باشید</h1>
+            <p>دیدگاه‌ها، پیشنهادها و سوالات خود را با تیم پشتیبانی و پذیرش آثار نشر الیما در میان بگذارید.</p>
+        </section>
+
+        <section class="contact-main-grid">
+            <div class="contact-info-card">
+                <h2>اطلاعات تماس</h2>
+                <p class="info-subtitle">راه‌های ارتباطی مستقیم با دفتر مرکزی نشر الیما</p>
+                
+                <div class="info-items-list">
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="contact-svg-icon icon-gps" aria-label="نشانی"></i>
+        </div>
+        <div class="info-text">
+            <h3>نشانی دفتر مرکزی</h3>
+            <p>خوزستان، اهواز، خیابان اصلی، مجتمع فرهنگی الیما</p>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="contact-svg-icon icon-phone" aria-label="تماس"></i>
+        </div>
+        <div class="info-text">
+            <h3>شماره‌های تماس</h3>
+            <p dir="ltr">+98 (61) 3333-XXXX</p>
+            <p dir="ltr">+98 916 XXX XXXX</p>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="contact-svg-icon icon-mail" aria-label="ایمیل"></i>
+        </div>
+        <div class="info-text">
+            <h3>پست الکترونیک</h3>
+            <p>info@elimapub.ir</p>
+            <p>support@elimapub.ir</p>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="contact-svg-icon icon-time" aria-label="ساعات کاری"></i>
+        </div>
+        <div class="info-text">
+            <h3>ساعات کاری</h3>
+            <p>شنبه تا چهارشنبه: ۹ صبح الی ۱۷ عصر</p>
+            <p>پنجشنبه‌ها: ۹ صبح الی ۱۳ ظهر</p>
+        </div>
+    </div>
+</div>
+                <div class="contact-map-placeholder">
+                    <span>نقشه موقعیت مکانی نشر الیما</span>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <h2>ارسال پیام مستقیم</h2>
+                <p class="form-subtitle">فرم زیر را پر کنید؛ کارشناسان ما در سریع‌ترین زمان با شما تماس می‌گیرند.</p>
+                
+                <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">نام و نام خانوادگی <span>*</span></label>
+                            <input type="text" id="fullName" name="fullName" placeholder="مثال: آبتین کیانی" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailAddress">آدرس ایمیل <span>*</span></label>
+                            <input type="email" id="emailAddress" name="emailAddress" placeholder="example@gmail.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phoneNumber">شماره تماس</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="۰۹۱۶XXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">موضوع پیام <span>*</span></label>
+                            <select id="subject" name="subject" required>
+                                <option value="" disabled selected>انتخاب موضوع...</option>
+                                <option value="publishing">پذیرش و چاپ آثار</option>
+                                <option value="support">پشتیبانی فروشگاه آنلاین</option>
+                                <option value="cooperation">همکاری با نویسندگان و شاعران</option>
+                                <option value="other">سایر موضوعات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="messageText">متن پیام شما <span>*</span></label>
+                        <textarea id="messageText" name="messageText" rows="6" placeholder="پیام خود را به طور کامل اینجا بنویسید..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-contact-btn">
+                        <span>ارسال پیام</span>
+                        <span class="btn-arrow">←</span>
+                    </button>
+                </form>
+                <div id="formResponse" class="form-response-message"></div>
+            </div>
+        </section>
+    </main>
+
+    <site-footer></site-footer>
+    <button class="scroll-top" id="scrollTopBtn" aria-label="رفتن به بالا">↑</button>
+
+    <script src="../layout.js"></script>
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const responseDiv = document.getElementById('formResponse');
+            const btn = event.target.querySelector('button[type="submit"]');
+            const originalBtnText = btn.innerHTML;
+            
+            btn.innerHTML = '<span style="opacity: 0.8">در حال ارسال...</span>';
+            btn.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                responseDiv.className = "form-response-message success";
+                responseDiv.style.display = "block";
+                responseDiv.innerText = "پیام شما با موفقیت ثبت شد. به‌زودی با شما تماس خواهیم گرفت.";
+                
+                document.getElementById('contactForm').reset();
+                btn.innerHTML = originalBtnText;
+                btn.style.pointerEvents = 'auto';
+                
+                setTimeout(() => {
+                    responseDiv.style.opacity = '0';
+                    setTimeout(() => { responseDiv.style.display = 'none'; responseDiv.style.opacity = '1'; }, 400);
+                }, 5000);
+            }, 1000);
+        }
+
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        if (scrollTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) scrollTopBtn.classList.add('visible');
+                else scrollTopBtn.classList.remove('visible');
+            });
+            scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+    </script>
+</body>
+</html>
