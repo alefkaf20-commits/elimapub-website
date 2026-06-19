@@ -21,7 +21,7 @@ class SiteHeader extends HTMLElement {
                 <nav class="desktop-nav">
                     <ul class="nav-links">
                         <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
-                        <li><a href="#" class="login-nav-btn">ورود</a></li>
+                        <li><a href="#" class="nav-item-link">ورود</a></li>
                         <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
                         <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
                         <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
@@ -40,7 +40,7 @@ class SiteHeader extends HTMLElement {
             <button class="close-menu-btn" id="closeMenuBtn">✕ برگشت</button>
             <ul class="nav-links">
                 <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
-                <li><a href="#" class="login-nav-btn">ورود</a></li>
+                <li><a href="#" class="nav-item-link">ورود</a></li>
                 <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
                 <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
                 <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
@@ -49,24 +49,40 @@ class SiteHeader extends HTMLElement {
         </nav>
         `;
 
-        // سیستم هوشمند و قطعی برای تشخیص صفحه فعال (بدون باگ تداخل صفحات)
+        // سیستم هوشمند و بدون باگ برای تفکیک صفحات و هشتگ‌های داخلی
         const currentUrl = new URL(window.location.href);
         const currentPath = currentUrl.pathname.endsWith('/') ? currentUrl.pathname + 'index.html' : currentUrl.pathname;
+        const currentHash = currentUrl.hash;
+        
         const navLinks = this.querySelectorAll('.nav-item-link');
-
+        
         navLinks.forEach(link => {
             try {
+                const hrefAttr = link.getAttribute('href');
+                
+                // اگر لینک خالی است یا صرفاً هشتگ خالی دارد، پردازش نشود (مثل دکمه ورود فعلی)
+                if (!hrefAttr || hrefAttr === '#' || hrefAttr.startsWith('#')) return;
+
                 const linkUrl = new URL(link.href, window.location.href);
                 const linkPath = linkUrl.pathname.endsWith('/') ? linkUrl.pathname + 'index.html' : linkUrl.pathname;
-                
-                // از رنگی شدن لینک‌های هشتگ‌دار در منو جلوگیری می‌کند
-                if (linkUrl.hash) return;
+                const linkHash = linkUrl.hash;
 
+                // بررسی تطابق مسیر فایل اصلی (مثلاً index.html)
                 if (currentPath === linkPath) {
-                    link.classList.add('active-page');
+                    if (linkHash) {
+                        // اگر لینک دارای هشتگ اختصاصی است (مثل شاعران)، فقط در صورت تطابق دقیق هشتگ روشن شود
+                        if (currentHash === linkHash) {
+                            link.classList.add('active-page');
+                        }
+                    } else {
+                        // اگر لینک هشتگ ندارد (مثل صفحه اصلی)، فقط زمانی روشن بماند که هشتگی در URL مرورگر نباشد
+                        if (!currentHash) {
+                            link.classList.add('active-page');
+                        }
+                    }
                 }
             } catch (e) {
-                // Ignore parsing errors
+                // خطاهای احتمالی پارس کردن آدرس نادیده گرفته شوند
             }
         });
 
