@@ -150,7 +150,7 @@ class SiteFooter extends HTMLElement {
                 <div class="quick-links">
                     <h3>لینک‌های سریع</h3>
                     <div class="quick-links-wrapper">
-                        <a href="${basePath}index.html#new-books" class="quick-link-item"><span class="arrow">←</span> فروشگاه آنلاین</a>
+                        <a href="${basePath}book/index.html" class="quick-link-item"><span class="arrow">←</span> فروشگاه آنلاین</a>
                         <a href="${basePath}contact/index.html" class="quick-link-item"><span class="arrow">←</span> مراحل پذیرش آثار</a>
                     </div>
                 </div>
