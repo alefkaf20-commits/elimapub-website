@@ -4,7 +4,7 @@
 
 /* ================= هدر و منوها ================= */
 header { 
-    position: fixed; 
+    position: fixed;
     top: 0; 
     left: 0; 
     width: 100%; 
@@ -12,11 +12,11 @@ header {
     background: var(--header-bg); 
     backdrop-filter: blur(16px); 
     -webkit-backdrop-filter: blur(16px); 
-    border-bottom: 1px solid var(--border-glass); 
+    border-bottom: 1px solid var(--border-glass);
     box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     transition: background-color 0.4s ease, border-color 0.4s ease; 
     transform: translateZ(0); 
-    backface-visibility: hidden; 
+    backface-visibility: hidden;
 }
 .header-container { 
     max-width: 1300px; 
@@ -24,7 +24,7 @@ header {
     display: flex;
     justify-content: space-between; 
     align-items: center; 
-    padding: 14px 20px; 
+    padding: 14px 20px;
 }
 .logo-area { 
     order: 1; 
@@ -32,7 +32,7 @@ header {
     display: flex; 
     justify-content: flex-start; 
     align-items: center;
-    gap: 12px; 
+    gap: 12px;
 }
 .logo-area img { object-fit: contain; }
 
@@ -40,7 +40,7 @@ header {
     position: relative; 
     overflow: hidden; 
     display: flex; 
-    align-items: center; 
+    align-items: center;
     gap: 6px;
     background: rgba(249, 115, 22, 0.1); 
     color: #ea580c; 
@@ -57,26 +57,26 @@ header {
 body.dark-theme .dev-badge { 
     color: #fdba74; 
     background-color: rgba(249, 115, 22, 0.15); 
-    border-color: rgba(249, 115, 22, 0.3); 
+    border-color: rgba(249, 115, 22, 0.3);
 }
 .dev-badge::before { 
     content: '';
     width: 6px; 
     height: 6px; 
     background-color: #f97316; 
-    border-radius: 50%; 
+    border-radius: 50%;
     box-shadow: 0 0 8px #f97316; 
     animation: blinkDot 1.5s infinite alternate;
 }
 .dev-badge::after { 
     content: ''; 
-    position: absolute; 
+    position: absolute;
     top: 0; 
     left: -100%; 
     width: 50%; 
     height: 100%; 
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: sweepLight 3s infinite linear; 
+    animation: sweepLight 3s infinite linear;
 }
 @keyframes blinkDot { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
 @keyframes sweepLight { 0% { left: -100%; } 20%, 100% { left: 200%; } }
@@ -85,7 +85,7 @@ nav.desktop-nav {
     order: 2; 
     flex: 2; 
     display: flex; 
-    justify-content: center; 
+    justify-content: center;
 }
 nav.desktop-nav .nav-links { 
     display: flex; 
@@ -94,16 +94,15 @@ nav.desktop-nav .nav-links {
     align-items: center;
 }
 
-/* جدا کردن استایل‌های لینک‌های عادی از دکمه ورود با کلاس nav-item-link */
 nav.desktop-nav .nav-links .nav-item-link { 
-    font-weight: 600; 
+    font-weight: 600;
     color: var(--text-body); 
     position: relative; 
     z-index: 1; 
     padding: 8px 12px; 
     font-size: 0.95rem; 
     text-decoration: none;
-    transition: color 0.4s ease, transform 0.4s ease; 
+    transition: color 0.4s ease, transform 0.4s ease;
     border-radius: 12px; 
     display: inline-block; 
     white-space: nowrap; 
@@ -111,7 +110,7 @@ nav.desktop-nav .nav-links .nav-item-link {
 nav.desktop-nav .nav-links .nav-item-link::before { 
     content: '';
     position: absolute; 
-    top: 0; 
+    top: 0;
     left: 0; 
     right: 0; 
     bottom: 0; 
@@ -120,11 +119,11 @@ nav.desktop-nav .nav-links .nav-item-link::before {
     z-index: -1; 
     opacity: 0; 
     transform: scale(0.8);
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 nav.desktop-nav .nav-links .nav-item-link:hover { 
     color: var(--primary);
-    transform: translateY(-2px); 
+    transform: translateY(-2px);
 }
 nav.desktop-nav .nav-links .nav-item-link:hover::before { 
     opacity: 1; 
@@ -138,35 +137,7 @@ nav.desktop-nav .nav-links .nav-item-link:hover::before {
 }
 .nav-links .nav-item-link.active-page::before { 
     opacity: 1; 
-    transform: scale(1); 
-}
-
-/* دیزاین اختصاصی و تمیز دکمه ورود در هدر دسکتاپ (بدون تداخل با لینک‌ها) */
-.login-nav-btn {
-    background: var(--primary);
-    color: #fff !important;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 8px 20px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    margin-right: 5px;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.15);
-}
-.login-nav-btn:hover {
-    background: #4338ca; /* تیره‌تر شدن هنگام هاور */
-    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
-    transform: translateY(-2px);
-}
-
-/* دکمه ورود در منوی موبایل */
-.mobile-nav .login-nav-btn {
-    display: block;
-    width: fit-content;
-    margin: 10px auto;
-    padding: 10px 30px;
-    border: none;
+    transform: scale(1);
 }
 
 .header-controls { 
@@ -182,7 +153,7 @@ nav.desktop-nav .nav-links .nav-item-link:hover::before {
 .theme-switch { 
     background: var(--primary-light); 
     border: none; 
-    width: 42px; 
+    width: 42px;
     height: 42px; 
     border-radius: 50%;
     cursor: pointer; 
@@ -190,13 +161,13 @@ nav.desktop-nav .nav-links .nav-item-link:hover::before {
     align-items: center; 
     justify-content: center; 
     transition: transform 0.4s, background-color 0.4s; 
-    will-change: transform; 
+    will-change: transform;
 }
 .theme-switch:hover { transform: scale(1.08) rotate(15deg); }
 .theme-switch img { 
     width: 24px; 
     height: 24px; 
-    object-fit: contain; 
+    object-fit: contain;
     transition: transform 0.4s ease; 
 }
 
@@ -204,26 +175,26 @@ nav.mobile-nav { display: none; }
 
 /* ================= فوتر ================= */
 footer { 
-    background: var(--header-bg); 
+    background: var(--header-bg);
     border-top: 1px solid var(--border-glass); 
     padding: 80px 20px 30px; 
     backdrop-filter: blur(16px); 
     -webkit-backdrop-filter: blur(16px);
     transform: translateZ(0); 
-    transition: background-color 0.4s, border-color 0.4s; 
+    transition: background-color 0.4s, border-color 0.4s;
 }
 .footer-grid { 
     max-width: 1300px; 
     margin: 0 auto; 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 40px; 
+    gap: 40px;
 }
 .footer-grid h3 { 
     color: var(--text-title); 
     margin-bottom: 20px; 
     font-weight: 800; 
-    transition: color 0.4s; 
+    transition: color 0.4s;
 }
 .footer-grid p { 
     color: var(--text-body);
@@ -275,26 +246,26 @@ body.dark-theme .social-icon-btn img {
     display: flex; 
     flex-direction: column; 
     align-items: flex-start;
-    gap: 12px; 
+    gap: 12px;
 }
 .quick-link-item { 
     display: flex; 
     align-items: center; 
     gap: 10px; 
     padding: 12px 18px; 
-    background: var(--bg-cards); 
+    background: var(--bg-cards);
     border: 1px solid var(--border-glass);
     border-radius: 14px; 
     text-decoration: none; 
     color: var(--text-body); 
     font-weight: 600; 
     transition: all 0.4s ease;
-    width: fit-content; 
+    width: fit-content;
 }
 .quick-link-item .arrow { transition: transform 0.4s ease; opacity: 0.7; }
 .quick-link-item:hover { 
     background: var(--primary); 
-    color: #fff; 
+    color: #fff;
     border-color: var(--primary);
     transform: translateX(-8px); 
     box-shadow: 0 10px 20px rgba(79, 70, 229, 0.15); 
@@ -304,7 +275,7 @@ body.dark-theme .social-icon-btn img {
 .newsletter-box { display: flex; margin-top: 15px; max-width: 350px; }
 .newsletter-box input { 
     flex: 1; 
-    padding: 14px 18px; 
+    padding: 14px 18px;
     border: 1px solid var(--border-glass);
     background: var(--input-bg); 
     border-radius: 0 12px 12px 0; 
@@ -316,7 +287,7 @@ body.dark-theme .social-icon-btn img {
     padding: 14px 24px; 
     border: none; 
     background: var(--primary); 
-    color: white; 
+    color: white;
     border-radius: 12px 0 0 12px; 
     cursor: pointer;
     font-weight: bold; 
@@ -338,7 +309,7 @@ body.dark-theme .social-icon-btn img {
     bottom: 30px; 
     right: 30px; 
     width: 45px; 
-    height: 45px; 
+    height: 45px;
     background: var(--primary); 
     color: white;
     border: none; 
@@ -346,12 +317,12 @@ body.dark-theme .social-icon-btn img {
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    cursor: pointer; 
+    cursor: pointer;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
     opacity: 0;
     pointer-events: none; 
     transition: opacity 0.4s ease, background-color 0.4s, transform 0.4s; 
-    z-index: 1000; 
+    z-index: 1000;
 }
 .scroll-top:hover { transform: translateY(-5px); }
 .scroll-top.visible { opacity: 1; pointer-events: auto; }
