@@ -3,21 +3,89 @@ html { scroll-behavior: smooth; }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
 
 body {
-    background-color: var(--bg-main); color: var(--text-body);
+    background-color: var(--bg-main); 
+    color: var(--text-body);
     transition: background-color 0.4s ease, color 0.4s ease;
-    padding-top: 85px; overflow-x: hidden;
+    padding-top: 85px; 
+    overflow-x: hidden;
     backface-visibility: hidden;
+    
+    /* انیمیشن نرم هنگام لود شدن صفحه */
+    animation: fadeInPage 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
 }
 
 body.no-scroll { overflow: hidden; }
 img { max-width: 100%; height: auto; display: block; }
 .site-wrapper { position: relative; width: 100%; min-height: 100vh; z-index: 1; }
 
+/* افکت شیشه‌ای بسیار سبک شده برای جلوگیری از لگ */
 .glass-effect {
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
-    background: var(--bg-cards); border: 1px solid var(--border-glass);
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    background: var(--bg-cards); 
+    border: 1px solid var(--border-glass);
     box-shadow: var(--glass-shadow);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
-    will-change: transform;
-    transform: translateZ(0); 
+}
+
+/* ================= میکرواینتراکشن‌ها (Micro-interactions) ================= */
+
+/* ۱. اسکرول‌بار اختصاصی و مدرن */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { 
+    background: var(--primary); 
+    border-radius: 10px; 
+    border: 2px solid var(--bg-main); /* حاشیه برای زیباتر شدن */
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ۲. رنگ هماهنگ هنگام انتخاب (Highlight) متن توسط کاربر */
+::selection { background: var(--primary-light); color: var(--primary); }
+::-moz-selection { background: var(--primary-light); color: var(--primary); }
+
+/* ================= انیمیشن‌های اسکرول (کاملاً سخت‌افزاری و بدون قطعی) ================= */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(20px); 
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+}
+
+.reveal-zoom {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+}
+
+.reveal-on-scroll.is-visible, 
+.reveal-zoom.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* تاخیر آبشاری (فقط برای دسکتاپ - در موبایل صفر می‌شود) */
+.delay-100 { transition-delay: 80ms; }
+.delay-200 { transition-delay: 160ms; }
+.delay-300 { transition-delay: 240ms; }
+.delay-400 { transition-delay: 320ms; }
+
+/* ================= ترانزیشن صفحات (ورود و خروج) ================= */
+body.fade-out {
+    animation: fadeOutPage 0.35s ease-in forwards;
+}
+
+@keyframes fadeInPage { 
+    0% { opacity: 0; transform: translateY(15px); } 
+    100% { opacity: 1; transform: translateY(0); } 
+}
+@keyframes fadeOutPage { 
+    0% { opacity: 1; transform: translateY(0); } 
+    100% { opacity: 0; transform: translateY(-15px); } 
+}
+
+/* ================= رفع لگ قطعی برای موبایل ================= */
+@media (max-width: 768px) {
+    .delay-100, .delay-200, .delay-300, .delay-400 {
+        transition-delay: 0ms !important;
+    }
 }
