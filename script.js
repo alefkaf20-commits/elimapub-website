@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // محاسبه مسیر اصلی سایت به صورت داینامیک برای رفع مشکل پوشه‌بندی
     const currentScript = document.currentScript || document.querySelector('script[src*="script.js"]');
     let basePath = '';
     if (currentScript) {
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (src) basePath = src.split('script.js')[0];
     }
 
-    // ================= سیستم جستجوی دوگانه (بدون حالت شناور روی سایت) =================
+    // ================= سیستم جستجوی دوگانه =================
     const searchInput = document.querySelector('.search-box input');
     const searchBoxForm = document.querySelector('.search-box');
 
@@ -44,10 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const renderBooks = (filteredBooks, isLive) => {
             if (filteredBooks.length === 0) return `<div class="${isLive ? 'live-no-results' : 'search-no-results-full'}">کتابی پیدا نشد 🔍</div>`;
-            
             return filteredBooks.map(book => {
                 const coverImage = book.images && book.images.length > 0 ? book.images[0] : 'default.jpg';
-                // استفاده از basePath برای جلوگیری از مشکل خرابی مسیر تصاویر
                 const imagePath = basePath + 'book/covers/' + coverImage;
                 const linkPath = basePath + 'book/details.html?id=' + book.id;
                 
@@ -98,15 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const closeOverlay = () => { overlay.classList.remove('active'); document.body.classList.remove('no-scroll'); };
         closeSearchBtn.addEventListener('click', closeOverlay);
+        
         document.addEventListener('click', (e) => { if (!searchBoxForm.contains(e.target) && !liveDropdown.contains(e.target)) liveDropdown.classList.remove('active'); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { liveDropdown.classList.remove('active'); if (overlay.classList.contains('active')) closeOverlay(); } });
         searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) liveDropdown.classList.add('active'); });
     }
 
-    // ================= رندر داینامیک گالری کتاب‌ها (book/index.html) =================
+    // ================= رندر داینامیک گالری کتاب‌ها =================
     const galleryContainer = document.querySelector('.compact-book-gallery');
     if (galleryContainer && typeof BOOKS_DATABASE !== 'undefined') {
-        // ایجاد داینامیک تمام کارت‌های کتاب از دیتابیس
         galleryContainer.innerHTML = BOOKS_DATABASE.map(book => {
             const coverImage = book.images && book.images.length > 0 ? book.images[0] : 'default.jpg';
             const imagePath = basePath + 'book/covers/' + coverImage;
@@ -119,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // سیستم فیلترینگ دکمه‌های گالری
         const filterBtns = document.querySelectorAll('.filter-btn');
         const galleryItems = document.querySelectorAll('.compact-card');
         if (filterBtns.length > 0 && galleryItems.length > 0) {
@@ -142,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const bookId = urlParams.get('id');
         const currentBook = BOOKS_DATABASE.find(b => b.id === bookId);
-
+        
         if (currentBook) {
             document.getElementById('pageTitle').textContent = `نشر الیما | ${currentBook.title}`;
             document.getElementById('bookTitle').textContent = currentBook.title;
@@ -198,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    // عملکرد تغییر عکس در اسلایدر
     window.changeImage = function(element) {
         const mainImage = document.getElementById('mainBookImg');
         if (!mainImage || mainImage.src === element.src) return;
@@ -213,4 +208,52 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.add('active-thumb');
         }
     };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '0px 0px -5% 0px',
+        threshold: 0
+    });
+
+    const animatedElements = document.querySelectorAll('.reveal-on-scroll, .reveal-zoom');
+    animatedElements.forEach(el => scrollObserver.observe(el));
+
+    // ================= انیمیشن خروج نرم صفحات (کاملاً رفع باگ شده) =================
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        
+        if (link && link.href && link.target !== '_blank' && link.host === window.location.host) {
+            const hrefAttr = link.getAttribute('href');
+            const isHashLink = hrefAttr.startsWith('#');
+            const isSamePageHash = link.href.includes('#') && link.pathname === window.location.pathname;
+            const isDownload = link.hasAttribute('download');
+            
+            // جلوگیری از اجرای انیمیشن خروج برای لینک‌های خاص مثل ایمیل و تماس
+            const isSpecialLink = hrefAttr.startsWith('mailto:') || hrefAttr.startsWith('tel:') || hrefAttr.startsWith('javascript:');
+            
+            if (!isHashLink && !isSamePageHash && !isDownload && !isSpecialLink) {
+                e.preventDefault(); 
+                document.body.classList.add('fade-out'); 
+                
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 350); 
+            }
+        }
+    });
+
+    // حل مشکل BFCache: اگر کاربر از دکمه Back مرورگر استفاده کرد، صفحه روی حالت محو شده (fade-out) گیر نکند
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            document.body.classList.remove('fade-out');
+        }
+    });
+
 });
