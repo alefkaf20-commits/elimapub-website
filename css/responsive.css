@@ -10,20 +10,33 @@
     .dev-badge { padding: 4px 10px; font-size: 0.65rem; white-space: nowrap; flex-shrink: 0; }
 
     .burger-wrapper { display: flex; order: 3; flex: 1; justify-content: flex-end; align-items: center; } 
+    
+    /* انیمیشن سریع و فنری منوی همبرگری */
     .burger-menu { position: relative; width: 26px; height: 18px; background: transparent; border: none; cursor: pointer; z-index: 2600; padding: 0; display: block; }
-    .burger-menu span { position: absolute; right: 0; width: 100%; height: 2.5px; border-radius: 3px; background-color: var(--text-title); transition: transform 0.4s, opacity 0.4s, top 0.4s; }
+    .burger-menu span { 
+        position: absolute; 
+        right: 0; 
+        width: 100%; 
+        height: 2.5px; 
+        border-radius: 3px; 
+        background-color: var(--text-title); 
+        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+    }
+    
     .burger-menu span:nth-child(1) { top: 0; }
-    .burger-menu span:nth-child(2) { top: 50%; margin-top: -1.25px; }
-    .burger-menu span:nth-child(3) { bottom: 0; }
-    .burger-menu.open span:nth-child(1) { top: 50%; margin-top: -1.25px; transform: rotate(45deg); }
+    .burger-menu span:nth-child(2) { top: calc(50% - 1.25px); }
+    .burger-menu span:nth-child(3) { top: calc(100% - 2.5px); }
+    
+    .burger-menu.open span:nth-child(1) { top: calc(50% - 1.25px); transform: rotate(45deg); }
     .burger-menu.open span:nth-child(2) { opacity: 0; transform: scale(0); }
-    .burger-menu.open span:nth-child(3) { bottom: auto; top: 50%; margin-top: -1.25px; transform: rotate(-45deg); }
+    .burger-menu.open span:nth-child(3) { top: calc(50% - 1.25px); transform: rotate(-45deg); }
 
     nav.desktop-nav { display: none; } 
 
     nav.mobile-nav {
         display: flex; position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
-        background: var(--header-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        /* بک‌گراند کاملاً توپر (Solid) برای جلوگیری از قاطی شدن با محتوای صفحه پشتی */
+        background: var(--bg-main); 
         flex-direction: column; justify-content: center; align-items: center;
         transform: translate3d(100%, 0, 0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 2500; will-change: transform;
@@ -37,45 +50,71 @@
     nav.mobile-nav .nav-links a { font-size: 1.1rem; font-weight: 700; color: var(--text-title); text-decoration: none; display: block; padding: 16px 0; }
     .close-menu-btn { position: absolute; top: 20px; left: 20px; background: var(--primary-light); color: var(--primary); border: none; padding: 8px 15px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
-    .hero-section { padding: 40px 15px 50px; }
-    .hero-logo { width: 90px; height: 90px; margin-bottom: 15px; }
-    .hero-section h1 { font-size: 1.9rem; margin-bottom: 10px; }
-    .hero-section p { font-size: 0.95rem; margin: 0 auto 20px; line-height: 1.7; }
-    
-    /* تنظیمات فرم جستجو برای تبلت */
-    .search-box { padding: 4px; width: 100%; max-width: 400px; }
-    .search-box input { font-size: 0.9rem; padding: 12px 15px; }
-    .search-box button { padding: 0 20px; font-size: 0.95rem; }
-
-    .cats-container, .books-wrapper, .authors-wrapper {
-        display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
-        padding: 10px 15px 20px; gap: 15px; scroll-snap-type: x mandatory; scrollbar-width: none; justify-content: flex-start;
-    }
-    .cats-container::-webkit-scrollbar, .books-wrapper::-webkit-scrollbar, .authors-wrapper::-webkit-scrollbar { display: none; }
-
-    .cat-card { flex: 0 0 160px; scroll-snap-align: start; padding: 20px 15px; border-radius: 16px; }
-    .book-item { flex: 0 0 240px; scroll-snap-align: start; padding: 16px; border-radius: 18px; }
-    .author-card { flex: 0 0 200px; scroll-snap-align: start; padding: 20px 15px; }
-
-    .cta-banner { margin: 30px 15px; padding: 35px 20px; border-radius: 20px; }
-    .cta-banner h2 { font-size: 1.4rem; }
-    footer { padding: 50px 15px 25px; }
+    .pro-top-section { flex-direction: column; padding: 30px 20px; gap: 35px; }
+    .pro-gallery { width: 100%; flex: none; }
+    .pro-main-image { max-width: 380px; margin: 0 auto; }
+    .pro-title { font-size: 2.1rem; text-align: center; }
+    .pro-author { text-align: center; margin-bottom: 35px; }
+    .pro-badges { justify-content: center; }
+    .pro-price-box { flex-direction: column; gap: 15px; text-align: center; padding: 20px; transform: scale(1); border-right: 2px solid var(--primary); border-bottom: 8px solid var(--accent); }
+    .pro-action-buttons { flex-direction: column; width: 100%; }
+    .pro-specs-section, .pro-desc-section { padding: 30px 20px; }
 }
 
 @media (max-width: 768px) {
+    .hero-section { padding: 25px 15px 35px; }
+    .hero-logo { width: 80px; height: 80px; margin-bottom: 12px; }
+    .hero-section h1 { font-size: 1.6rem; margin-bottom: 8px; }
+    .hero-section p { font-size: 0.9rem; margin-bottom: 18px; line-height: 1.6; }
+
+    .section-header { margin: 40px auto 15px; padding: 0 15px; }
+    .section-header h2 { font-size: 1.35rem; }
+
+    .cats-container, .books-wrapper, .authors-wrapper { 
+        display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+        padding: 25px 0 35px; 
+        gap: 15px; scroll-snap-type: x mandatory; scrollbar-width: none; justify-content: flex-start;
+    }
+    .cats-container::-webkit-scrollbar, .books-wrapper::-webkit-scrollbar, .authors-wrapper::-webkit-scrollbar { display: none; }
+
+    .cats-container::before, .cats-container::after,
+    .books-wrapper::before, .books-wrapper::after,
+    .authors-wrapper::before, .authors-wrapper::after {
+        content: '';
+        flex: 0 0 1px; 
+        display: block;
+    }
+
+    .cat-card { flex: 0 0 135px; scroll-snap-align: center; padding: 15px 10px; border-radius: 14px; }
+    .cat-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .cat-card h3 { font-size: 0.9rem; }
+
+    .book-item { flex: 0 0 170px; scroll-snap-align: center; padding: 12px; border-radius: 16px; }
+    .book-cover-img { max-width: 130px; margin-bottom: 12px; border-radius: 6px; }
+    .item-title { font-size: 0.95rem; margin-bottom: 4px; }
+    .item-author { font-size: 0.8rem; margin-bottom: 10px; }
+    .item-price { font-size: 0.95rem; margin-bottom: 12px; }
+    .btn-action { padding: 8px; font-size: 0.85rem; border-radius: 10px; }
+
+    .author-card { flex: 0 0 145px; scroll-snap-align: center; padding: 15px 10px; border-radius: 14px; }
+    .author-pic { width: 75px; height: 75px; margin-bottom: 10px; border-width: 2px; }
+    .author-card h3 { font-size: 0.95rem; }
+    .author-card p { font-size: 0.8rem; }
+
+    .cat-card:active, .book-item:active, .author-card:active { transform: scale(0.98); transition: transform 0.1s; border-color: var(--primary); }
+
+    .cta-banner { padding: 30px 20px; margin: 30px 15px; border-radius: 18px; }
+    .cta-banner h2 { font-size: 1.3rem; margin-bottom: 10px; }
+    .cta-banner p { font-size: 0.85rem; margin-bottom: 20px; }
+    .cta-banner .btn-white { padding: 10px 20px; font-size: 0.9rem; border-radius: 10px; }
+
     .about-page { padding-bottom: 40px; }
     .about-hero { padding: 40px 15px; margin-bottom: 30px; }
     .about-hero h1 { font-size: 2rem; margin-bottom: 10px; }
     .about-hero p { font-size: 1rem; }
     
-    /* تنظیمات اختصاصی جستجو برای موبایل و افکت سه‌نقطه */
-    .search-box input { 
-        font-size: 0.8rem; 
-        padding: 10px 12px; 
-        text-overflow: ellipsis; 
-        overflow: hidden; 
-        white-space: nowrap; 
-    }
+    .search-box { width: 100%; max-width: 400px; padding: 4px; }
+    .search-box input { font-size: 0.8rem; padding: 10px 12px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
     .search-box button { padding: 0 16px; font-size: 0.85rem; }
     
     .about-grid { grid-template-columns: 1fr !important; gap: 20px !important; margin-bottom: 40px; }
@@ -116,13 +155,14 @@
     
     .pro-specs-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .spec-row { padding: 8px; flex-direction: column; gap: 4px; text-align: center; font-size: 0.85rem; }
+
+    footer { padding: 50px 15px 25px; }
 }
 
 @media (max-width: 500px) {
     .compact-book-gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px 10px; }
     .compact-card h4 { font-size: 0.75rem; }
     
-    /* برای گوشی‌های خیلی کوچیک */
     .search-box input { font-size: 0.75rem; padding: 8px 10px; }
     .search-box button { padding: 0 14px; font-size: 0.8rem; }
 }
@@ -137,81 +177,16 @@
     .pro-specs-section, .pro-desc-section { padding: 25px; }
 }
 
+@media (max-width: 480px) {
+    .pro-title { font-size: 1.7rem; }
+    .price-value { font-size: 1.9rem; }
+    .thumb-img { width: 65px; height: 90px; }
+    .spec-row { flex-direction: column; gap: 8px; text-align: center; }
+}
+
 @media (max-width: 380px) {
     .pro-price-box { flex-direction: column; gap: 5px; }
     .pro-action-buttons { flex-direction: column; }
     .pro-specs-grid { grid-template-columns: 1fr; }
     .spec-row { flex-direction: row; text-align: right; justify-content: space-between; }
-}
-/* ================= ریسپانسیو صفحه جزئیات کتاب (موبایل و تبلت) ================= */
-@media (max-width: 992px) {
-    .pro-top-section {
-        flex-direction: column;
-        padding: 30px 20px;
-        gap: 35px;
-    }
-    
-    .pro-gallery {
-        width: 100%;
-        flex: none;
-    }
-    
-    .pro-main-image {
-        max-width: 380px; 
-        margin: 0 auto;
-    }
-    
-    .pro-title {
-        font-size: 2.1rem;
-        text-align: center;
-    }
-    
-    .pro-author {
-        text-align: center;
-        margin-bottom: 35px;
-    }
-    
-    .pro-badges {
-        justify-content: center;
-    }
-    
-    .pro-price-box {
-        flex-direction: column; 
-        gap: 15px;
-        text-align: center;
-        padding: 20px;
-        transform: scale(1); 
-        border-right: 2px solid var(--primary);
-        border-bottom: 8px solid var(--accent); 
-    }
-    
-    .pro-action-buttons {
-        flex-direction: column; 
-        width: 100%;
-    }
-    
-    .pro-specs-section, .pro-desc-section {
-        padding: 30px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .pro-title {
-        font-size: 1.7rem;
-    }
-    
-    .price-value {
-        font-size: 1.9rem;
-    }
-    
-    .thumb-img {
-        width: 65px;
-        height: 90px;
-    }
-    
-    .spec-row {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
 }
