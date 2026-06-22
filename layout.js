@@ -55,27 +55,23 @@ class SiteHeader extends HTMLElement {
         const currentHash = currentUrl.hash;
         
         const navLinks = this.querySelectorAll('.nav-item-link');
-        
         navLinks.forEach(link => {
             try {
                 const hrefAttr = link.getAttribute('href');
                 
-                // اگر لینک خالی است یا صرفاً هشتگ خالی دارد، پردازش نشود (مثل دکمه ورود فعلی)
+                // اگر لینک خالی است یا صرفاً هشتگ خالی دارد، پردازش نشود
                 if (!hrefAttr || hrefAttr === '#' || hrefAttr.startsWith('#')) return;
 
                 const linkUrl = new URL(link.href, window.location.href);
                 const linkPath = linkUrl.pathname.endsWith('/') ? linkUrl.pathname + 'index.html' : linkUrl.pathname;
                 const linkHash = linkUrl.hash;
 
-                // بررسی تطابق مسیر فایل اصلی (مثلاً index.html)
                 if (currentPath === linkPath) {
                     if (linkHash) {
-                        // اگر لینک دارای هشتگ اختصاصی است (مثل شاعران)، فقط در صورت تطابق دقیق هشتگ روشن شود
                         if (currentHash === linkHash) {
                             link.classList.add('active-page');
                         }
                     } else {
-                        // اگر لینک هشتگ ندارد (مثل صفحه اصلی)، فقط زمانی روشن بماند که هشتگی در URL مرورگر نباشد
                         if (!currentHash) {
                             link.classList.add('active-page');
                         }
@@ -139,7 +135,7 @@ class SiteFooter extends HTMLElement {
                     <h3>شبکه‌های اجتماعی ما</h3>
                     <p>با دنبال کردن ما، از تازه‌های نشر اِلیما و تخفیف‌های ویژه جا نمانید:</p>
                     <div class="social-icons compact">
-                        <a href="#" class="social-icon-btn" aria-label="اینستاگرام">
+                        <a href="https://www.instagram.com/elima.pub?igsh=MWFnbjllMGZndGUxdQ==" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="اینستاگرام">
                             <img src="${basePath}instaicon.svg" alt="اینستاگرام">
                         </a>
                         <a href="#" class="social-icon-btn" aria-label="تلگرام">
