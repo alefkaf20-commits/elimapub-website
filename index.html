@@ -32,6 +32,10 @@
     <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="css/responsive.css">
     
+    <!-- کتابخانه قدرتمند Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- فایل‌های سایت در صفحه اصلی باید دقیقاً همین‌طوری آدرس‌دهی بشن -->
     <script src="database.js" defer></script>
     <script src="layout.js" defer></script>
     <script src="script.js" defer></script>
@@ -42,6 +46,13 @@
             document.body.classList.add('dark-theme');
         }
     </script>
+    <!-- ================= پری‌لودر اختصاصی نشر الیما ================= -->
+    <div id="elima-preloader" class="preloader-wrapper">
+        <div class="preloader-content">
+            <img src="logo.png" alt="در حال بارگذاری نشر الیما" class="preloader-logo">
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
     
     <div class="site-wrapper">
         
