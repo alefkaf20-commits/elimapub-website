@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>نشر الیما | صفحه پیدا نشد (404)</title>
+    <meta name="description" content="متاسفانه صفحه‌ای که به دنبال آن هستید در سایت نشر الیما پیدا نشد.">
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#4f46e5">
+    
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <script src="/database.js" defer></script>
+    <script src="/layout.js" defer></script>
+    <script src="/script.js" defer></script>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+
+    <site-header></site-header>
+
+    <main class="error-page-container">
+        <div class="error-content reveal-zoom delay-100">
+            <div class="error-number">404</div>
+            <h1>مسیر رو اشتباه اومدی!</h1>
+            <p>صفحه‌ای که دنبالش می‌گردی وجود نداره، پاک شده یا اسمش تغییر کرده. نگران نباش، بیا برگردیم به صفحه اصلی و از اونجا دوباره شروع کنیم.</p>
+            
+            <a href="/index.html" class="btn-primary back-home-btn">
+                <span>بازگشت به خانه</span>
+                <span class="arrow">←</span>
+            </a>
+        </div>
+    </main>
+
+    <site-footer></site-footer>
+</body>
+</html>
