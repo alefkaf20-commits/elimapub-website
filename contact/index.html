@@ -32,6 +32,10 @@
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/pages.css">
     <link rel="stylesheet" href="../css/responsive.css">
+
+    <script src="../database.js" defer></script>
+    <script src="../layout.js" defer></script>
+    <script src="../script.js" defer></script>
 </head>
 <body>
     <script>
@@ -39,67 +43,76 @@
             document.body.classList.add('dark-theme');
         }
     </script>
+    <!-- ================= پری‌لودر اختصاصی نشر الیما ================= -->
+    <div id="elima-preloader" class="preloader-wrapper">
+        <div class="preloader-content">
+            <img src="../logo.png" alt="در حال بارگذاری نشر الیما" class="preloader-logo">
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
 
     <site-header></site-header>
 
     <main class="contact-page-container">
-        <section class="contact-hero">
+        <section class="contact-hero reveal-zoom">
             <h1>با ما در <span class="text-primary">ارتباط</span> باشید</h1>
             <p>دیدگاه‌ها، پیشنهادها و سوالات خود را با تیم پشتیبانی و پذیرش آثار نشر الیما در میان بگذارید.</p>
         </section>
 
         <section class="contact-main-grid">
-            <div class="contact-info-card">
+            <!-- کلاس glass-effect برای جلوگیری از لگ حذف شد -->
+            <div class="contact-info-card reveal-on-scroll delay-100">
                 <h2>اطلاعات تماس</h2>
                 <p class="info-subtitle">راه‌های ارتباطی مستقیم با دفتر مرکزی نشر الیما</p>
                 
                 <div class="info-items-list">
-    <div class="info-item">
-        <div class="info-icon">
-            <i class="contact-svg-icon icon-gps" aria-label="نشانی"></i>
-        </div>
-        <div class="info-text">
-            <h3>نشانی دفتر مرکزی</h3>
-            <p>خوزستان، اهواز، خیابان اصلی، مجتمع فرهنگی الیما</p>
-        </div>
-    </div>
-    <div class="info-item">
-        <div class="info-icon">
-            <i class="contact-svg-icon icon-phone" aria-label="تماس"></i>
-        </div>
-        <div class="info-text">
-            <h3>شماره‌های تماس</h3>
-            <p dir="ltr">+98 (61) 3333-XXXX</p>
-            <p dir="ltr">+98 916 XXX XXXX</p>
-        </div>
-    </div>
-    <div class="info-item">
-        <div class="info-icon">
-            <i class="contact-svg-icon icon-mail" aria-label="ایمیل"></i>
-        </div>
-        <div class="info-text">
-            <h3>پست الکترونیک</h3>
-            <p>info@elimapub.ir</p>
-            <p>support@elimapub.ir</p>
-        </div>
-    </div>
-    <div class="info-item">
-        <div class="info-icon">
-            <i class="contact-svg-icon icon-time" aria-label="ساعات کاری"></i>
-        </div>
-        <div class="info-text">
-            <h3>ساعات کاری</h3>
-            <p>شنبه تا چهارشنبه: ۹ صبح الی ۱۷ عصر</p>
-            <p>پنجشنبه‌ها: ۹ صبح الی ۱۳ ظهر</p>
-        </div>
-    </div>
-</div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="contact-svg-icon icon-gps" aria-label="نشانی"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>نشانی دفتر مرکزی</h3>
+                            <p>خوزستان، اهواز، خیابان اصلی، مجتمع فرهنگی الیما</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="contact-svg-icon icon-phone" aria-label="تماس"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>شماره‌های تماس</h3>
+                            <p dir="ltr">+98 (61) 3333-XXXX</p>
+                            <p dir="ltr">+98 916 XXX XXXX</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="contact-svg-icon icon-mail" aria-label="ایمیل"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>پست الکترونیک</h3>
+                            <p>info@elimapub.ir</p>
+                            <p>support@elimapub.ir</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="contact-svg-icon icon-time" aria-label="ساعات کاری"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>ساعات کاری</h3>
+                            <p>شنبه تا چهارشنبه: ۹ صبح الی ۱۷ عصر</p>
+                            <p>پنجشنبه‌ها: ۹ صبح الی ۱۳ ظهر</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="contact-map-placeholder">
                     <span>نقشه موقعیت مکانی نشر الیما</span>
                 </div>
             </div>
 
-            <div class="contact-form-card">
+            <!-- کلاس glass-effect برای جلوگیری از لگ حذف شد -->
+            <div class="contact-form-card reveal-on-scroll delay-200">
                 <h2>ارسال پیام مستقیم</h2>
                 <p class="form-subtitle">فرم زیر را پر کنید؛ کارشناسان ما در سریع‌ترین زمان با شما تماس می‌گیرند.</p>
                 
@@ -150,7 +163,6 @@
     <site-footer></site-footer>
     <button class="scroll-top" id="scrollTopBtn" aria-label="رفتن به بالا">↑</button>
 
-    <script src="../layout.js"></script>
     <script>
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -175,15 +187,6 @@
                     setTimeout(() => { responseDiv.style.display = 'none'; responseDiv.style.opacity = '1'; }, 400);
                 }, 5000);
             }, 1000);
-        }
-
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        if (scrollTopBtn) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) scrollTopBtn.classList.add('visible');
-                else scrollTopBtn.classList.remove('visible');
-            });
-            scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         }
     </script>
 </body>
