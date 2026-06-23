@@ -2,26 +2,33 @@
 html { scroll-behavior: smooth; }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
 
+/* تنظیمات انیمیشن تغییر تم (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+}
+
 body {
     background-color: var(--bg-main); 
     color: var(--text-body);
-    transition: background-color 0.4s ease, color 0.4s ease;
     padding-top: 85px; 
     overflow-x: hidden;
-    backface-visibility: hidden;
-    
-    /* انیمیشن نرم هنگام لود شدن صفحه */
-    animation: fadeInPage 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
 }
 
 body.no-scroll { overflow: hidden; }
 img { max-width: 100%; height: auto; display: block; }
 .site-wrapper { position: relative; width: 100%; min-height: 100vh; z-index: 1; }
 
+/* انتقال انیمیشن لود صفحه به محتوای اصلی و فوتر */
+main, site-footer {
+    animation: fadeInPage 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
 /* افکت شیشه‌ای بسیار سبک شده برای جلوگیری از لگ */
 .glass-effect {
-    backdrop-filter: blur(8px); 
+    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px); 
     background: var(--bg-cards); 
     border: 1px solid var(--border-glass);
@@ -29,63 +36,132 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ================= میکرواینتراکشن‌ها (Micro-interactions) ================= */
-
-/* ۱. اسکرول‌بار اختصاصی و مدرن */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-main); }
 ::-webkit-scrollbar-thumb { 
-    background: var(--primary); 
+    background: var(--primary);
     border-radius: 10px; 
-    border: 2px solid var(--bg-main); /* حاشیه برای زیباتر شدن */
+    border: 2px solid var(--bg-main);
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-/* ۲. رنگ هماهنگ هنگام انتخاب (Highlight) متن توسط کاربر */
 ::selection { background: var(--primary-light); color: var(--primary); }
 ::-moz-selection { background: var(--primary-light); color: var(--primary); }
 
-/* ================= انیمیشن‌های اسکرول (کاملاً سخت‌افزاری و بدون قطعی) ================= */
+/* ================= انیمیشن‌های اسکرول (گوگولی، سبک و مبتنی بر GPU) ================= */
 .reveal-on-scroll {
     opacity: 0;
-    transform: translateY(20px); 
-    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    transform: translate3d(0, 35px, 0);
+    will-change: opacity, transform;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .reveal-zoom {
     opacity: 0;
-    transform: scale(0.96);
-    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    transform: scale3d(0.9, 0.9, 1);
+    will-change: opacity, transform;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.reveal-on-scroll.is-visible, 
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
 .reveal-zoom.is-visible {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale3d(1, 1, 1);
 }
 
-/* تاخیر آبشاری (فقط برای دسکتاپ - در موبایل صفر می‌شود) */
 .delay-100 { transition-delay: 80ms; }
 .delay-200 { transition-delay: 160ms; }
 .delay-300 { transition-delay: 240ms; }
 .delay-400 { transition-delay: 320ms; }
 
 /* ================= ترانزیشن صفحات (ورود و خروج) ================= */
-body.fade-out {
-    animation: fadeOutPage 0.35s ease-in forwards;
-}
+body.fade-out { animation: fadeOutPage 0.35s ease-in forwards; }
 
 @keyframes fadeInPage { 
-    0% { opacity: 0; transform: translateY(15px); } 
-    100% { opacity: 1; transform: translateY(0); } 
+    0% { opacity: 0; transform: translate3d(0, 15px, 0); } 
+    100% { opacity: 1; transform: translate3d(0, 0, 0); } 
 }
 @keyframes fadeOutPage { 
-    0% { opacity: 1; transform: translateY(0); } 
-    100% { opacity: 0; transform: translateY(-15px); } 
+    0% { opacity: 1; transform: translate3d(0, 0, 0); } 
+    100% { opacity: 0; transform: translate3d(0, -15px, 0); } 
 }
 
-/* ================= رفع لگ قطعی برای موبایل ================= */
+/* ================= تنظیمات سرعت انیمیشن برای موبایل ================= */
 @media (max-width: 768px) {
-    .delay-100, .delay-200, .delay-300, .delay-400 {
-        transition-delay: 0ms !important;
-    }
+    .reveal-on-scroll { transform: translate3d(0, 25px, 0); }
+    .delay-100 { transition-delay: 40ms; }
+    .delay-200 { transition-delay: 80ms; }
+    .delay-300 { transition-delay: 120ms; }
+    .delay-400 { transition-delay: 160ms; }
+}
+/* ================= پری‌لودر اختصاصی (Preloader) ================= */
+.preloader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-main); /* هماهنگ با لایت‌مود و دارک‌مود */
+    z-index: 99999; /* بالاترین سطح ممکن روی سایت */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+}
+
+/* این کلاس توسط جاوااسکریپت اضافه میشه تا لودینگ محو بشه */
+.preloader-wrapper.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.preloader-logo {
+    width: 95px;
+    height: auto;
+    /* انیمیشن نبض زدن لوگو */
+    animation: pulseLogo 1.2s infinite ease-in-out alternate;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+}
+
+.preloader-bar {
+    width: 140px;
+    height: 4px;
+    background-color: var(--border-glass);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.preloader-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 40%;
+    background-color: var(--primary); /* رنگ اصلی سایتت */
+    border-radius: 10px;
+    /* انیمیشن رفت و برگشت نوار لودینگ */
+    animation: loadingBar 1s infinite ease-in-out alternate;
+}
+
+@keyframes pulseLogo {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes loadingBar {
+    0% { left: -40%; }
+    100% { left: 100%; }
 }
