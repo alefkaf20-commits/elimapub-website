@@ -49,7 +49,6 @@ class SiteHeader extends HTMLElement {
         </nav>
         `;
 
-        // سیستم هوشمند و بدون باگ برای تفکیک صفحات و هشتگ‌های داخلی
         const currentUrl = new URL(window.location.href);
         const currentPath = currentUrl.pathname.endsWith('/') ? currentUrl.pathname + 'index.html' : currentUrl.pathname;
         const currentHash = currentUrl.hash;
@@ -58,8 +57,6 @@ class SiteHeader extends HTMLElement {
         navLinks.forEach(link => {
             try {
                 const hrefAttr = link.getAttribute('href');
-                
-                // اگر لینک خالی است یا صرفاً هشتگ خالی دارد، پردازش نشود
                 if (!hrefAttr || hrefAttr === '#' || hrefAttr.startsWith('#')) return;
 
                 const linkUrl = new URL(link.href, window.location.href);
@@ -68,18 +65,12 @@ class SiteHeader extends HTMLElement {
 
                 if (currentPath === linkPath) {
                     if (linkHash) {
-                        if (currentHash === linkHash) {
-                            link.classList.add('active-page');
-                        }
+                        if (currentHash === linkHash) link.classList.add('active-page');
                     } else {
-                        if (!currentHash) {
-                            link.classList.add('active-page');
-                        }
+                        if (!currentHash) link.classList.add('active-page');
                     }
                 }
-            } catch (e) {
-                // خطاهای احتمالی پارس کردن آدرس نادیده گرفته شوند
-            }
+            } catch (e) {}
         });
 
         const themeBtn = this.querySelector('#themeBtn');
@@ -97,11 +88,22 @@ class SiteHeader extends HTMLElement {
 
         if (themeBtn) {
             updateThemeIcon(isDark);
+            
             themeBtn.addEventListener('click', () => {
-                body.classList.toggle('dark-theme');
-                const currentDark = body.classList.contains('dark-theme');
-                localStorage.setItem('elima-theme', currentDark ? 'dark' : 'light');
-                updateThemeIcon(currentDark);
+                // تابع خام برای تغییر تم بدون هیچ انیمیشن دستی
+                const switchTheme = () => {
+                    body.classList.toggle('dark-theme');
+                    const currentDark = body.classList.contains('dark-theme');
+                    localStorage.setItem('elima-theme', currentDark ? 'dark' : 'light');
+                    updateThemeIcon(currentDark);
+                };
+
+                // استفاده از تکنولوژی مدرن و بدون لگ View Transitions API
+                if (!document.startViewTransition) {
+                    switchTheme(); // مرورگرهای خیلی قدیمی مستقیما و بدون افکت تم را عوض میکنند
+                } else {
+                    document.startViewTransition(switchTheme); // سوپر انیمیشن روان توسط خود مرورگر
+                }
             });
         }
 
@@ -123,6 +125,18 @@ class SiteHeader extends HTMLElement {
             closeMenuBtn.addEventListener('click', () => toggleMenu(false));
             mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) toggleMenu(false); });
         }
+
+        // ================= هدر ثابت (Sticky Header) =================
+        const headerEl = this.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            if (!headerEl) return;
+            if (window.scrollY > 50) {
+                headerEl.classList.add('header-scrolled');
+            } else {
+                headerEl.classList.remove('header-scrolled');
+            }
+        }, { passive: true });
     }
 }
 
@@ -138,7 +152,7 @@ class SiteFooter extends HTMLElement {
                         <a href="https://www.instagram.com/elima.pub?igsh=MWFnbjllMGZndGUxdQ==" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="اینستاگرام">
                             <img src="${basePath}instaicon.svg" alt="اینستاگرام">
                         </a>
-                        <a href="#" class="social-icon-btn" aria-label="تلگرام">
+                        <a href="https://t.me/elimapub" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="تلگرام">
                             <img src="${basePath}teleicon.svg" alt="تلگرام">
                         </a>
                     </div>
