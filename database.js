@@ -1,54 +1,33 @@
-// ================= دیتابیس مرکزی انتشارات الیما =================
-const BOOKS_DATABASE = [
-    { 
-        id: 'navayedel', 
-        title: 'نوای دل', 
-        author: 'هوشنگ اعتمادی گندمانی', 
-        images: ['navayedel.jpg', 'navayedelback.jpg', 'book1-3.jpg'], 
-        category: 'literature',
-        price: '۲۴۵,۰۰۰',
-        pages: '۳۲۰',
-        format: 'رقعی (۱۴ در ۲۱)',
-        coverType: 'شومیز مات (Softcover)',
-        paperType: 'بالک سوئدی (سبک)',
-        isbn: '978-600-12345-6-7',
-        year: '۱۴۰۵',
-        printEdition: 'چاپ سوم',
-        isBestseller: true,
-        desc: '<p>این کتاب مجموعه‌ای از اشعار و غزلیات ناب است که با زبانی شیوا و دلنشین سروده شده است. طراحی این قسمت به گونه‌ای است که خواندن متن‌های طولانی چشم را خسته نکند و فضای کافی بین خطوط وجود داشته باشد.</p>'
-    },
-    { 
-        id: 'barayeshomare13', 
-        title: 'برای شماره ۱۳ ها', 
-        author: 'علی قنواتی', 
-        images: ['barayeshomare13.jpg', 'barayeshomare13back.jpg', 'book1-3.jpg'], 
-        category: 'history',
-        price: '۲۹۰,۰۰۰',
-        pages: '۴۱۰',
-        format: 'رقعی (۱۴ در ۲۱)',
-        coverType: 'شومیز براق',
-        paperType: 'تحریر سفید',
-        isbn: '978-600-98765-4-3',
-        year: '۱۴۰۴',
-        printEdition: 'چاپ پنجم',
-        isBestseller: true,
-        desc: '<p>روایتی تاریخی و مستند از وقایعی که کمتر شنیده شده‌اند. این کتاب با بررسی دقیق اسناد، نوری تازه بر تاریکی‌های تاریخ می‌تاباند.</p>'
-    },
-    { 
-        id: 'dobarehmarz', 
-        title: 'دوباره مرز', 
-        author: 'سهام سجیراتی', 
-        images: ['dobarehmarz.jpg', 'dobarehmarzback.jpg', 'book1-3.jpg'], 
-        category: 'history',
-        price: '۲۹۰,۰۰۰',
-        pages: '۴۱۰',
-        format: 'رقعی (۱۴ در ۲۱)',
-        coverType: 'شومیز براق',
-        paperType: 'تحریر سفید',
-        isbn: '978-600-98765-4-3',
-        year: '۱۴۰۴',
-        printEdition: 'چاپ پنجم',
-        isBestseller: true,
-        desc: '<p>روایتی تاریخی و مستند از وقایعی که کمتر شنیده شده‌اند. این کتاب با بررسی دقیق اسناد، نوری تازه بر تاریکی‌های تاریخ می‌تاباند.</p>'
+// ================= اتصال به دیتابیس مرکزی و ابری نشر الیما =================
+
+const SUPABASE_URL = 'https://dgdxxzwgqlhepvchfigh.supabase.co'; 
+const SUPABASE_ANON_KEY = 'sb_publishable_9hr00qPKSxxo051rnNVb1g_MGXBl4Cx'; 
+
+// اسم متغیر رو تغییر دادیم تا با کتابخانه اصلی تداخل نداشته باشه
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+window.BOOKS_DATABASE = [];
+window.IS_DATA_READY = false; 
+
+async function fetchBooksFromCloud() {
+    try {
+        // اینجا هم از همون اسم جدید استفاده می‌کنیم
+        const { data, error } = await supabaseClient.from('books').select('*');
+
+        if (error) throw error;
+
+        // اگر اطلاعات با موفقیت دریافت شد، جایگزین می‌کنیم
+        if (data && data.length > 0) {
+            window.BOOKS_DATABASE = data;
+            console.log("🔥 اطلاعات کتاب‌ها با موفقیت دریافت شد!", window.BOOKS_DATABASE);
+        }
+
+    } catch (error) {
+        console.error("❌ خطا در اتصال به سرور:", error.message);
+    } finally {
+        window.IS_DATA_READY = true; 
+        document.dispatchEvent(new Event('cloudDataLoaded'));
     }
-];
+}
+
+fetchBooksFromCloud();
