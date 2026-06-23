@@ -1,0 +1,220 @@
+/* ================= بهینه‌سازی عملکرد (حذف کدهای باعث لگ) ================= */
+.admin-body { 
+    padding-top: 0; 
+    height: 100vh; 
+    overflow: hidden; 
+    background: var(--bg-main); 
+    margin: 0;
+}
+
+/* افکت شیشه‌ای بسیار سبک و سخت‌افزاری */
+.glass-panel {
+    background: var(--bg-cards);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(4px); 
+    -webkit-backdrop-filter: blur(4px);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+body.dark-theme .glass-panel { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+
+/* ================= صفحه ورود ================= */
+.login-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--bg-main); 
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 10000; 
+    transition: opacity 0.4s ease, visibility 0.4s; 
+}
+.login-box { 
+    padding: 35px 30px; 
+    border-radius: 24px; 
+    text-align: center; 
+    width: 90%; 
+    max-width: 380px; 
+    transform: translateY(0);
+}
+.login-logo { width: 70px; display: block; margin: 0 auto 15px auto; }
+.login-box h2 { color: var(--text-title); margin-bottom: 8px; font-weight: 800; font-size: 1.4rem; }
+.login-box p { color: var(--text-body); margin-bottom: 25px; font-size: 0.9rem; }
+.login-box input { 
+    width: 100%; padding: 14px 16px; margin-bottom: 20px; 
+    border: 2px solid var(--border-glass); 
+    background: var(--input-bg); color: var(--text-title); 
+    border-radius: 14px; font-size: 1.1rem; text-align: center; letter-spacing: 2px;
+    transition: border-color 0.3s ease; 
+}
+.login-box input:focus { border-color: var(--primary); outline: none; }
+.error-msg { color: #ef4444; font-size: 0.85rem; min-height: 20px; margin-top: 10px; }
+
+/* ================= دکمه‌ها ================= */
+.btn-primary { 
+    background: var(--primary); color: white; border: none; cursor: pointer; 
+    padding: 12px 24px; border-radius: 12px; font-size: 1rem; font-weight: 700;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+.btn-secondary { 
+    background: var(--input-bg); color: var(--text-title); border: 2px solid var(--border-glass); 
+    padding: 12px 24px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; 
+    transition: background 0.2s; 
+}
+.btn-secondary:hover { background: var(--shape-1); }
+
+/* ================= ساختار اصلی داشبورد ================= */
+.admin-layout { 
+    display: grid; grid-template-columns: 260px 1fr; height: 100vh; 
+    opacity: 0; visibility: hidden; transition: opacity 0.5s ease; 
+}
+
+.admin-sidebar { 
+    padding: 20px; display: flex; flex-direction: column; gap: 20px; 
+    border-left: 1px solid var(--border-glass); z-index: 10; 
+}
+.sidebar-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding-bottom: 15px; border-bottom: 1px solid var(--border-glass); 
+}
+.brand-area { display: flex; align-items: center; gap: 10px; }
+.brand-area img { width: 40px; }
+.brand-area h2 { color: var(--text-title); font-size: 1.1rem; font-weight: 800; margin:0; }
+
+.theme-toggle-btn {
+    background: var(--input-bg); border: 1px solid var(--border-glass); border-radius: 50%;
+    width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; transition: background 0.3s;
+}
+.theme-toggle-btn:hover { background: var(--shape-1); }
+
+.sidebar-nav { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.nav-item { 
+    padding: 12px 16px; border-radius: 12px; color: var(--text-body); 
+    text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; 
+    transition: background 0.2s, color 0.2s; 
+}
+.nav-item:hover, .nav-item.active { background: var(--shape-1); color: var(--primary); }
+
+.admin-main { 
+    padding: 25px; 
+    padding-bottom: 50px; /* فضای تنفس پایین برای دسکتاپ */
+    overflow-y: auto; 
+    scroll-behavior: smooth; 
+}
+
+.admin-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 20px 25px; border-radius: 16px; margin-bottom: 25px; 
+}
+.admin-header h1 { font-size: 1.4rem; color: var(--text-title); font-weight: 800; margin:0; }
+
+.stats-grid { margin-bottom: 25px; }
+.stat-card { padding: 20px 25px; border-radius: 16px; text-align: right; }
+.stat-card h3 { color: var(--text-body); font-size: 1rem; margin-bottom: 8px; font-weight: 700; }
+.stat-value { color: var(--accent); font-size: 2.2rem; font-weight: 900; }
+
+/* ================= جدول کتاب‌ها ================= */
+.table-container { border-radius: 16px; overflow-x: auto; margin-bottom: 20px; }
+.admin-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+.admin-table th, .admin-table td { 
+    padding: 14px 20px; text-align: right; border-bottom: 1px solid var(--border-glass); 
+    color: var(--text-title); font-size: 0.9rem; font-weight: 600; 
+}
+.admin-table th { background: var(--shape-1); font-weight: 800; color: var(--primary); }
+.thumb-td img { width: 40px; height: 60px; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.action-buttons { display: flex; gap: 8px; }
+.btn-action-sm { 
+    padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; 
+    cursor: pointer; border: none; white-space: nowrap; transition: opacity 0.2s;
+}
+.btn-action-sm:hover { opacity: 0.8; }
+.btn-edit { background: var(--primary-light); color: var(--primary); }
+body.dark-theme .btn-edit { background: rgba(99, 102, 241, 0.15); }
+.btn-delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* ================= مودال ویرایش ================= */
+.modal-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5); 
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; 
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-content { 
+    width: 95%; max-width: 650px; padding: 25px; border-radius: 20px; 
+    transform: scale(0.98); transition: transform 0.3s ease; 
+}
+.modal-overlay.active .modal-content { transform: scale(1); }
+.scrollable-modal { max-height: 85vh; overflow-y: auto; overflow-x: hidden; }
+.modal-content h2 { color: var(--text-title); margin-bottom: 20px; font-weight: 800; font-size: 1.3rem; border-right: 4px solid var(--primary); padding-right: 10px; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full-width { grid-column: 1 / -1; }
+.form-group label { font-size: 0.9rem; font-weight: 700; color: var(--text-title); }
+.helper-text { color: var(--primary); font-size: 0.75rem; margin-top: -3px; }
+.form-group input, .form-group select, .form-group textarea { 
+    padding: 10px 14px; border: 2px solid var(--border-glass); 
+    background: var(--input-bg); color: var(--text-title); 
+    border-radius: 10px; font-size: 0.95rem; outline: none; transition: border-color 0.2s; 
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+
+.checkbox-group { flex-direction: row !important; align-items: center; gap: 8px; margin-top: 5px; }
+.checkbox-group input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+.checkbox-group label { margin: 0; cursor: pointer; font-size: 0.95rem; }
+
+.modal-actions { 
+    display: flex; justify-content: flex-end; gap: 12px; 
+    margin-top: 25px; padding-top: 15px; border-bottom: 20px solid transparent; /* جلوگیری از گیر کردن دکمه به پایین فرم */
+    border-top: 1px solid var(--border-glass); 
+}
+
+/* انیمیشن لود نرم صفحه */
+.fade-in { opacity: 0; animation: simpleFade 0.5s ease forwards; }
+@keyframes simpleFade { to { opacity: 1; } }
+
+/* ================= طراحی فوق‌العاده ظریف برای موبایل ================= */
+@media (max-width: 768px) {
+    .admin-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    
+    .admin-sidebar { 
+        padding: 12px 15px; flex-direction: row; flex-wrap: wrap; 
+        border-left: none; border-bottom: 1px solid var(--border-glass); gap: 10px; 
+    }
+    .sidebar-header { width: 100%; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 5px; }
+    body.dark-theme .sidebar-header { border-bottom-color: rgba(255,255,255,0.05); }
+    .brand-area img { width: 32px; }
+    .brand-area h2 { font-size: 1rem; }
+    .theme-toggle-btn { width: 32px; height: 32px; font-size: 1rem; }
+    
+    .sidebar-nav { flex-direction: row; width: 100%; justify-content: space-between; }
+    .nav-item { padding: 8px; font-size: 0.8rem; border-radius: 8px; flex: 1; justify-content: center; text-align: center; gap: 5px; }
+    .nav-item span { margin: 0; }
+    #logoutBtn { flex: 0 0 auto; }
+
+    .admin-main { 
+        padding: 15px; 
+        padding-bottom: 90px; /* <--- حل مشکل گیر کردن در انتهای صفحه موبایل ---> */
+    }
+
+    .admin-header { flex-direction: column; gap: 15px; padding: 15px; margin-bottom: 15px; border-radius: 12px; }
+    .admin-header h1 { font-size: 1.2rem; }
+    .admin-header button { width: 100%; padding: 12px; font-size: 0.95rem; }
+
+    .stat-card { padding: 15px; text-align: center; border-radius: 12px; }
+    .stat-card h3 { font-size: 0.9rem; }
+    .stat-value { font-size: 1.8rem; }
+
+    .table-container { padding: 0; border-radius: 12px; margin-bottom: 30px; /* فاصله از پایین */ }
+    .admin-table th, .admin-table td { padding: 12px 10px; font-size: 0.85rem; }
+    .thumb-td img { width: 35px; height: 50px; }
+
+    .modal-content { padding: 20px 15px; width: 95%; border-radius: 16px; max-height: 90vh; }
+    .modal-content h2 { font-size: 1.1rem; margin-bottom: 15px; }
+    .form-grid { grid-template-columns: 1fr; gap: 12px; }
+    .form-group input, .form-group select, .form-group textarea { padding: 10px; font-size: 0.9rem; border-radius: 8px; }
+    
+    .modal-actions { flex-direction: column-reverse; gap: 10px; margin-top: 20px; padding-top: 15px; }
+    .modal-actions button { width: 100%; height: 45px; padding: 0; font-size: 1rem; border-radius: 10px; }
+}
