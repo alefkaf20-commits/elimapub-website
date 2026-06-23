@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نشر الیما | پنل مدیریت پیشرفته</title>
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../database.js" defer></script>
+    <script src="admin.js" defer></script>
+</head>
+<body class="admin-body">
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') { document.body.classList.add('dark-theme'); }
+    </script>
+
+    <!-- صفحه ورود -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box glass-panel">
+            <img src="../logo.png" alt="لوگو" class="login-logo">
+            <h2>ورود به پنل مدیریت</h2>
+            <p>لطفاً رمز عبور خود را وارد کنید</p>
+            <form id="loginForm">
+                <input type="email" id="adminEmail" placeholder="ایمیل مدیریت..." required dir="ltr">
+                <input type="password" id="adminPassword" placeholder="رمز عبور..." required dir="ltr">
+                <button type="submit" class="btn-primary" id="loginBtn">ورود به سیستم</button>
+            </form>
+            <p id="loginError" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- ساختار اصلی پنل -->
+    <div class="admin-layout" id="mainAdminLayout">
+        <aside class="admin-sidebar glass-panel">
+            <div class="sidebar-header">
+                <div class="brand-area">
+                    <img src="../logo.png" alt="لوگو">
+                    <h2>پنل اِلیما</h2>
+                </div>
+                <!-- دکمه تغییر تم -->
+                <button id="adminThemeBtn" class="theme-toggle-btn" aria-label="تغییر تم"></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active"><span>📊</span> مدیریت آثار</a>
+                <a href="../index.html" class="nav-item"><span>🌐</span> مشاهده سایت</a>
+                <a href="#" class="nav-item" id="logoutBtn" style="color: #ef4444; margin-top: auto;"><span>🚪</span> خروج</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header glass-panel fade-in">
+                <h1>مدیریت کتاب‌ها</h1>
+                <button class="btn-primary" id="addNewBookBtn">+ افزودن کتاب جدید</button>
+            </header>
+
+            <div class="stats-grid fade-in">
+                <div class="stat-card glass-panel">
+                    <h3>تعداد کل آثار منتشر شده</h3>
+                    <p class="stat-value" id="totalBooksCount">...</p>
+                </div>
+            </div>
+
+            <div class="table-container glass-panel fade-in">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>تصویر</th>
+                            <th>عنوان کتاب</th>
+                            <th>نویسنده</th>
+                            <th>قیمت (تومان)</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminBooksTableBody">
+                        <tr><td colspan="5" style="text-align: center; padding: 30px;">در حال بارگذاری...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- مودال افزودن و ویرایش کتاب -->
+    <div class="modal-overlay" id="bookModal">
+        <div class="modal-content glass-panel scrollable-modal">
+            <h2 id="modalMainTitle">افزودن کتاب جدید</h2>
+            <form id="bookForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>آیدی انگلیسی یکتا</label>
+                        <input type="text" id="newId" placeholder="مثال: navayedel" dir="ltr" required>
+                    </div>
+                    <div class="form-group">
+                        <label>عنوان کتاب</label>
+                        <input type="text" id="newTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نویسنده</label>
+                        <input type="text" id="newAuthor" required>
+                    </div>
+                    <div class="form-group">
+                        <label>قیمت (تومان)</label>
+                        <input type="text" id="newPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>دسته‌بندی موضوعی</label>
+                        <select id="newCategory" required>
+                            <option value="literature">ادبیات و شعر</option>
+                            <option value="history">تاریخ و فرهنگ</option>
+                            <option value="psychology">روانشناسی و فلسفه</option>
+                            <option value="art">هنر و معماری</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>تعداد صفحات</label>
+                        <input type="text" id="newPages" required>
+                    </div>
+                    <div class="form-group">
+                        <label>قطع کتاب</label>
+                        <input type="text" id="newFormat" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع جلد</label>
+                        <input type="text" id="newCoverType" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع کاغذ</label>
+                        <input type="text" id="newPaperType" required>
+                    </div>
+                    <div class="form-group">
+                        <label>سال چاپ</label>
+                        <input type="text" id="newYear" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نوبت چاپ</label>
+                        <input type="text" id="newPrintEdition" placeholder="مثال: چاپ اول" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نام فایل‌های تصویر</label>
+                        <input type="text" id="newImage" placeholder="مثال: cover.jpg, back.jpg" dir="ltr" required>
+                        <small class="helper-text">برای چند عکس، با ویرگول انگلیسی (,) جدا کنید.</small>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>شابک (ISBN)</label>
+                        <input type="text" id="newIsbn" dir="ltr" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>معرفی و خلاصه کتاب</label>
+                        <textarea id="newDesc" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width checkbox-group">
+                        <input type="checkbox" id="newIsBestseller">
+                        <label for="newIsBestseller">نمایش در لیست پرفروش‌ها</label>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="closeModalBtn">انصراف</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">ذخیره در دیتابیس</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
