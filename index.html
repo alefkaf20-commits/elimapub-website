@@ -63,7 +63,7 @@
                     <h1>انتشارات اِلیما</h1>
                     <p>دریچه‌ای نو به سوی آگاهی و فرهنگ. یافتن آثار ماندگار، تاریخی و ادبی با بالاترین کیفیت در بزرگترین مرجع چاپ و نشر.</p>
                     <form class="search-box reveal-on-scroll delay-200" onsubmit="event.preventDefault();">
-                        <input type="text" placeholder="نام کتاب یا نویسنده را جستجو کنید..." required>
+                        <input type="text" id="heroSearchInput" placeholder="نام کتاب یا نویسنده را جستجو کنید..." required>
                         <button type="submit">جستجو</button>
                     </form>
                 </div>
@@ -78,13 +78,10 @@
             </section>
 
             <div class="section-header reveal-on-scroll" id="new-books"><h2>تازه‌های نشر الیما</h2></div>
-            
             <section class="books-wrapper"></section>
 
-            <!-- بخش جدید اخبار و رویدادها -->
             <div class="section-header reveal-on-scroll" id="news-events"><h2>تازه ترین اخبار</h2></div>
             <section class="news-wrapper" id="newsContainer">
-                <!-- کارت‌های خبری به صورت داینامیک اینجا رندر می‌شوند -->
                 <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-body);">در حال بارگذاری اخبار...</div>
             </section>
 
