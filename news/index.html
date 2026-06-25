@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر الیما | اخبار و رویدادها</title>
+    
+    <meta name="description" content="آخرین اخبار، نشست‌های ادبی، شب‌های شعر و رویدادهای فرهنگی انتشارات الیما را در این صفحه دنبال کنید.">
+    <meta name="theme-color" content="#4f46e5">
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../database.js" defer></script>
+    <script src="../layout.js" defer></script>
+    <script src="../script.js" defer></script>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+
+    <div id="elima-preloader" class="preloader-wrapper">
+        <div class="preloader-content">
+            <img src="../logo.png" alt="در حال بارگذاری" class="preloader-logo">
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
+
+    <div class="site-wrapper">
+        <site-header></site-header>
+
+        <main class="gallery-page">
+            <section class="gallery-header">
+                <h1>اخبار و <span>رویدادها</span></h1>
+                <p>تازه‌ترین رویدادهای ادبی، نشست‌ها و اطلاعیه‌های نشر الیما</p>
+            </section>
+
+            <!-- این کانتینر توسط جاوااسکریپت پر خواهد شد -->
+            <section class="news-wrapper" id="newsGalleryContainer" style="padding-bottom: 80px;">
+                <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-body);">در حال بارگذاری اخبار...</div>
+            </section>
+        </main>
+
+        <site-footer></site-footer>
+
+        <button class="scroll-top" id="scrollTopBtn" aria-label="برو به بالا">▲</button>
+    </div>
+</body>
+</html>
