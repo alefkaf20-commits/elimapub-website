@@ -1,6 +1,5 @@
 // ================= سیستم هوشمند و سراسری مدیریت خطای تصاویر =================
 const DEFAULT_COVER = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300' fill='%23f1f5f9'%3E%3Crect width='200' height='300'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='16' fill='%2394a3b8' text-anchor='middle' dominant-baseline='middle'%3Eبدون تصویر%3C/text%3E%3C/svg%3E";
-
 window.handleImgError = function(img) {
     if (!img.dataset.retried) {
         img.dataset.retried = 'true';
@@ -8,7 +7,8 @@ window.handleImgError = function(img) {
         img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
         setTimeout(() => { img.src = originalSrc + '?retry=' + Date.now(); }, 1000);
     } else {
-        if (img.src !== DEFAULT_COVER) { img.onerror = null; img.src = DEFAULT_COVER; }
+        if (img.src !== DEFAULT_COVER) { img.onerror = null;
+        img.src = DEFAULT_COVER; }
     }
 };
 
@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const performFullSearch = (query) => {
-                const cleanedQuery = query.trim().toLowerCase(); searchQueryText.textContent = cleanedQuery ? cleanedQuery : 'همه آثار';
+                const cleanedQuery = query.trim().toLowerCase();
+                searchQueryText.textContent = cleanedQuery ? cleanedQuery : 'همه آثار';
                 const filteredBooks = window.BOOKS_DATABASE.filter(book => (book.title && book.title.toLowerCase().includes(cleanedQuery)) || (book.author && book.author.toLowerCase().includes(cleanedQuery)));
                 searchResultsGrid.innerHTML = renderBooks(filteredBooks, false); liveDropdown.classList.remove('active'); overlay.classList.add('active'); document.body.classList.add('no-scroll');
             };
@@ -143,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4>${book.title}</h4>
                 </a>`;
             }).join('');
-
             const filterBtns = document.querySelectorAll('.filter-btn');
             const galleryItems = document.querySelectorAll('.compact-card');
             if (filterBtns.length > 0 && galleryItems.length > 0) {
@@ -159,14 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- ۳. صفحه جزئیات کتاب ---
         if (window.location.pathname.includes('book/details.html') && window.BOOKS_DATABASE) {
-            const urlParams = new URLSearchParams(window.location.search); const bookId = urlParams.get('id');
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookId = urlParams.get('id');
             const currentBook = window.BOOKS_DATABASE.find(b => b.id === bookId);
-
             if (currentBook) {
                 document.getElementById('pageTitle').textContent = `نشر الیما | ${currentBook.title}`;
                 document.getElementById('bookTitle').textContent = currentBook.title; document.getElementById('bookAuthor').textContent = currentBook.author;
                 document.getElementById('bookPrice').textContent = toPersianNum(currentBook.price); document.getElementById('bookPages').textContent = toPersianNum(currentBook.pages) + ' صفحه';
-                document.getElementById('bookFormat').textContent = currentBook.format; document.getElementById('bookCoverType').textContent = currentBook.covertype || currentBook.coverType;
+                document.getElementById('bookFormat').textContent = currentBook.format;
+                document.getElementById('bookCoverType').textContent = currentBook.covertype || currentBook.coverType;
                 document.getElementById('bookPaperType').textContent = currentBook.papertype || currentBook.paperType; document.getElementById('bookIsbn').textContent = currentBook.isbn;
                 document.getElementById('bookYear').textContent = toPersianNum(currentBook.year); document.getElementById('bookDesc').innerHTML = currentBook.desc || '';
 
@@ -174,8 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentBook.isbestseller || currentBook.isBestseller) badgesHTML += `<span class="badge-tag highlight">پرفروش</span>`;
                 document.getElementById('badgesContainer').innerHTML = badgesHTML;
 
-                let parsedImages = []; try { parsedImages = typeof currentBook.images === 'string' ? JSON.parse(currentBook.images) : currentBook.images; } catch(e) {}
-                const mainImg = document.getElementById('mainBookImg'); const thumbsContainer = document.getElementById('thumbnailsContainer');
+                let parsedImages = []; try { parsedImages = typeof currentBook.images === 'string' ? JSON.parse(currentBook.images) : currentBook.images;
+                } catch(e) {}
+                const mainImg = document.getElementById('mainBookImg');
+                const thumbsContainer = document.getElementById('thumbnailsContainer');
                 
                 mainImg.src = getDisplayUrl(parsedImages && parsedImages.length > 0 ? parsedImages[0] : 'default.jpg');
                 mainImg.onerror = function() { window.handleImgError(this); };
@@ -220,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.NEWS_DATABASE.length === 0) {
                     container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-body);">در حال حاضر خبری منتشر نشده است.</div>';
                 } else {
-                    // اگر تو صفحه اصلی باشیم ۳ تا خبر نشون میده، اگر تو صفحه گالری اخبار باشیم همه رو نشون میده
                     const isHomePage = container.id === 'newsContainer';
                     const displayNews = isHomePage ? window.NEWS_DATABASE.slice(0, 3) : window.NEWS_DATABASE;
                     
@@ -252,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const newsId = urlParams.get('id');
             const currentNews = window.NEWS_DATABASE.find(n => n.id === newsId);
-
             if (currentNews) {
                 document.title = `نشر الیما | ${currentNews.title}`;
                 
@@ -261,9 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const dateEl = document.getElementById('newsDate');
                 if (dateEl) dateEl.textContent = toPersianNum(currentNews.date);
-                
                 const contentEl = document.getElementById('newsFullContent');
-                // حفظ پاراگراف‌بندی متن کامل با تبدیل اینترها به <br>
+                
                 if (contentEl) contentEl.innerHTML = currentNews.content ? currentNews.content.replace(/\n/g, '<br><br>') : '';
                 
                 const coverImg = document.getElementById('newsCoverImg');
@@ -284,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ================= سیستم هوشمند نمایش اسکلتون لودینگ =================
     const showSkeletons = () => {
-        // ۱. ساخت اسکلت برای بخش تازه‌های نشر (صفحه اصلی)
         const newBooksContainer = document.querySelector('.books-wrapper');
         if (newBooksContainer && !window.IS_DATA_READY && !window.location.pathname.includes('book/') && !window.location.pathname.includes('news/')) {
             newBooksContainer.innerHTML = Array(3).fill(`
@@ -297,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `).join('');
         }
 
-        // ۲. ساخت اسکلت برای اخبار (صفحه اصلی و صفحه لیست اخبار)
         const newsContainers = document.querySelectorAll('#newsContainer, #newsGalleryContainer');
         newsContainers.forEach(container => {
             if (!window.IS_DATA_READY) {
@@ -315,10 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // ۳. ساخت اسکلت برای گالری کتاب‌ها
         const galleryContainer = document.querySelector('.compact-book-gallery');
         if (galleryContainer && !window.IS_DATA_READY) {
-            // ۱۲ تا اسکلت برای گالری رندر می‌کنیم
             galleryContainer.innerHTML = Array(12).fill(`
                 <div class="compact-card" style="width: 100%;">
                     <div class="skeleton-box" style="width: 100%; aspect-ratio: 2/3; border-radius: 8px; margin-bottom: 10px;"></div>
@@ -328,9 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // اجرای سیستم: اگر دیتا آماده بود که هیچ، اگر نبود اول اسکلت‌ها رو نشون بده بعد صبر کن دیتا بیاد
     if (window.IS_DATA_READY) { 
-        initDynamicFeatures(); 
+        initDynamicFeatures();
     } else { 
         showSkeletons(); 
         document.addEventListener('cloudDataLoaded', initDynamicFeatures);
@@ -352,13 +347,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.changeImage = function(element) {
-        const mainImage = document.getElementById('mainBookImg'); if (!mainImage || mainImage.src === element.src) return;
+        const mainImage = document.getElementById('mainBookImg');
+        if (!mainImage || mainImage.src === element.src) return;
         mainImage.style.opacity = '0';
         setTimeout(() => { mainImage.src = element.src; mainImage.style.opacity = '1'; }, 200);
         const thumbnails = document.querySelectorAll('.thumb-img');
         if (thumbnails.length > 0) { thumbnails.forEach(thumb => thumb.classList.remove('active-thumb')); element.classList.add('active-thumb'); }
     };
-
+    
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (link && link.href && link.target !== '_blank' && link.host === window.location.host) {
@@ -369,6 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
+    
     window.addEventListener('pageshow', (event) => { if (event.persisted) document.body.classList.remove('fade-out'); });
 });
