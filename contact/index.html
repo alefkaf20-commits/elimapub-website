@@ -80,9 +80,8 @@
                             <i class="contact-svg-icon icon-phone" aria-label="تماس"></i>
                         </div>
                         <div class="info-text">
-                            <h3>شماره‌های تماس</h3>
-                            <p dir="ltr">+98 (61) 3333-XXXX</p>
-                            <p dir="ltr">+98 916 XXX XXXX</p>
+                            <h3>شماره تماس</h3>
+                            <p dir="ltr">+989163902147</p>
                         </div>
                     </div>
                     <div class="info-item">
@@ -91,7 +90,6 @@
                         </div>
                         <div class="info-text">
                             <h3>پست الکترونیک</h3>
-                            <p>info@elimapub.ir</p>
                             <p>support@elimapub.ir</p>
                         </div>
                     </div>
@@ -131,7 +129,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="phoneNumber">شماره تماس</label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="۰۹۱۶XXXXXXX">
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="۰۹XXXXXXXXX">
                         </div>
                         <div class="form-group">
                             <label for="subject">موضوع پیام <span>*</span></label>
@@ -163,31 +161,41 @@
     <site-footer></site-footer>
     <button class="scroll-top" id="scrollTopBtn" aria-label="رفتن به بالا">↑</button>
 
-    <script>
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            const responseDiv = document.getElementById('formResponse');
-            const btn = event.target.querySelector('button[type="submit"]');
-            const originalBtnText = btn.innerHTML;
-            
-            btn.innerHTML = '<span style="opacity: 0.8">در حال ارسال...</span>';
-            btn.style.pointerEvents = 'none';
+    <style>
+    .spinner-icon {
+        display: inline-block; width: 18px; height: 18px;
+        border: 3px solid rgba(255,255,255,0.3); border-radius: 50%;
+        border-top-color: #fff; animation: spin 1s ease-in-out infinite;
+        margin-left: 8px; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        const responseDiv = document.getElementById('formResponse');
+        const btn = event.target.querySelector('button[type="submit"]');
+        const originalBtnText = btn.innerHTML;
+        
+        // جایگزینی دکمه با اسپینر
+        btn.innerHTML = '<span class="spinner-icon"></span><span style="opacity: 0.9">در حال ارسال...</span>';
+        btn.style.pointerEvents = 'none';
 
+        setTimeout(() => {
+            responseDiv.className = "form-response-message success";
+            responseDiv.style.display = "block";
+            responseDiv.innerText = "پیام شما با موفقیت ثبت شد. به‌زودی با شما تماس خواهیم گرفت.";
+            
+            document.getElementById('contactForm').reset();
+            btn.innerHTML = originalBtnText;
+            btn.style.pointerEvents = 'auto';
+            
             setTimeout(() => {
-                responseDiv.className = "form-response-message success";
-                responseDiv.style.display = "block";
-                responseDiv.innerText = "پیام شما با موفقیت ثبت شد. به‌زودی با شما تماس خواهیم گرفت.";
-                
-                document.getElementById('contactForm').reset();
-                btn.innerHTML = originalBtnText;
-                btn.style.pointerEvents = 'auto';
-                
-                setTimeout(() => {
-                    responseDiv.style.opacity = '0';
-                    setTimeout(() => { responseDiv.style.display = 'none'; responseDiv.style.opacity = '1'; }, 400);
-                }, 5000);
-            }, 1000);
-        }
-    </script>
+                responseDiv.style.opacity = '0';
+                setTimeout(() => { responseDiv.style.display = 'none'; responseDiv.style.opacity = '1'; }, 400);
+            }, 5000);
+        }, 1000);
+    }
+</script>
 </body>
 </html>
