@@ -300,3 +300,84 @@
     transition: opacity 0.4s ease;
     mix-blend-mode: overlay; /* باعث میشه نور خیلی طبیعی روی طرح جلد بشینه */
 }
+/* ================= بخش اخبار و رویدادها =================/* ================= بخش اخبار و رویدادها ================= */
+.news-wrapper { 
+    max-width: 1300px; margin: 0 auto; display: grid; 
+    /* استفاده از auto-fill به جای auto-fit برای جلوگیری از کشیدگی وقتی یک آیتم داریم */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 30px; padding: 0 20px; justify-content: center;
+}
+
+.news-card { 
+    background: var(--bg-cards); border: 1px solid var(--border-glass); 
+    border-radius: 20px; overflow: hidden; 
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s; 
+    display: flex; flex-direction: column; text-decoration: none;
+    max-width: 400px; /* حداکثر عرض کارت برای زیبایی بیشتر */
+    margin: 0 auto; width: 100%;
+}
+
+.news-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1); 
+    border-color: var(--primary); 
+}
+
+.news-img-box { 
+    width: 100%; 
+    aspect-ratio: 1 / 1; /* ابعاد دقیقاً ۱ در ۱ (مربع) */
+    height: auto; overflow: hidden; position: relative; 
+}
+
+.news-img-box img { 
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; 
+}
+
+.news-card:hover .news-img-box img { transform: scale(1.05); }
+
+.news-date-badge { 
+    position: absolute; top: 15px; right: 15px; 
+    background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); 
+    color: white; padding: 6px 14px; border-radius: 12px; 
+    font-size: 0.85rem; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    z-index: 2; border: 1px solid rgba(255,255,255,0.1); 
+}
+
+.news-content { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+
+.news-title { 
+    font-size: 1.25rem; font-weight: 800; color: var(--text-title); 
+    margin-bottom: 12px; line-height: 1.5; transition: color 0.3s; 
+}
+
+.news-card:hover .news-title { color: var(--primary); }
+
+.news-excerpt { 
+    font-size: 0.95rem; color: var(--text-body); line-height: 1.8; 
+    margin-bottom: 20px; flex: 1; display: -webkit-box; 
+    -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; 
+}
+
+.news-read-more { 
+    font-weight: 800; color: var(--primary); display: inline-flex; 
+    align-items: center; gap: 8px; font-size: 0.95rem; 
+}
+
+.news-read-more span { transition: transform 0.3s ease; }
+.news-card:hover .news-read-more span { transform: translateX(-6px); }
+
+/* ریسپانسیو و اسلایدر موبایل برای اخبار */
+@media (max-width: 768px) {
+    .news-wrapper { 
+        display: flex; flex-wrap: nowrap; overflow-x: auto; 
+        -webkit-overflow-scrolling: touch; padding: 25px 0 35px; 
+        gap: 15px; scroll-snap-type: x mandatory; scrollbar-width: none; 
+        justify-content: flex-start;
+    }
+    .news-wrapper::-webkit-scrollbar { display: none; }
+    .news-wrapper::before, .news-wrapper::after { content: ''; flex: 0 0 1px; display: block; }
+    .news-card { flex: 0 0 280px; scroll-snap-align: center; border-radius: 18px; max-width: none; margin: 0; }
+    .news-img-box { aspect-ratio: 1 / 1; height: auto; }
+    .news-content { padding: 20px; }
+    .news-title { font-size: 1.15rem; }
+}
