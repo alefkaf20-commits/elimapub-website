@@ -44,49 +44,115 @@
                     <img src="../logo.png" alt="لوگو">
                     <h2>پنل اِلیما</h2>
                 </div>
-                <!-- دکمه تغییر تم -->
                 <button id="adminThemeBtn" class="theme-toggle-btn" aria-label="تغییر تم"></button>
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active"><span>📊</span> مدیریت آثار</a>
-                <a href="../index.html" class="nav-item"><span>🌐</span> مشاهده سایت</a>
+                <a href="#" class="nav-item active" data-target="section-books"><span>📊</span> مدیریت آثار</a>
+                <a href="#" class="nav-item" data-target="section-news"><span>📰</span> مدیریت اخبار</a>
+                <a href="#" class="nav-item" data-target="section-media"><span>🖼️</span> گالری تصاویر</a>
+                <a href="../index.html" class="nav-item" target="_blank"><span>🌐</span> مشاهده سایت</a>
                 <a href="#" class="nav-item" id="logoutBtn" style="color: #ef4444; margin-top: auto;"><span>🚪</span> خروج</a>
             </nav>
         </aside>
 
         <main class="admin-main">
-            <header class="admin-header glass-panel fade-in">
-                <h1>مدیریت کتاب‌ها</h1>
-                <button class="btn-primary" id="addNewBookBtn">+ افزودن کتاب جدید</button>
-            </header>
-
-            <div class="stats-grid fade-in">
-                <div class="stat-card glass-panel">
-                    <h3>تعداد کل آثار منتشر شده</h3>
-                    <p class="stat-value" id="totalBooksCount">...</p>
+            <!-- بخش مدیریت کتاب‌ها -->
+            <div id="section-books" class="admin-section active-section fade-in">
+                <header class="admin-header glass-panel">
+                    <div class="header-title-group">
+                        <h1>مدیریت کتاب‌ها</h1>
+                        <button class="btn-refresh" id="refreshBooksBtn" title="به‌روزرسانی لیست">🔄</button>
+                    </div>
+                    <button class="btn-primary" id="addNewBookBtn">+ افزودن کتاب جدید</button>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card glass-panel">
+                        <h3>تعداد کل آثار منتشر شده</h3>
+                        <p class="stat-value" id="totalBooksCount">...</p>
+                    </div>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>تصویر</th>
+                                <th>عنوان کتاب</th>
+                                <th>نویسنده</th>
+                                <th>قیمت (تومان)</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBooksTableBody">
+                            <tr><td colspan="5" style="text-align: center; padding: 30px;">در حال بارگذاری...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="table-container glass-panel fade-in">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>تصویر</th>
-                            <th>عنوان کتاب</th>
-                            <th>نویسنده</th>
-                            <th>قیمت (تومان)</th>
-                            <th>عملیات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminBooksTableBody">
-                        <tr><td colspan="5" style="text-align: center; padding: 30px;">در حال بارگذاری...</td></tr>
-                    </tbody>
-                </table>
+            <!-- بخش جدید مدیریت اخبار -->
+            <div id="section-news" class="admin-section fade-in" style="display: none;">
+                <header class="admin-header glass-panel">
+                    <div class="header-title-group">
+                        <h1>مدیریت اخبار و رویدادها</h1>
+                        <button class="btn-refresh" id="refreshNewsBtn" title="به‌روزرسانی اخبار">🔄</button>
+                    </div>
+                    <button class="btn-primary" id="addNewNewsBtn">+ انتشار خبر جدید</button>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card glass-panel">
+                        <h3>تعداد کل اخبار منتشر شده</h3>
+                        <p class="stat-value" id="totalNewsCount">...</p>
+                    </div>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>کاور</th>
+                                <th>تیتر خبر</th>
+                                <th>تاریخ انتشار</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminNewsTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 30px;">در حال بارگذاری اخبار...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- بخش مدیریت رسانه‌ها (گالری تصاویر) -->
+            <div id="section-media" class="admin-section fade-in" style="display: none;">
+                <header class="admin-header glass-panel" style="flex-direction: column; align-items: stretch; gap: 15px;">
+                    <div class="header-title-group" style="display: flex; justify-content: space-between; width: 100%;">
+                        <h1>گالری تصاویر</h1>
+                        <button class="btn-refresh" id="refreshMediaBtn" title="به‌روزرسانی گالری">🔄</button>
+                    </div>
+                    <div class="media-toolbar">
+                        <div class="search-wrapper">
+                            <input type="text" id="mediaSearchInput" class="search-input" placeholder="🔍 جستجو در نام عکس‌ها...">
+                        </div>
+                        <select id="mediaSortSelect" class="sort-select">
+                            <option value="newest">جدیدترین فایل‌ها</option>
+                            <option value="oldest">قدیمی‌ترین فایل‌ها</option>
+                            <option value="az">ترتیب الفبا</option>
+                        </select>
+                        <label class="btn-primary" style="cursor: pointer; margin: 0; white-space: nowrap; height: 100%;">
+                            + آپلود عکس
+                            <input type="file" id="mediaGalleryUploadInput" accept="image/*" multiple style="display: none;">
+                        </label>
+                    </div>
+                </header>
+                <div class="glass-panel" style="padding: 20px; border-radius: 16px;">
+                    <div id="mainMediaGrid">
+                        <div style="text-align: center; padding: 40px;">در حال بارگذاری گالری...</div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- مودال افزودن و ویرایش کتاب -->
+    <!-- مودال اصلی افزودن و ویرایش کتاب -->
     <div class="modal-overlay" id="bookModal">
         <div class="modal-content glass-panel scrollable-modal">
             <h2 id="modalMainTitle">افزودن کتاب جدید</h2>
@@ -141,11 +207,15 @@
                         <label>نوبت چاپ</label>
                         <input type="text" id="newPrintEdition" placeholder="مثال: چاپ اول" required>
                     </div>
-                    <div class="form-group">
-                        <label>نام فایل‌های تصویر</label>
-                        <input type="text" id="newImage" placeholder="مثال: cover.jpg, back.jpg" dir="ltr" required>
-                        <small class="helper-text">برای چند عکس، با ویرگول انگلیسی (,) جدا کنید.</small>
+
+                    <div class="form-group full-width" style="background: var(--input-bg); padding: 15px; border-radius: 12px; border: 1px dashed var(--border-glass);">
+                        <label style="margin-bottom: 10px; display: block;">تصویر جلد کتاب</label>
+                        <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" class="btn-secondary" id="openImageSelectorBtn" style="flex-shrink: 0;">🖼️ انتخاب از گالری دیتابیس</button>
+                            <div id="selectedImagesPreview" class="selected-images-preview"></div>
+                        </div>
                     </div>
+
                     <div class="form-group full-width">
                         <label>شابک (ISBN)</label>
                         <input type="text" id="newIsbn" dir="ltr" required>
@@ -154,7 +224,6 @@
                         <label>معرفی و خلاصه کتاب</label>
                         <textarea id="newDesc" rows="4" required></textarea>
                     </div>
-                    
                     <div class="form-group full-width checkbox-group">
                         <input type="checkbox" id="newIsBestseller">
                         <label for="newIsBestseller">نمایش در لیست پرفروش‌ها</label>
@@ -166,6 +235,79 @@
                     <button type="submit" class="btn-primary" id="submitBtn">ذخیره در دیتابیس</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- مودال افزودن و ویرایش خبر -->
+    <div class="modal-overlay" id="newsModal">
+        <div class="modal-content glass-panel scrollable-modal">
+            <h2 id="newsModalMainTitle">انتشار خبر جدید</h2>
+            <form id="newsForm">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>آیدی انگلیسی یکتا (لینک خبر)</label>
+                        <input type="text" id="newsId" placeholder="مثال: poetry-event-ahvaz" dir="ltr" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>تیتر خبر</label>
+                        <input type="text" id="newsTitle" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>تاریخ رویداد / انتشار (مثال: ۲۵ خرداد ۱۴۰۵)</label>
+                        <input type="text" id="newsDate" required>
+                    </div>
+                    
+                    <div class="form-group full-width" style="background: var(--input-bg); padding: 15px; border-radius: 12px; border: 1px dashed var(--border-glass);">
+                        <label style="margin-bottom: 10px; display: block;">تصویر کاور خبر (فقط یک عکس)</label>
+                        <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" class="btn-secondary" id="openNewsImageSelectorBtn" style="flex-shrink: 0;">🖼️ انتخاب کاور از گالری</button>
+                            <div id="newsSelectedImagePreview" class="selected-images-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>خلاصه خبر (برای نمایش در صفحه اصلی)</label>
+                        <textarea id="newsExcerpt" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>متن کامل خبر</label>
+                        <textarea id="newsContent" rows="6" required></textarea>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="closeNewsModalBtn">انصراف</button>
+                    <button type="submit" class="btn-primary" id="submitNewsBtn">ذخیره خبر در دیتابیس</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- مودال انتخابگر تصویر از دیتابیس -->
+    <div class="modal-overlay" id="imageSelectorModal" style="z-index: 10001;">
+        <div class="modal-content glass-panel" style="max-width: 800px; height: 80vh; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="margin: 0;">انتخاب تصویر از گالری</h2>
+                <button class="btn-secondary" id="closeSelectorBtn" style="padding: 5px 15px;">بستن ✕</button>
+            </div>
+            <div style="overflow-y: auto; flex: 1; padding: 10px; border: 1px solid var(--border-glass); border-radius: 12px; background: var(--input-bg);">
+                <div class="media-grid" id="selectorMediaGrid">
+                    <!-- تصاویر قابل انتخاب اینجا لود می‌شوند -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال تاییدیه اختصاصی سیستم (حذف) -->
+    <div class="confirm-overlay" id="customConfirmModal">
+        <div class="confirm-box">
+            <div class="confirm-icon">⚠️</div>
+            <h3 id="confirmTitle">آیا مطمئن هستید؟</h3>
+            <p id="confirmMessage">این عملیات غیرقابل بازگشت است و داده‌ها برای همیشه حذف می‌شوند.</p>
+            <div class="confirm-actions">
+                <button class="btn-cancel" id="confirmCancelBtn">انصراف</button>
+                <button class="btn-danger" id="confirmOkBtn">بله، مطمئنم</button>
+            </div>
         </div>
     </div>
 </body>
