@@ -23,7 +23,7 @@ class SiteHeader extends HTMLElement {
                         <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
                         <li><a href="#" class="nav-item-link">ورود</a></li>
                         <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
-                        <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
+                        <li><a href="${basePath}news/index.html" class="nav-item-link">اخبار و رویدادها</a></li>
                         <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
                         <li><a href="${basePath}contact/index.html" class="nav-item-link">ارتباط با ما</a></li>
                     </ul>
@@ -42,7 +42,7 @@ class SiteHeader extends HTMLElement {
                 <li><a href="${basePath}index.html" class="nav-item-link">صفحه اصلی</a></li>
                 <li><a href="#" class="nav-item-link">ورود</a></li>
                 <li><a href="${basePath}book/index.html" class="nav-item-link">کتاب‌ها</a></li>
-                <li><a href="${basePath}index.html#authors" class="nav-item-link">شاعران و نویسندگان</a></li>
+                <li><a href="${basePath}news/index.html" class="nav-item-link">اخبار و رویدادها</a></li>
                 <li><a href="${basePath}about/index.html" class="nav-item-link">درباره ما</a></li>
                 <li><a href="${basePath}contact/index.html" class="nav-item-link">ارتباط با ما</a></li>
             </ul>
@@ -90,7 +90,6 @@ class SiteHeader extends HTMLElement {
             updateThemeIcon(isDark);
             
             themeBtn.addEventListener('click', () => {
-                // تابع خام برای تغییر تم بدون هیچ انیمیشن دستی
                 const switchTheme = () => {
                     body.classList.toggle('dark-theme');
                     const currentDark = body.classList.contains('dark-theme');
@@ -98,11 +97,10 @@ class SiteHeader extends HTMLElement {
                     updateThemeIcon(currentDark);
                 };
 
-                // استفاده از تکنولوژی مدرن و بدون لگ View Transitions API
                 if (!document.startViewTransition) {
-                    switchTheme(); // مرورگرهای خیلی قدیمی مستقیما و بدون افکت تم را عوض میکنند
+                    switchTheme();
                 } else {
-                    document.startViewTransition(switchTheme); // سوپر انیمیشن روان توسط خود مرورگر
+                    document.startViewTransition(switchTheme);
                 }
             });
         }
@@ -126,9 +124,7 @@ class SiteHeader extends HTMLElement {
             mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) toggleMenu(false); });
         }
 
-        // ================= هدر ثابت (Sticky Header) =================
         const headerEl = this.querySelector('header');
-        
         window.addEventListener('scroll', () => {
             if (!headerEl) return;
             if (window.scrollY > 50) {
