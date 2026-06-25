@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر الیما | جزئیات خبر</title>
+    
+    <meta name="theme-color" content="#4f46e5">
+    
+    <link rel="icon" href="../icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../database.js" defer></script>
+    <script src="../layout.js" defer></script>
+    <script src="../script.js" defer></script>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('elima-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+
+    <div id="elima-preloader" class="preloader-wrapper">
+        <div class="preloader-content">
+            <img src="../logo.png" alt="در حال بارگذاری" class="preloader-logo">
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
+
+    <div class="site-wrapper">
+        <site-header></site-header>
+
+        <main class="news-details-page" style="min-height: 70vh;">
+            <article class="glass-panel fade-in" style="max-width: 900px; margin: 40px auto; padding: 30px; border-radius: 24px;">
+                <div style="width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <img id="newsCoverImg" src="" alt="کاور خبر" style="width: 100%; max-height: 450px; object-fit: cover; display: block;">
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px;">
+                    <h1 id="newsMainTitle" style="color: var(--text-title); font-size: 1.8rem; font-weight: 800; margin: 0; flex: 1; line-height: 1.4;">در حال بارگذاری...</h1>
+                    <span class="badge-tag" style="background: var(--shape-1); color: var(--primary); padding: 8px 16px; border-radius: 12px; font-weight: bold; font-size: 0.95rem; white-space: nowrap;">
+                        📅 <span id="newsDate">...</span>
+                    </span>
+                </div>
+                
+                <div id="newsFullContent" style="color: var(--text-body); line-height: 2.2; font-size: 1.05rem; text-align: justify;">
+                    </div>
+                
+                <div style="margin-top: 40px; text-align: center;">
+                    <a href="index.html" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 8px;">
+                        <span>←</span> بازگشت به لیست اخبار
+                    </a>
+                </div>
+            </article>
+        </main>
+
+        <site-footer></site-footer>
+
+        <button class="scroll-top" id="scrollTopBtn" aria-label="برو به بالا">▲</button>
+    </div>
+</body>
+</html>
