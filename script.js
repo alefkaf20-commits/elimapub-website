@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
         }
 
-        // --- ۵. اخبار و رویدادها (صفحه اصلی و صفحه گالری اخبار) ---
+        // --- ۵. اخبار و رویدادها ---
         const newsContainers = document.querySelectorAll('#newsContainer, #newsGalleryContainer');
         if (newsContainers.length > 0 && window.NEWS_DATABASE) {
             newsContainers.forEach(container => {
@@ -282,8 +282,59 @@ document.addEventListener('DOMContentLoaded', () => {
         observeAnimations();
     };
 
-    if (window.IS_DATA_READY) { initDynamicFeatures(); } 
-    else { document.addEventListener('cloudDataLoaded', initDynamicFeatures); }
+    // ================= سیستم هوشمند نمایش اسکلتون لودینگ =================
+    const showSkeletons = () => {
+        // ۱. ساخت اسکلت برای بخش تازه‌های نشر (صفحه اصلی)
+        const newBooksContainer = document.querySelector('.books-wrapper');
+        if (newBooksContainer && !window.IS_DATA_READY && !window.location.pathname.includes('book/') && !window.location.pathname.includes('news/')) {
+            newBooksContainer.innerHTML = Array(3).fill(`
+                <article class="book-item" style="border: 1px solid var(--border-glass); box-shadow: none;">
+                    <div class="skeleton-box" style="width: 100%; max-width: 180px; aspect-ratio: 2/3; margin: 0 auto 20px; border-radius: 8px;"></div>
+                    <div class="skeleton-box" style="width: 70%; height: 24px; margin-bottom: 15px; border-radius: 6px;"></div>
+                    <div class="skeleton-box" style="width: 40%; height: 18px; margin-bottom: 25px; border-radius: 6px;"></div>
+                    <div class="skeleton-box" style="width: 100%; height: 46px; border-radius: 14px;"></div>
+                </article>
+            `).join('');
+        }
+
+        // ۲. ساخت اسکلت برای اخبار (صفحه اصلی و صفحه لیست اخبار)
+        const newsContainers = document.querySelectorAll('#newsContainer, #newsGalleryContainer');
+        newsContainers.forEach(container => {
+            if (!window.IS_DATA_READY) {
+                container.innerHTML = Array(3).fill(`
+                    <div class="news-card" style="border: 1px solid var(--border-glass); box-shadow: none;">
+                        <div class="news-img-box skeleton-box" style="border-radius: 0;"></div>
+                        <div class="news-content">
+                            <div class="skeleton-box" style="width: 90%; height: 22px; margin-bottom: 12px; border-radius: 6px;"></div>
+                            <div class="skeleton-box" style="width: 100%; height: 14px; margin-bottom: 8px; border-radius: 4px;"></div>
+                            <div class="skeleton-box" style="width: 80%; height: 14px; margin-bottom: 20px; border-radius: 4px;"></div>
+                            <div class="skeleton-box" style="width: 40%; height: 18px; border-radius: 4px; margin-top: auto;"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+
+        // ۳. ساخت اسکلت برای گالری کتاب‌ها
+        const galleryContainer = document.querySelector('.compact-book-gallery');
+        if (galleryContainer && !window.IS_DATA_READY) {
+            // ۱۲ تا اسکلت برای گالری رندر می‌کنیم
+            galleryContainer.innerHTML = Array(12).fill(`
+                <div class="compact-card" style="width: 100%;">
+                    <div class="skeleton-box" style="width: 100%; aspect-ratio: 2/3; border-radius: 8px; margin-bottom: 10px;"></div>
+                    <div class="skeleton-box" style="width: 80%; height: 16px; border-radius: 4px; margin: 0 auto;"></div>
+                </div>
+            `).join('');
+        }
+    };
+
+    // اجرای سیستم: اگر دیتا آماده بود که هیچ، اگر نبود اول اسکلت‌ها رو نشون بده بعد صبر کن دیتا بیاد
+    if (window.IS_DATA_READY) { 
+        initDynamicFeatures(); 
+    } else { 
+        showSkeletons(); 
+        document.addEventListener('cloudDataLoaded', initDynamicFeatures);
+    }
 
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     if (scrollTopBtn) {
