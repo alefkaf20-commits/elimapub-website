@@ -22,6 +22,7 @@
     <meta name="twitter:title" content="نشر الیما | وبسایت رسمی انتشارات">
     <meta name="twitter:description" content="یافتن آثار ماندگار، تاریخی و ادبی با بالاترین کیفیت در بزرگترین مرجع چاپ و نشر.">
     <meta name="twitter:image" content="https://elimapub.ir/logo.png">
+    
     <link rel="icon" href="icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     
@@ -32,10 +33,8 @@
     <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="css/responsive.css">
     
-    <!-- کتابخانه قدرتمند Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- فایل‌های سایت در صفحه اصلی باید دقیقاً همین‌طوری آدرس‌دهی بشن -->
     <script src="database.js" defer></script>
     <script src="layout.js" defer></script>
     <script src="script.js" defer></script>
@@ -46,7 +45,6 @@
             document.body.classList.add('dark-theme');
         }
     </script>
-    <!-- ================= پری‌لودر اختصاصی نشر الیما ================= -->
     <div id="elima-preloader" class="preloader-wrapper">
         <div class="preloader-content">
             <img src="logo.png" alt="در حال بارگذاری نشر الیما" class="preloader-logo">
@@ -80,56 +78,14 @@
             </section>
 
             <div class="section-header reveal-on-scroll" id="new-books"><h2>تازه‌های نشر الیما</h2></div>
-            <section class="books-wrapper">
-                
-                <article class="book-item reveal-on-scroll delay-100">
-                    <img src="book/covers/navayedel.jpg" alt="نوای دل" class="book-cover-img" onerror="this.src='book/covers/default.jpg'">
-                    <h3 class="item-title">نوای دل</h3>
-                    <p class="item-author">نویسنده: هوشنگ اعتمادی گندمانی</p>
-                    <div class="item-price">۲۴۵,۰۰۰ تومان</div>
-                    <a href="book/details.html?id=navayedel" class="btn-action">مشاهده و خرید</a>
-                </article>
+            
+            <section class="books-wrapper"></section>
 
-                <article class="book-item reveal-on-scroll delay-200">
-                    <img src="book/covers/barayeshomare13.jpg" alt="برای شماره ۱۳ ها" class="book-cover-img" onerror="this.src='book/covers/default.jpg'">
-                    <h3 class="item-title">برای شماره ۱۳ ها</h3>
-                    <p class="item-author">نویسنده: علی قنواتی</p>
-                    <div class="item-price">۲۹۰,۰۰۰ تومان</div>
-                    <a href="book/details.html?id=barayeshomare13" class="btn-action">مشاهده و خرید</a>
-                </article>
-
-                <article class="book-item reveal-on-scroll delay-300">
-                    <img src="book/covers/dobarehmarz.jpg" alt="دوباره مرز" class="book-cover-img" onerror="this.src='book/covers/default.jpg'">
-                    <h3 class="item-title">دوباره مرز</h3>
-                    <p class="item-author">نویسنده: سهام سجیراتی</p>
-                    <div class="item-price">۲۹۰,۰۰۰ تومان</div>
-                    <a href="book/details.html?id=dobarehmarz" class="btn-action">مشاهده و خرید</a>
-                </article>
-
-            </section>
-
-            <div class="section-header reveal-on-scroll" id="authors"><h2>شاعران و نویسندگان</h2></div>
-            <section class="authors-wrapper">
-                <article class="author-card glass-effect reveal-on-scroll delay-100">
-                    <div class="author-pic"></div>
-                    <h3>نام نویسنده</h3>
-                    <p>ادبیات داستانی</p>
-                </article>
-                <article class="author-card glass-effect reveal-on-scroll delay-200">
-                    <div class="author-pic"></div>
-                    <h3>نام مترجم</h3>
-                    <p>تاریخ و فلسفه</p>
-                </article>
-                <article class="author-card glass-effect reveal-on-scroll delay-300">
-                    <div class="author-pic"></div>
-                    <h3>نام پژوهشگر</h3>
-                    <p>فرهنگ و اساطیر</p>
-                </article>
-                <article class="author-card glass-effect reveal-on-scroll delay-400">
-                    <div class="author-pic"></div>
-                    <h3>نام شاعر</h3>
-                    <p>شعر کلاسیک</p>
-                </article>
+            <!-- بخش جدید اخبار و رویدادها -->
+            <div class="section-header reveal-on-scroll" id="news-events"><h2>اخبار و رویدادهای ادبی</h2></div>
+            <section class="news-wrapper" id="newsContainer">
+                <!-- کارت‌های خبری به صورت داینامیک اینجا رندر می‌شوند -->
+                <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-body);">در حال بارگذاری اخبار...</div>
             </section>
 
             <section class="cta-banner reveal-zoom">
