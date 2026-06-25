@@ -124,7 +124,7 @@ body.dark-theme .pro-top-section { box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
 .btn-action { width: 100%; padding: 13px; background: var(--primary); color: #fff !important; border-radius: 14px; font-weight: 700; text-decoration: none; transition: opacity 0.4s; display: inline-block; text-align: center; }
 .btn-action:hover { opacity: 0.9; }
 .filter-btn { background: var(--input-bg); border: 1px solid var(--border-glass); color: var(--text-body); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
 .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
 .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--primary); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s; z-index: 1000; }
@@ -161,4 +161,47 @@ body.dark-theme .pro-top-section { box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
     .spec-key, .spec-value { font-size: 0.9rem; }
 
     .pro-desc-content p { font-size: 0.95rem; line-height: 1.9; }
+}
+/* ================= سیستم اسکلتون لودینگ (Skeleton Loading) ================= */
+.skeleton-box {
+    /* استفاده از گرادیانت برای ایجاد افکت عبور نور */
+    background: linear-gradient(90deg, var(--shape-1) 25%, var(--border-glass) 50%, var(--shape-1) 75%);
+    background-size: 400% 100%;
+    animation: skeletonLoading 1.5s infinite linear;
+    border-radius: 8px;
+    pointer-events: none; /* جلوگیری از کلیک شدن */
+}
+
+/* رنگ‌بندی مخصوص دارک مود */
+body.dark-theme .skeleton-box {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 400% 100%;
+}
+
+@keyframes skeletonLoading {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+/* ================= استایل دکمه برگشت اختصاصی اخبار ================= */
+.back-news-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 12px;
+    background: var(--bg-cards);
+    border: 1px solid var(--border-glass);
+    color: var(--text-body);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.back-news-btn:hover {
+    background: var(--primary);
+    color: #ffffff !important;
+    border-color: var(--primary);
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
 }
